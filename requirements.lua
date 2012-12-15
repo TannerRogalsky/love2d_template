@@ -33,6 +33,7 @@ HC = require 'lib/HardonCollider'
 inspect = require 'lib/inspect'
 require 'lib/AnAL'
 cron = require 'lib/cron'
+COLORS = require 'lib/colors'
 
 require 'base'
 require 'game'
