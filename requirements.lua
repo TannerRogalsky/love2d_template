@@ -22,11 +22,21 @@ inspect = require 'lib/inspect'
 require 'lib/AnAL'
 cron = require 'lib/cron'
 COLORS = require 'lib/colors'
+tween = require 'lib/tween'
+beholder = require 'lib/beholder'
 
 require 'base'
 require 'game'
 
-require 'states/loading'
-require 'states/main'
-require 'states/menu'
-require 'states/game_over'
+local function require_all(directory)
+  local lfs = love.filesystem
+  for index,filename in ipairs(lfs.enumerate(directory)) do
+    local file = directory .. "/" .. filename
+    if lfs.isFile(file) then
+      require(file:gsub("%.lua", ""))
+    elseif lfs.isDirectory(file) then
+      require_all(file)
+    end
+  end
+end
+require_all("states")
