@@ -32,7 +32,7 @@ local function require_all(directory)
   local lfs = love.filesystem
   for index,filename in ipairs(lfs.enumerate(directory)) do
     local file = directory .. "/" .. filename
-    if lfs.isFile(file) then
+    if lfs.isFile(file) and file:match("%.lua$") then
       require(file:gsub("%.lua", ""))
     elseif lfs.isDirectory(file) then
       require_all(file)
