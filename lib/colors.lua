@@ -35,7 +35,7 @@ function color_map_mt.rgb_to_hsl(rgb_color)
       h = (g - b) / d + (g < b and 6 or 0)
     elseif max == g then
       h = (b - r) / d + 2
-    elseif max == b
+    elseif max == b then
       h = (r - g) / d + 4
     end
 
