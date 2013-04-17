@@ -6,6 +6,8 @@ end
 
 function love.update(dt)
   game:update(dt)
+  cron.update(dt)
+  tween.update(dt)
 end
 
 function love.mousepressed(x, y, button)
