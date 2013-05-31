@@ -24,47 +24,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ]]--
 
-local math_abs, math_floor, math_min, math_max = math.abs, math.floor, math.min, math.max
-local math_sqrt, math_log, math_pi, math_huge = math.sqrt, math.log, math.pi, math.huge
+local math_min, math_sqrt, math_huge = math.min, math.sqrt, math.huge
 
 local _PACKAGE = (...):match("^(.+)%.[^%.]+")
-if not common and common.class then
+if not (common and common.class and common.instance) then
 	class_commons = true
 	require(_PACKAGE .. '.class')
 end
-local vector  = require(_PACKAGE .. '.vector')
+local vector  = require(_PACKAGE .. '.vector-light')
 local Polygon = require(_PACKAGE .. '.polygon')
-
-local function math_absmin(a,b) return math_abs(a) < math_abs(b) and a or b end
-local function test_axes(axes, shape_one, shape_two, sep, min_overlap)
-	for _,axis in ipairs(axes) do
-		local l1,r1 = shape_one:projectOn(axis)
-		local l2,r2 = shape_two:projectOn(axis)
-		-- do the intervals overlap?
-		if r1 < l2 or r2 < l1 then return false end
-
-		-- get the smallest absolute overlap
-		local overlap = math_absmin(l2-r1, r2-l1)
-		if math_abs(overlap) < min_overlap then
-			sep, min_overlap = overlap * axis, math_abs(overlap)
-		end
-	end
-	return true, sep, min_overlap
-end
-
-local function SAT(shape_one, axes_one, shape_two, axes_two)
-	local collide, sep, overlap = false, vector(0,0), math_huge
-	collide, sep, overlap = test_axes(axes_one, shape_one, shape_two, sep, overlap)
-	if not collide then return false end
-	collide, sep = test_axes(axes_two, shape_one, shape_two, sep, overlap)
-	return collide, sep
-end
-
-local function outcircles_intersect(shape_one, shape_two)
-	local x1,y1,r1 = shape_one:outcircle()
-	local x2,y2,r2 = shape_two:outcircle()
-	return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) <= (r1+r2)*(r1+r2)
-end
+local GJK     = require(_PACKAGE .. '.gjk') -- actual collision detection
 
 --
 -- base class
@@ -80,11 +49,6 @@ function Shape:moveTo(x,y)
 	self:move(x - cx, y - cy)
 end
 
-function Shape:moveToWithoutCentroid(x,y)
-	local cx,cy = self:bbox()
-	self:move(x - cx, y - cy)
-end
-
 function Shape:rotation()
 	return self._rotation
 end
@@ -97,25 +61,19 @@ function Shape:setRotation(angle, x,y)
 	return self:rotate(angle - self._rotation, x,y)
 end
 
--- supported shapes
-Shape.POLYGON  = setmetatable({}, {__tostring = function() return 'POLYGON'  end})
-Shape.COMPOUND = setmetatable({}, {__tostring = function() return 'COMPOUND' end})
-Shape.CIRCLE   = setmetatable({}, {__tostring = function() return 'CIRCLE' end})
-Shape.POINT    = setmetatable({}, {__tostring = function() return 'POINT' end})
-
 --
 -- class definitions
 --
 local ConvexPolygonShape = {}
 function ConvexPolygonShape:init(polygon)
-	Shape.init(self, Shape.POLYGON)
+	Shape.init(self, 'polygon')
 	assert(polygon:isConvex(), "Polygon is not convex.")
 	self._polygon = polygon
 end
 
 local ConcavePolygonShape = {}
 function ConcavePolygonShape:init(poly)
-	Shape.init(self, Shape.COMPOUND)
+	Shape.init(self, 'compound')
 	self._polygon = poly
 	self._shapes = poly:splitConvex()
 	for i,s in ipairs(self._shapes) do
@@ -125,116 +83,101 @@ end
 
 local CircleShape = {}
 function CircleShape:init(cx,cy, radius)
-	Shape.init(self, Shape.CIRCLE)
-	self._center = vector(cx,cy)
+	Shape.init(self, 'circle')
+	self._center = {x = cx, y = cy}
 	self._radius = radius
 end
 
 local PointShape = {}
 function PointShape:init(x,y)
-	Shape.init(self, Shape.POINT)
-	self._pos = vector(x,y)
+	Shape.init(self, 'point')
+	self._pos = {x = x, y = y}
 end
 
 --
 -- collision functions
 --
-function ConvexPolygonShape:getAxes()
-	local axes = {}
-	local vert = self._polygon.vertices
-	for i = 1,#vert do
-		axes[#axes+1] = (vert[i]-vert[(i%#vert)+1]):perpendicular():normalize_inplace()
+function ConvexPolygonShape:support(dx,dy)
+	local v = self._polygon.vertices
+	local max, vmax = -math_huge
+	for i = 1,#v do
+		local d = vector.dot(v[i].x,v[i].y, dx,dy)
+		if d > max then
+			max, vmax = d, v[i]
+		end
 	end
-	return axes
+	return vmax.x, vmax.y
 end
 
-function ConvexPolygonShape:projectOn(axis)
-	local vertices = self._polygon.vertices
-	local projection = {}
-	for i = 1,#vertices do
-		projection[i] = vertices[i] * axis -- same as vertices[i]:projectOn(axis) * axis
-	end
-	return math_min(unpack(projection)), math_max(unpack(projection))
-end
-
-function CircleShape:projectOn(axis)
-	-- v:projectOn(a) * a = v * a (see ConvexPolygonShape)
-	-- therefore: (c +- a*r) * a = c*a +- |a|^2 * r
-	local center = self._center * axis
-	local shift = self._radius * axis:len2()
-	return center - shift, center + shift
+function CircleShape:support(dx,dy)
+	return vector.add(self._center.x, self._center.y,
+		vector.mul(self._radius, vector.normalize(dx,dy)))
 end
 
 -- collision dispatching:
 -- let circle shape or compund shape handle the collision
 function ConvexPolygonShape:collidesWith(other)
-	if other._type ~= Shape.POLYGON then
-		local collide, sep = other:collidesWith(self)
-		return collide, sep and -sep
+	if self == other then return false end
+	if other._type ~= 'polygon' then
+		local collide, sx,sy = other:collidesWith(self)
+		return collide, sx and -sx, sy and -sy
 	end
 
-	-- else: type is POLYGON, use the SAT
-	if not outcircles_intersect(self, other) then return false end
-	return SAT(self, self:getAxes(), other, other:getAxes())
+	-- else: type is POLYGON
+	return GJK(self, other)
 end
 
 function ConcavePolygonShape:collidesWith(other)
-	if other._type == Shape.POINT then
+	if self == other then return false end
+	if other._type == 'point' then
 		return other:collidesWith(self)
 	end
 
-	if not outcircles_intersect(self, other) then return false end
-
-	local sep, collide, collisions = vector(0,0), false, 0
+	-- TODO: better way of doing this. report all the separations?
+	local collide,dx,dy = false,0,0
 	for _,s in ipairs(self._shapes) do
-		local status, separating_vector = s:collidesWith(other)
+		local status, sx,sy = s:collidesWith(other)
 		collide = collide or status
 		if status then
-			sep, collisions = sep + separating_vector, collisions + 1
+			if math.abs(dx) < math.abs(sx) then
+				dx = sx
+			end
+			if math.abs(dy) < math.abs(sy) then
+				dy = sy
+			end
 		end
 	end
-	return collide, sep / collisions
+	return collide, dx, dy
 end
 
 function CircleShape:collidesWith(other)
-	if other._type == Shape.CIRCLE then
-		local d = self._center:dist(other._center)
+	if self == other then return false end
+	if other._type == 'circle' then
+		local px,py = self._center.x-other._center.x, self._center.y-other._center.y
+		local d = vector.len2(px,py)
 		local radii = self._radius + other._radius
-		if d < radii then
+		if d < radii*radii then
 			-- if circles overlap, push it out upwards
-			if d == 0 then return true, radii * vector(0,1) end
+			if d == 0 then return true, 0,radii end
 			-- otherwise push out in best direction
-			return true, (radii - d) * (self._center - other._center):normalize_inplace()
+			return true, vector.mul(radii - math_sqrt(d), vector.normalize(px,py))
 		end
 		return false
-	elseif other._type == Shape.COMPOUND then
-		local collide, sep = other:collidesWith(self)
-		return collide, sep and -sep
-	elseif other._type == Shape.POINT then
-		return other:collidesWith(self)
+	elseif other._type == 'polygon' then
+		return GJK(self, other)
 	end
 
-	-- else: other._type == POLYGON
-	if not outcircles_intersect(self, other) then return false end
-	-- retrieve closest edge to center
-	local points = other._polygon.vertices
-	local closest, dist = points[1], (self._center - points[1]):len2()
-	for i = 2,#points do
-		local d = (self._center - points[i]):len2()
-		if d < dist then
-			closest, dist = points[i], d
-		end
-	end
-	local axis = vector(0,1)
-	if dist ~= 0 then axis = (closest - self._center):normalize_inplace() end
-	return SAT(self, {axis}, other, other:getAxes())
+	-- else: let the other shape decide
+	local collide, sx,sy = other:collidesWith(self)
+	return collide, sx and -sx, sy and -sy
 end
 
 function PointShape:collidesWith(other)
-	if other._type == Shape.POINT then
-		return (self._pos == other._pos), vector(0,0)
+	if self == other then return false end
+	if other._type == 'point' then
+		return (self._pos == other._pos), 0,0
 	end
-	return other:contains(self._pos.x, self._pos.y), vector(0,0)
+	return other:contains(self._pos.x, self._pos.y), 0,0
 end
 
 --
@@ -249,7 +192,7 @@ function ConcavePolygonShape:contains(x,y)
 end
 
 function CircleShape:contains(x,y)
-	return (vector(x,y) - self._center):len2() < self._radius * self._radius
+	return vector.len2(x-self._center.x, y-self._center.y) < self._radius * self._radius
 end
 
 function PointShape:contains(x,y)
@@ -273,12 +216,11 @@ end
 --
 --     d*d s^2 + 2 d*(p-c) s + (p-c)*(p-c)-r^2 = 0
 function CircleShape:intersectsRay(x,y, dx,dy)
-	local pc = vector(x,y) - self._center
-	local d = vector(dx,dy)
+	local pcx,pcy = x-self._center.x, y-self._center.y
 
-	local a = d * d
-	local b = 2 * d * pc
-	local c = pc * pc - self._radius * self._radius
+	local a = vector.len2(dx,dy)
+	local b = 2 * vector.dot(dx,dy, pcx,pcy)
+	local c = vector.len2(pcx,pcy) - self._radius * self._radius
 	local discr = b*b - 4*a*c
 	if discr < 0 then return false end
 
@@ -295,9 +237,8 @@ end
 
 -- point shape intersects ray if it lies on the ray
 function PointShape:intersectsRay(x,y,dx,dy)
-	local p = self._pos - vector(x,y)
-	local d = vector(dx,dy)
-	local t = p * d / d:len2()
+	local px,py = self._pos.x-x, self._pos.y-y
+	local t = vector.dot(px,py, dx,dy) / vector.len2(dx,dy)
 	return t >= 0, t
 end
 
@@ -305,19 +246,19 @@ end
 -- auxiliary
 --
 function ConvexPolygonShape:center()
-	return self._polygon.centroid:unpack()
+	return self._polygon.centroid.x, self._polygon.centroid.y
 end
 
 function ConcavePolygonShape:center()
-	return self._polygon.centroid:unpack()
+	return self._polygon.centroid.x, self._polygon.centroid.y
 end
 
 function CircleShape:center()
-	return self._center:unpack()
+	return self._center.x, self._center.y
 end
 
 function PointShape:center()
-	return self._pos:unpack()
+	return self._pos.x, self._pos.y
 end
 
 function ConvexPolygonShape:outcircle()
@@ -340,21 +281,21 @@ function PointShape:outcircle()
 end
 
 function ConvexPolygonShape:bbox()
-	return self._polygon:getBBox()
+	return self._polygon:bbox()
 end
 
 function ConcavePolygonShape:bbox()
-	return self._polygon:getBBox()
+	return self._polygon:bbox()
 end
 
 function CircleShape:bbox()
-	local cx,cy = self._center:unpack()
+	local cx,cy = self:center()
 	local r = self._radius
 	return cx-r,cy-r, cx+r,cy+r
 end
 
 function PointShape:bbox()
-	local x,y = self._pos:unpack()
+	local x,y = self:center()
 	return x,y,x,y
 end
 
@@ -371,7 +312,8 @@ function ConcavePolygonShape:move(x,y)
 end
 
 function CircleShape:move(x,y)
-	self._center = self._center + vector(x,y)
+	self._center.x = self._center.x + x
+	self._center.y = self._center.y + y
 end
 
 function PointShape:move(x,y)
@@ -382,9 +324,12 @@ end
 
 function ConcavePolygonShape:rotate(angle,cx,cy)
 	Shape.rotate(self, angle)
-	self._polygon:rotate(angle,cx)
+	if not (cx and cy) then
+		cx,cy = self:center()
+	end
+	self._polygon:rotate(angle,cx,cy)
 	for _,p in ipairs(self._shapes) do
-		p:rotate(angle, cx and vector(cx,cy) or self._polygon.centroid)
+		p:rotate(angle, cx,cy)
 	end
 end
 
@@ -395,16 +340,40 @@ end
 
 function CircleShape:rotate(angle, cx,cy)
 	Shape.rotate(self, angle)
-	if not cx then return end
-	local c = vector(cx,cy)
-	self._center = (self._center - c):rotate_inplace(angle) + c
+	if not (cx and cy) then return end
+	self._center.x,self._center.y = vector.add(cx,cy, vector.rotate(angle, self._center.x-cx, self._center.y-cy))
 end
 
 function PointShape:rotate(angle, cx,cy)
 	Shape.rotate(self, angle)
-	if not cx then return end
-	local c = vector(cx,cy)
-	self._pos = (self._pos - c):rotate_inplace(angle) + c
+	if not (cx and cy) then return end
+	self._pos.x,self._pos.y = vector.add(cx,cy, vector.rotate(angle, self._pos.x-cx, self._pos.y-cy))
+end
+
+
+function ConcavePolygonShape:scale(s)
+	assert(type(s) == "number" and s > 0, "Invalid argument. Scale must be greater than 0")
+	local cx,cy = self:center()
+	self._polygon:scale(s, cx,cy)
+	for _, p in ipairs(self._shapes) do
+		local dx,dy = vector.sub(cx,cy, p:center())
+		p:scale(s)
+		p:moveTo(cx-dx*s, cy-dy*s)
+	end
+end
+
+function ConvexPolygonShape:scale(s)
+	assert(type(s) == "number" and s > 0, "Invalid argument. Scale must be greater than 0")
+	self._polygon:scale(s, self:center())
+end
+
+function CircleShape:scale(s)
+	assert(type(s) == "number" and s > 0, "Invalid argument. Scale must be greater than 0")
+	self._radius = self._radius * s
+end
+
+function PointShape:scale()
+	-- nothing
 end
 
 
@@ -413,23 +382,23 @@ function ConvexPolygonShape:draw(mode)
 	love.graphics.polygon(mode, self._polygon:unpack())
 end
 
-function ConcavePolygonShape:draw(mode)
+function ConcavePolygonShape:draw(mode, wireframe)
 	local mode = mode or 'line'
 	if mode == 'line' then
 		love.graphics.polygon('line', self._polygon:unpack())
-	else
-		for _,p in ipairs(self._shapes) do
-			love.graphics.polygon(mode, p._polygon:unpack())
-		end
+		if not wireframe then return end
+	end
+	for _,p in ipairs(self._shapes) do
+		love.graphics.polygon(mode, p._polygon:unpack())
 	end
 end
 
 function CircleShape:draw(mode, segments)
-	love.graphics.circle(mode or 'line', self._center.x, self._center.y, self._radius)
+	love.graphics.circle(mode or 'line', self:outcircle())
 end
 
 function PointShape:draw()
-	love.graphics.point(self._pos.x, self._pos.y)
+	love.graphics.point(self:center())
 end
 
 
@@ -450,6 +419,7 @@ local function newPolygonShape(polygon, ...)
 	if polygon:isConvex() then
 		return common.instance(ConvexPolygonShape, polygon)
 	end
+
 	return common.instance(ConcavePolygonShape, polygon)
 end
 
