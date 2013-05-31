@@ -1,9 +1,9 @@
-local GameOver = Game:addState('GameOver')
+local Over = Game:addState('Over')
 
-function GameOver:enteredState()
+function Over:enteredState()
 end
 
-function GameOver:exitedState()
+function Over:exitedState()
 end
 
-return GameOver
+return Over
