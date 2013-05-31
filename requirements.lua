@@ -12,6 +12,9 @@ function pointInCircle(circle, point) return (point.x-circle.x)^2 + (point.y - c
 function string:split(sep) return self:match((self:gsub("[^"..sep.."]*"..sep, "([^"..sep.."]*)"..sep))) end
 globalID = 0
 function generateID() globalID = globalID + 1 return globalID end
+function is_func(f) return type(f) == "function" end
+function is_num(n) return type(n) == "number" end
+function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
 require 'lib/middleclass'
