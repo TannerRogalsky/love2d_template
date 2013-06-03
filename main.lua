@@ -45,6 +45,7 @@ end
 
 function love.draw()
   game:render()
+  loveframes.draw()
 end
 
 function love.focus(has_focus)
