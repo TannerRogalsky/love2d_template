@@ -28,6 +28,7 @@ cron = require 'lib/cron'
 COLORS = require 'lib/colors'
 tween = require 'lib/tween'
 beholder = require 'lib/beholder'
+Grid = require 'lib/grid'
 
 require 'base'
 require 'game'
