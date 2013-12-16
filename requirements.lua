@@ -4,7 +4,8 @@ GRAVITY = 700
 math.tau = math.pi * 2
 
 -- The pixel grid is actually offset to the center of each pixel. So to get clean pixels drawn use 0.5 + integer increments.
-g.setPoint(2.5, "rough")
+g.setPointSize(2.5)
+g.setPointStyle("rough")
 math.randomseed(os.time())
 function math.round(n, deci) deci = 10^(deci or 0) return math.floor(n*deci+.5)/deci end
 function math.clamp(low, n, high) return math.min(math.max(low, n), high) end
@@ -23,7 +24,7 @@ skiplist = require "lib/skiplist"
 HC = require 'lib/HardonCollider'
 inspect = require 'lib/inspect'
 require 'lib/AnAL'
-require 'lib/LoveFrames'
+-- require 'lib/LoveFrames'
 cron = require 'lib/cron'
 COLORS = require 'lib/colors'
 tween = require 'lib/tween'
@@ -35,7 +36,7 @@ require 'game'
 
 local function require_all(directory)
   local lfs = love.filesystem
-  for index,filename in ipairs(lfs.enumerate(directory)) do
+  for index,filename in ipairs(lfs.getDirectoryItems(directory)) do
     local file = directory .. "/" .. filename
     if lfs.isFile(file) and file:match("%.lua$") then
       require(file:gsub("%.lua", ""))
