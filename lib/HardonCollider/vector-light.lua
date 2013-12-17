@@ -34,6 +34,18 @@ local function mul(s, x,y)
 	return s*x, s*y
 end
 
+local function limit(x, y, limit)
+  if x > limit then
+    x = limit
+  end
+
+  if y > limit then
+    y = limit
+  end
+
+  return x, y
+end
+
 local function div(s, x,y)
 	return x/s, y/s
 end
@@ -129,10 +141,12 @@ return {
 	-- misc operations
 	len2          = len2,
 	len           = len,
+	magnitude     = len,
 	dist          = dist,
 	normalize     = normalize,
 	rotate        = rotate,
 	perpendicular = perpendicular,
 	project       = project,
 	mirror        = mirror,
+	limit         = limit
 }
