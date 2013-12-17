@@ -34,6 +34,8 @@ Grid = require 'lib/grid'
 require 'base'
 require 'game'
 
+require 'direction'
+
 local function require_all(directory)
   local lfs = love.filesystem
   for index,filename in ipairs(lfs.getDirectoryItems(directory)) do
