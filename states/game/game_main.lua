@@ -13,7 +13,11 @@ function Main:enteredState()
       up = Player.on_update_up,
       right = Player.on_update_right,
       down = Player.on_update_down,
-      left = Player.on_update_left
+      left = Player.on_update_left,
+      u = Player.on_update_up,
+      r = Player.on_update_right,
+      d = Player.on_update_down,
+      l = Player.on_update_left
     }
   })
   self.player:spawn_controlled_object(g.getWidth() / 4, g.getHeight() / 2)

@@ -3,6 +3,7 @@ Player = class('Player', Base):include(Stateful)
 function Player:initialize(control_map)
   Base.initialize(self)
 
+  self.joystick = love.joystick.getJoysticks()[1]
   self.control_map = control_map
   self.controlled_objects = {}
 end
@@ -15,11 +16,19 @@ end
 
 function Player:update(dt)
   local velocity = {x = 0, y = 0}
+  -- keyboard
   for key,action in pairs(self.control_map.update) do
     if love.keyboard.isDown(key) then
       action(self, velocity)
     end
   end
+  -- joystick hat
+  local hat_action = self.joystick:getHat(1)
+  for i=1,#hat_action do
+    local action = self.control_map.update[hat_action:sub(i, i)]
+    if is_func(action) then action(self, velocity) end
+  end
+  -- set velocity of controlled balls
   for id, control_object in pairs(self.controlled_objects) do
     local body = control_object.body
     body:setLinearVelocity(velocity.x, velocity.y)
