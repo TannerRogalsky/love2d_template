@@ -1,14 +1,21 @@
 Player = class('Player', Base):include(Stateful)
+Player.static.instances = {}
 
-function Player:initialize(control_map)
+function Player:initialize(control_map, color, spawn_point, joystick)
   Base.initialize(self)
 
-  self.joystick = love.joystick.getJoysticks()[1]
+  self.color = color
+  self.spawn_point = spawn_point
+
+  self.joystick = joystick
   self.control_map = control_map
   self.controlled_objects = {}
+
+  Player.instances[self.id] = self
 end
 
 function Player:spawn_controlled_object(x, y)
+  x, y = x or self.spawn_point.x, y or self.spawn_point.y
   local controlled_object = ControlledObject:new(x, y)
   self.controlled_objects[controlled_object.id] = controlled_object
   return controlled_object
@@ -22,11 +29,17 @@ function Player:update(dt)
       action(self, velocity)
     end
   end
-  -- joystick hat
-  local hat_action = self.joystick:getHat(1)
-  for i=1,#hat_action do
-    local action = self.control_map.update[hat_action:sub(i, i)]
-    if is_func(action) then action(self, velocity) end
+  -- joystick stick
+  if self.joystick then
+    local x, y = self.joystick:getAxis(1), self.joystick:getAxis(2)
+    velocity.x, velocity.y = velocity.x + x * 150, velocity.y + y * 150
+
+    -- joystick hat
+    local hat_action = self.joystick:getHat(1)
+    for i=1,#hat_action do
+      local action = self.control_map.update[hat_action:sub(i, i)]
+      if is_func(action) then action(self, velocity) end
+    end
   end
   -- set velocity of controlled balls
   for id, control_object in pairs(self.controlled_objects) do
@@ -36,7 +49,7 @@ function Player:update(dt)
 end
 
 function Player:render()
-  g.setColor(COLORS.red:rgb())
+  g.setColor(self.color:rgb())
   for id, control_object in pairs(self.controlled_objects) do
     local x, y = control_object.body:getPosition()
     g.circle("fill", x, y, control_object.shape:getRadius())

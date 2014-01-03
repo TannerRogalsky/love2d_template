@@ -5,7 +5,8 @@ function Main:enteredState()
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
 
-  self.player = Player:new({
+  -- set up players
+  local player = Player:new({
     pressed = {
       [" "] = Player.shoot_ball
     },
@@ -13,16 +14,28 @@ function Main:enteredState()
       up = Player.on_update_up,
       right = Player.on_update_right,
       down = Player.on_update_down,
-      left = Player.on_update_left,
+      left = Player.on_update_left
+    }
+  }, COLORS.red, {x = g.getWidth() / 4, y = g.getHeight() / 2})
+  player:spawn_controlled_object()
+
+  player = Player:new({
+    pressed = {
+      [" "] = Player.shoot_ball
+    },
+    update = {
       u = Player.on_update_up,
       r = Player.on_update_right,
       d = Player.on_update_down,
       l = Player.on_update_left
     }
-  })
-  self.player:spawn_controlled_object(g.getWidth() / 4, g.getHeight() / 2)
+  }, COLORS.purple, {x = g.getWidth() / 4 * 3, y = g.getHeight() / 2}, love.joystick.getJoysticks()[1])
+  player:spawn_controlled_object()
+
   cron.every(5, function()
-    self.player:spawn_controlled_object(g.getWidth() / 4, g.getHeight() / 2)
+    for _,player in pairs(Player.instances) do
+      player:spawn_controlled_object()
+    end
   end)
 
   -- set up obstacles
@@ -65,7 +78,9 @@ function Main:enteredState()
 end
 
 function Main:update(dt)
-  self.player:update(dt)
+  for id,player in pairs(Player.instances) do
+    player:update(dt)
+  end
 
   local ball_friction = 1 * dt
   for _,ball_object in ipairs(self.ball_objects) do
@@ -86,7 +101,9 @@ end
 function Main:render()
   self.camera:set()
 
-  self.player:render()
+  for id,player in pairs(Player.instances) do
+    player:render()
+  end
 
   g.setColor(COLORS.blue:rgb())
   for _,blocking_object in ipairs(self.blocking_objects) do
@@ -121,9 +138,11 @@ function Main:keyreleased(key, unicode)
 end
 
 function Main:joystickpressed(joystick, button)
+  print(joystick, button)
 end
 
 function Main:joystickreleased(joystick, button)
+  print(joystick, button)
 end
 
 function Main:focus(has_focus)
