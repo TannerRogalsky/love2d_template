@@ -33,6 +33,8 @@ Grid = require 'lib/grid'
 
 require 'base'
 require 'game'
+require 'player'
+require 'controlled_object'
 
 require 'direction'
 

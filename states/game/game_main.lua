@@ -5,17 +5,20 @@ function Main:enteredState()
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
 
-  self.control_objects = {}
-  function new_control_object(x, y)
-    local object = {}
-    object.body = love.physics.newBody(World, x, y, "dynamic")
-    object.shape = love.physics.newCircleShape(10)
-    object.fixture = love.physics.newFixture(object.body, object.shape)
-    return object
-  end
-  table.insert(self.control_objects, new_control_object(g.getWidth() / 4, g.getHeight() / 2))
+  self.player = Player:new({
+    pressed = {
+      [" "] = Player.shoot_ball
+    },
+    update = {
+      up = Player.on_update_up,
+      right = Player.on_update_right,
+      down = Player.on_update_down,
+      left = Player.on_update_left
+    }
+  })
+  self.player:spawn_controlled_object(g.getWidth() / 4, g.getHeight() / 2)
   cron.every(5, function()
-    table.insert(self.control_objects, new_control_object(g.getWidth() / 4, g.getHeight() / 2))
+    self.player:spawn_controlled_object(g.getWidth() / 4, g.getHeight() / 2)
   end)
 
   -- set up obstacles
@@ -55,37 +58,12 @@ function Main:enteredState()
     return object
   end
   table.insert(self.ball_objects, new_ball_object(g.getWidth() / 2, g.getHeight() / 2))
-
-  self.control_map = {
-    pressed = {
-      -- up = self.pressed_up,
-      -- right = self.pressed_right,
-      -- down = self.pressed_down,
-      -- left = self.pressed_left
-      [" "] = self.shoot_ball
-    },
-    update = {
-      up = self.on_update_up,
-      right = self.on_update_right,
-      down = self.on_update_down,
-      left = self.on_update_left
-    }
-  }
 end
 
 function Main:update(dt)
-  local velocity = {x = 0, y = 0}
-  for key,action in pairs(self.control_map.update) do
-    if love.keyboard.isDown(key) then
-      action(self, velocity)
-    end
-  end
-  for _,control_object in ipairs(self.control_objects) do
-    local body = control_object.body
-    body:setLinearVelocity(velocity.x, velocity.y)
-  end
+  self.player:update(dt)
 
-  local ball_friction = 1
+  local ball_friction = 1 * dt
   for _,ball_object in ipairs(self.ball_objects) do
     local body = ball_object.body
     local vx, vy = body:getLinearVelocity()
@@ -98,18 +76,13 @@ function Main:update(dt)
     body:setLinearVelocity(vx, vy)
   end
 
-
   World:update(dt)
 end
 
 function Main:render()
   self.camera:set()
 
-  g.setColor(COLORS.red:rgb())
-  for _,control_object in ipairs(self.control_objects) do
-    local x, y = control_object.body:getPosition()
-    g.circle("fill", x, y, control_object.shape:getRadius())
-  end
+  self.player:render()
 
   g.setColor(COLORS.blue:rgb())
   for _,blocking_object in ipairs(self.blocking_objects) do
@@ -125,55 +98,9 @@ function Main:render()
   self.camera:unset()
 end
 
-local velocity = 150
-function Main:on_update_up(vel)
-  -- self:apply_velocity_to_control_objects(0, -velocity)
-  vel.x, vel.y = vel.x + 0, vel.y - velocity
-end
-function Main:on_update_right(vel)
-  -- self:apply_velocity_to_control_objects(velocity, 0)
-  vel.x, vel.y = vel.x + velocity, vel.y + 0
-end
-function Main:on_update_down(vel)
-  -- self:apply_velocity_to_control_objects(0, velocity)
-  vel.x, vel.y = vel.x + 0, vel.y + velocity
-end
-function Main:on_update_left(vel)
-  -- self:apply_velocity_to_control_objects(-velocity, 0)
-  vel.x, vel.y = vel.x  - velocity, vel.y + 0
-end
-
-function Main:apply_velocity_to_control_objects(vx, vy)
-  for _,control_object in ipairs(self.control_objects) do
-    local body = control_object.body
-    body:setLinearVelocity(vx, vy)
-  end
-end
-
-local force = 10
-function Main:pressed_up()
-  self:apply_impulse_to_control_objects(0, -force)
-end
-function Main:pressed_right()
-  self:apply_impulse_to_control_objects(force, 0)
-end
-function Main:pressed_down()
-  self:apply_impulse_to_control_objects(0, force)
-end
-function Main:pressed_left()
-  self:apply_impulse_to_control_objects(-force, 0)
-end
-
 function Main:shoot_ball()
   for index,contact in ipairs(World:getContactList()) do
     print(index, contact)
-  end
-end
-
-function Main:apply_impulse_to_control_objects(ix, iy)
-  for _,control_object in ipairs(self.control_objects) do
-    local body = control_object.body
-    body:applyLinearImpulse(ix, iy)
   end
 end
 
@@ -184,8 +111,6 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
-  local action = self.control_map.pressed[key]
-  if is_func(action) then action(self) end
 end
 
 function Main:keyreleased(key, unicode)
