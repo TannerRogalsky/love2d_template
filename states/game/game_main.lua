@@ -3,9 +3,13 @@ local Main = Game:addState('Main')
 function Main:enteredState()
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
+  World:setCallbacks(
+    function(a, b, c) self:begin_contact(a, b, c) end,
+    function(a, b, c) self:end_contact(a, b, c) end
+  )
 
   -- set up players
-  local player = Player:new({
+  local player1 = Player:new({
     pressed = {
       [" "] = Player.shoot_ball
     },
@@ -16,9 +20,9 @@ function Main:enteredState()
       left = Player.on_update_left
     }
   }, COLORS.red, {x = g.getWidth() / 4, y = g.getHeight() / 2})
-  player:spawn_controlled_object()
+  player1:spawn_controlled_object()
 
-  player = Player:new({
+  local player2 = Player:new({
     pressed = {
       [" "] = Player.shoot_ball
     },
@@ -29,7 +33,7 @@ function Main:enteredState()
       l = Player.on_update_left
     }
   }, COLORS.purple, {x = g.getWidth() / 4 * 3, y = g.getHeight() / 2}, love.joystick.getJoysticks()[1])
-  player:spawn_controlled_object()
+  player2:spawn_controlled_object()
 
   cron.every(5, function()
     for _,player in pairs(Player.instances) do
@@ -66,6 +70,13 @@ function Main:enteredState()
 
   -- the ball(s)
   BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
+  cron.every(10, function()
+    BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
+  end)
+
+  -- goals
+  GoalObject:new(player2, 0, g.getHeight() / 3, 50, g.getHeight() / 3)
+  GoalObject:new(player1, g.getWidth() - 50, g.getHeight() / 3, 50, g.getHeight() / 3)
 end
 
 function Main:update(dt)
@@ -82,6 +93,10 @@ end
 
 function Main:render()
   self.camera:set()
+
+  for _,goal_object in pairs(GoalObject.instances) do
+    goal_object:render()
+  end
 
   for id,player in pairs(Player.instances) do
     player:render()
@@ -128,22 +143,20 @@ end
 function Main:focus(has_focus)
 end
 
--- shape_one and shape_two are the colliding shapes. mtv_x and mtv_y define the minimum translation vector,
--- i.e. the direction and magnitude shape_one has to be moved so that the collision will be resolved.
--- Note that if one of the shapes is a point shape, the translation vector will be invalid.
-function Main.on_start_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
-  local object_one, object_two = shape_one.parent, shape_two.parent
+function Main:begin_contact(fixture_a, fixture_b, contact)
+  local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
 
-  if object_one and is_func(object_one.on_collide) then
-    object_one:on_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
+  if object_one and is_func(object_one.begin_contact) then
+    object_one:begin_contact(object_two, contact)
   end
 
-  if object_two and is_func(object_two.on_collide) then
-    object_two:on_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
+  if object_two and is_func(object_two.begin_contact) then
+    object_two:begin_contact(object_one, contact)
   end
 end
 
-function Main.on_stop_collide(dt, shape_one, shape_two)
+function Main:end_contact(fixture_a, fixture_b, contact)
+  local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
 end
 
 function Main:exitedState()

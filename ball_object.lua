@@ -9,12 +9,14 @@ function BallObject:initialize(x, y)
   self.body = love.physics.newBody(World, x, y, "dynamic")
   self.shape = love.physics.newCircleShape(BallObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)
+  self.fixture:setUserData(self)
+  self.fixture:setRestitution(1)
 
   BallObject.instances[self.id] = self
 end
 
 function BallObject:destroy()
-  BallObject[self.id] = nil
+  BallObject.instances[self.id] = nil
   self.body:destroy()
 end
 

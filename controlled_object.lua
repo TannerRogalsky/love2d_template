@@ -7,6 +7,7 @@ function ControlledObject:initialize(x, y)
   self.body = love.physics.newBody(World, x, y, "dynamic")
   self.shape = love.physics.newCircleShape(ControlledObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)
+  self.fixture:setUserData(self)
 end
 
 function ControlledObject:update(dt)

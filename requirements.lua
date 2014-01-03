@@ -36,6 +36,7 @@ require 'game'
 require 'player'
 require 'controlled_object'
 require 'ball_object'
+require 'goal_object'
 
 require 'direction'
 
