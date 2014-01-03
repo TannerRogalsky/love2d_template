@@ -1,7 +1,6 @@
 local Main = Game:addState('Main')
 
 function Main:enteredState()
-  -- Collider = HC(100, self.on_start_collide, self.on_stop_collide)
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
 
@@ -66,15 +65,7 @@ function Main:enteredState()
   new_bound(0, g.getHeight(), g.getWidth(), g.getHeight())
 
   -- the ball(s)
-  self.ball_objects = {}
-  function new_ball_object(x, y)
-    local object = {}
-    object.body = love.physics.newBody(World, x, y, "dynamic")
-    object.shape = love.physics.newCircleShape(20)
-    object.fixture = love.physics.newFixture(object.body, object.shape)
-    return object
-  end
-  table.insert(self.ball_objects, new_ball_object(g.getWidth() / 2, g.getHeight() / 2))
+  BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
 end
 
 function Main:update(dt)
@@ -82,17 +73,8 @@ function Main:update(dt)
     player:update(dt)
   end
 
-  local ball_friction = 1 * dt
-  for _,ball_object in ipairs(self.ball_objects) do
-    local body = ball_object.body
-    local vx, vy = body:getLinearVelocity()
-    if vx >= ball_friction then vx = vx - ball_friction
-    elseif vx <= -ball_friction then vx = vx + ball_friction
-    else vx = 0 end
-    if vy >= ball_friction then vy = vy - ball_friction
-    elseif vy <= -ball_friction then vy = vy + ball_friction
-    else vy = 0 end
-    body:setLinearVelocity(vx, vy)
+  for _,ball_object in pairs(BallObject.instances) do
+    ball_object:update(dt)
   end
 
   World:update(dt)
@@ -110,10 +92,8 @@ function Main:render()
     g.polygon("fill", blocking_object.body:getWorldPoints(blocking_object.shape:getPoints()))
   end
 
-  g.setColor(COLORS.green:rgb())
-  for _,ball_object in ipairs(self.ball_objects) do
-    local x, y = ball_object.body:getPosition()
-    g.circle("fill", x, y, ball_object.shape:getRadius())
+  for _,ball_object in pairs(BallObject.instances) do
+    ball_object:render()
   end
 
   self.camera:unset()
@@ -167,8 +147,8 @@ function Main.on_stop_collide(dt, shape_one, shape_two)
 end
 
 function Main:exitedState()
-  -- Collider:clear()
-  -- Collider = nil
+  World:destroy()
+  World = nil
 end
 
 return Main
