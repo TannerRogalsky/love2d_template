@@ -157,6 +157,14 @@ end
 
 function Main:end_contact(fixture_a, fixture_b, contact)
   local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
+
+  if object_one and is_func(object_one.end_contact) then
+    object_one:end_contact(object_two, contact)
+  end
+
+  if object_two and is_func(object_two.end_contact) then
+    object_two:end_contact(object_one, contact)
+  end
 end
 
 function Main:exitedState()
