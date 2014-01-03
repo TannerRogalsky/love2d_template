@@ -49,10 +49,12 @@ function Player:update(dt)
 end
 
 function Player:render()
-  g.setColor(self.color:rgb())
   for id, control_object in pairs(self.controlled_objects) do
     local x, y = control_object.body:getPosition()
+    g.setColor(self.color:rgb())
     g.circle("fill", x, y, control_object.shape:getRadius())
+    g.setColor(COLORS.black:rgb())
+    g.circle("line", x, y, control_object.shape:getRadius())
   end
 end
 
