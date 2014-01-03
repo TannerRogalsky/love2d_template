@@ -10,6 +10,20 @@ function ControlledObject:initialize(x, y)
   self.fixture:setUserData(self)
 end
 
+function ControlledObject:destroy()
+  local player = self:get_player()
+  player.controlled_objects[self.id] = nil
+  self.body:destroy()
+end
+
+function ControlledObject:get_player()
+  for _,player in pairs(Player.instances) do
+    if player.controlled_objects[self.id] then
+      return player
+    end
+  end
+end
+
 function ControlledObject:update(dt)
 end
 
