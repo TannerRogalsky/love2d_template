@@ -127,6 +127,9 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
+  for _,player in pairs(Player.instances) do
+    player:keypressed(key, unicode)
+  end
 end
 
 function Main:keyreleased(key, unicode)

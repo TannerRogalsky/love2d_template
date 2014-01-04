@@ -65,6 +65,8 @@ function Player:mousereleased(x, y, button)
 end
 
 function Player:keypressed(key, unicode)
+  local action = self.control_map.pressed[key]
+  if is_func(action) then action(self) end
 end
 
 function Player:keyreleased(key, unicode)
