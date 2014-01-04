@@ -91,3 +91,16 @@ end
 function Player:on_update_left(vel)
   vel.x, vel.y = vel.x  - velocity, vel.y + 0
 end
+
+local shoot_force = 1
+function Player:shoot_ball()
+  for _,ball in pairs(BallObject.instances) do
+    for _,controlled_object in pairs(ball.controlled_objects_touching) do
+      if self.controlled_objects[controlled_object.id] then
+        local x1, y1 = controlled_object.body:getPosition()
+        local x2, y2 = ball.body:getPosition()
+        ball.body:applyLinearImpulse((x2 - x1) * shoot_force, (y2 - y1) * shoot_force)
+      end
+    end
+  end
+end
