@@ -6,6 +6,8 @@ BallObject.static.friction_coefficient = 1
 function BallObject:initialize(x, y)
   Base.initialize(self)
 
+  self.controlled_objects_touching = {}
+
   self.body = love.physics.newBody(World, x, y, "dynamic")
   self.shape = love.physics.newCircleShape(BallObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)

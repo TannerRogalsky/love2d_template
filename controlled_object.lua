@@ -13,6 +13,13 @@ end
 function ControlledObject:destroy()
   local player = self:get_player()
   player.controlled_objects[self.id] = nil
+
+  for _,ball in pairs(BallObject.instances) do
+    if ball.controlled_objects_touching[self.id] then
+      ball.controlled_objects_touching[self.id] = nil
+    end
+  end
+
   self.body:destroy()
 end
 
@@ -21,6 +28,18 @@ function ControlledObject:get_player()
     if player.controlled_objects[self.id] then
       return player
     end
+  end
+end
+
+function ControlledObject:begin_contact(other, contact)
+  if instanceOf(BallObject, other) then
+    other.controlled_objects_touching[self.id] = self
+  end
+end
+
+function ControlledObject:end_contact(other, contact)
+  if instanceOf(BallObject, other) then
+    other.controlled_objects_touching[self.id] = nil
   end
 end
 
