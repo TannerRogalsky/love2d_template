@@ -24,7 +24,7 @@ function Main:enteredState()
 
   local player2 = Player:new({
     pressed = {
-      [" "] = Player.shoot_ball
+      [2] = Player.shoot_ball
     },
     update = {
       u = Player.on_update_up,
@@ -136,11 +136,19 @@ function Main:keyreleased(key, unicode)
 end
 
 function Main:joystickpressed(joystick, button)
-  print(joystick, button)
+  for _,player in pairs(Player.instances) do
+    if joystick == player.joystick then
+      player:joystickpressed(button)
+    end
+  end
 end
 
 function Main:joystickreleased(joystick, button)
-  print(joystick, button)
+  for _,player in pairs(Player.instances) do
+    if joystick == player.joystick then
+      player:joystickreleased(button)
+    end
+  end
 end
 
 function Main:focus(has_focus)

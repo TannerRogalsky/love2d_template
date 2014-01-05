@@ -72,10 +72,14 @@ end
 function Player:keyreleased(key, unicode)
 end
 
-function Player:joystickpressed(joystick, button)
+function Player:joystickpressed(button)
+  -- print("pressed", self, button)
+  local action = self.control_map.pressed[button]
+  if is_func(action) then action(self) end
 end
 
-function Player:joystickreleased(joystick, button)
+function Player:joystickreleased(button)
+  -- print("released", self, button)
 end
 
 local velocity = 150
