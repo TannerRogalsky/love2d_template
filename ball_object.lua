@@ -1,7 +1,7 @@
 BallObject = class('BallObject', Base):include(Stateful)
 BallObject.static.RADIUS = 20
 BallObject.static.instances = {}
-BallObject.static.friction_coefficient = 1
+BallObject.static.friction_coefficient = 50
 
 function BallObject:initialize(x, y)
   Base.initialize(self)
@@ -26,12 +26,8 @@ function BallObject:update(dt)
   local ball_friction = BallObject.friction_coefficient * dt
   local body = self.body
   local vx, vy = body:getLinearVelocity()
-  if vx >= ball_friction then vx = vx - ball_friction
-  elseif vx <= -ball_friction then vx = vx + ball_friction
-  else vx = 0 end
-  if vy >= ball_friction then vy = vy - ball_friction
-  elseif vy <= -ball_friction then vy = vy + ball_friction
-  else vy = 0 end
+  vx = math.attenuate(vx, ball_friction)
+  vy = math.attenuate(vy, ball_friction)
   body:setLinearVelocity(vx, vy)
 end
 

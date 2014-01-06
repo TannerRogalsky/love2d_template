@@ -44,6 +44,7 @@ function Player:update(dt)
   -- set velocity of controlled balls
   for id, control_object in pairs(self.controlled_objects) do
     local body = control_object.body
+    local vx, vy = body:getLinearVelocity()
     body:setLinearVelocity(velocity.x, velocity.y)
   end
 end
@@ -73,7 +74,7 @@ function Player:keyreleased(key, unicode)
 end
 
 function Player:joystickpressed(button)
-  -- print("pressed", self, button)
+  print("pressed", self, button)
   local action = self.control_map.pressed[button]
   if is_func(action) then action(self) end
 end
@@ -105,6 +106,17 @@ function Player:shoot_ball()
         local x2, y2 = ball.body:getPosition()
         ball.body:applyLinearImpulse((x2 - x1) * shoot_force, (y2 - y1) * shoot_force)
       end
+    end
+  end
+end
+
+local cluster_force = 1
+function Player:cluster_controlled_objects()
+  for _,controlled_object_a in pairs(self.controlled_objects) do
+    for _,controlled_object_b in pairs(self.controlled_objects) do
+        local x1, y1 = controlled_object_a.body:getPosition()
+        local x2, y2 = controlled_object_b.body:getPosition()
+        controlled_object_a.body:applyLinearImpulse((x2 - x1) * cluster_force, (y2 - y1) * cluster_force)
     end
   end
 end
