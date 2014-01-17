@@ -3,6 +3,7 @@ local Loading = Game:addState('Loading')
 function Loading:enteredState()
   self.loader = require 'lib/love-loader'
   self.preloaded_images = {}
+  self.preloaded_fonts = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -10,6 +11,16 @@ function Loading:enteredState()
       self.loader.newImage(self.preloaded_images, image, 'images/' .. image)
     end
   end
+
+  local sizes = {12, 14, 16, 20, 24}
+  -- for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do
+  --   if font:match('(.*).ttf$') ~= nil then
+  --     for _,size in ipairs(sizes) do
+  --       local key = font .. "_" .. tostring(size)
+  --       self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. font, size)
+  --     end
+  --   end
+  -- end
 
   self.loader.start(function()
     -- loader finished callback
