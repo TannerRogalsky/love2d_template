@@ -1,7 +1,6 @@
 BallObject = class('BallObject', Base):include(Stateful)
 BallObject.static.RADIUS = 20
 BallObject.static.instances = {}
-BallObject.static.friction_coefficient = 50
 
 function BallObject:initialize(x, y)
   Base.initialize(self)
@@ -12,7 +11,7 @@ function BallObject:initialize(x, y)
   self.shape = love.physics.newCircleShape(BallObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)
   self.fixture:setUserData(self)
-  self.fixture:setRestitution(1)
+  self.fixture:setRestitution(0.1)
 
   BallObject.instances[self.id] = self
 end
@@ -23,12 +22,10 @@ function BallObject:destroy()
 end
 
 function BallObject:update(dt)
-  local ball_friction = BallObject.friction_coefficient * dt
   local body = self.body
   local vx, vy = body:getLinearVelocity()
-  vx = math.attenuate(vx, ball_friction)
-  vy = math.attenuate(vy, ball_friction)
   body:setLinearVelocity(vx, vy)
+  body:applyForce(-vx, -vy) -- this works really nicely as drag/friction
 end
 
 function BallObject:render()

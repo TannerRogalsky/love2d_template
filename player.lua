@@ -26,7 +26,7 @@ function Player:update(dt)
   -- keyboard
   for key,action in pairs(self.control_map.update) do
     if love.keyboard.isDown(key) then
-      action(self, velocity)
+      action(self, dt, velocity)
     end
   end
   -- joystick stick
@@ -42,10 +42,13 @@ function Player:update(dt)
     end
   end
   -- set velocity of controlled balls
-  for id, control_object in pairs(self.controlled_objects) do
-    local body = control_object.body
-    local vx, vy = body:getLinearVelocity()
-    body:setLinearVelocity(velocity.x, velocity.y)
+  -- for id, control_object in pairs(self.controlled_objects) do
+  --   local body = control_object.body
+  --   local vx, vy = body:getLinearVelocity()
+  --   body:setLinearVelocity(velocity.x, velocity.y)
+  -- end
+  for _,controlled_object in pairs(self.controlled_objects) do
+    controlled_object:update(dt)
   end
 end
 
@@ -84,17 +87,30 @@ function Player:joystickreleased(button)
 end
 
 local velocity = 150
-function Player:on_update_up(vel)
-  vel.x, vel.y = vel.x + 0, vel.y - velocity
+local force = 10000
+function Player:on_update_up(dt, vel)
+  -- vel.x, vel.y = vel.x + 0, vel.y - velocity
+  self:apply_force_to_controlled_ojbects(dt, 0, -force)
 end
-function Player:on_update_right(vel)
-  vel.x, vel.y = vel.x + velocity, vel.y + 0
+function Player:on_update_right(dt, vel)
+  -- vel.x, vel.y = vel.x + velocity, vel.y + 0
+  self:apply_force_to_controlled_ojbects(dt, force, 0)
 end
-function Player:on_update_down(vel)
-  vel.x, vel.y = vel.x + 0, vel.y + velocity
+function Player:on_update_down(dt, vel)
+  -- vel.x, vel.y = vel.x + 0, vel.y + velocity
+  self:apply_force_to_controlled_ojbects(dt, 0, force)
 end
-function Player:on_update_left(vel)
-  vel.x, vel.y = vel.x  - velocity, vel.y + 0
+function Player:on_update_left(dt, vel)
+  -- vel.x, vel.y = vel.x  - velocity, vel.y + 0
+  self:apply_force_to_controlled_ojbects(dt, -force, 0)
+end
+
+function Player:apply_force_to_controlled_ojbects(dt, fx, fy)
+  fx, fy = fx * dt, fy * dt
+  for id, control_object in pairs(self.controlled_objects) do
+    local body = control_object.body
+    body:applyForce(fx, fy)
+  end
 end
 
 local shoot_force = 1

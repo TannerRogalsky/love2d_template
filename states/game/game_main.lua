@@ -11,7 +11,8 @@ function Main:enteredState()
   -- set up players
   local player1 = Player:new({
     pressed = {
-      [" "] = Player.shoot_ball
+      [" "] = Player.shoot_ball,
+      s = Player.cluster_controlled_objects
     },
     update = {
       up = Player.on_update_up,
