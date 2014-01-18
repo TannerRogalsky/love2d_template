@@ -1,6 +1,7 @@
 ControlledObject = class('ControlledObject', Base):include(Stateful)
 ControlledObject.static.RADIUS = 10
 ControlledObject.static.MAX_VEL = 150
+ControlledObject.static.MOVE_FORCE = 10000
 
 function ControlledObject:initialize(x, y)
   Base.initialize(self)
@@ -9,8 +10,11 @@ function ControlledObject:initialize(x, y)
   self.shape = love.physics.newCircleShape(ControlledObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)
   self.fixture:setUserData(self)
+  self.fixture:setFriction(1)
 
   self.body:setMass(1)
+  self.body:setLinearDamping(0.5)
+  self.body:setAngularDamping(100)
 end
 
 function ControlledObject:destroy()
@@ -53,10 +57,14 @@ function ControlledObject:update(dt)
   vy = math.clamp(-ControlledObject.MAX_VEL, vy, ControlledObject.MAX_VEL)
 
   body:setLinearVelocity(vx, vy)
-  body:applyForce(-vx, -vy) -- this works really nicely as drag/friction
 end
 
-function ControlledObject:render()
+function ControlledObject:render(color)
+  local x, y = self.body:getPosition()
+  g.setColor(color:rgb())
+  g.circle("fill", x, y, self.shape:getRadius())
+  g.setColor(COLORS.black:rgb())
+  g.circle("line", x, y, self.shape:getRadius())
 end
 
 function ControlledObject:mousepressed(x, y, button)

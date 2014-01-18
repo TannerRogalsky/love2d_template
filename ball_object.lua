@@ -12,6 +12,9 @@ function BallObject:initialize(x, y)
   self.fixture = love.physics.newFixture(self.body, self.shape)
   self.fixture:setUserData(self)
   self.fixture:setRestitution(0.1)
+  self.body:setLinearDamping(0.8)
+  self.body:setAngularDamping(100)
+  self.fixture:setFriction(1)
 
   BallObject.instances[self.id] = self
 end
@@ -22,10 +25,6 @@ function BallObject:destroy()
 end
 
 function BallObject:update(dt)
-  local body = self.body
-  local vx, vy = body:getLinearVelocity()
-  body:setLinearVelocity(vx, vy)
-  body:applyForce(-vx, -vy) -- this works really nicely as drag/friction
 end
 
 function BallObject:render()

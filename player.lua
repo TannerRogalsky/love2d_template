@@ -22,23 +22,23 @@ function Player:spawn_controlled_object(x, y)
 end
 
 function Player:update(dt)
-  local velocity = {x = 0, y = 0}
   -- keyboard
   for key,action in pairs(self.control_map.update) do
     if love.keyboard.isDown(key) then
-      action(self, dt, velocity)
+      action(self, dt)
     end
   end
   -- joystick stick
   if self.joystick then
     local x, y = self.joystick:getAxis(1), self.joystick:getAxis(2)
-    velocity.x, velocity.y = velocity.x + x * 150, velocity.y + y * 150
+    local fx, fy = ControlledObject.MOVE_FORCE * x, ControlledObject.MOVE_FORCE * y
+    self:apply_force_to_controlled_ojbects(dt, fx, fy)
 
     -- joystick hat
     local hat_action = self.joystick:getHat(1)
     for i=1,#hat_action do
       local action = self.control_map.update[hat_action:sub(i, i)]
-      if is_func(action) then action(self, velocity) end
+      if is_func(action) then action(self, dt) end
     end
   end
   -- set velocity of controlled balls
@@ -54,11 +54,7 @@ end
 
 function Player:render()
   for id, control_object in pairs(self.controlled_objects) do
-    local x, y = control_object.body:getPosition()
-    g.setColor(self.color:rgb())
-    g.circle("fill", x, y, control_object.shape:getRadius())
-    g.setColor(COLORS.black:rgb())
-    g.circle("line", x, y, control_object.shape:getRadius())
+    control_object:render(self.color)
   end
 end
 
@@ -87,22 +83,21 @@ function Player:joystickreleased(button)
 end
 
 local velocity = 150
-local force = 10000
 function Player:on_update_up(dt, vel)
   -- vel.x, vel.y = vel.x + 0, vel.y - velocity
-  self:apply_force_to_controlled_ojbects(dt, 0, -force)
+  self:apply_force_to_controlled_ojbects(dt, 0, -ControlledObject.MOVE_FORCE)
 end
 function Player:on_update_right(dt, vel)
   -- vel.x, vel.y = vel.x + velocity, vel.y + 0
-  self:apply_force_to_controlled_ojbects(dt, force, 0)
+  self:apply_force_to_controlled_ojbects(dt, ControlledObject.MOVE_FORCE, 0)
 end
 function Player:on_update_down(dt, vel)
   -- vel.x, vel.y = vel.x + 0, vel.y + velocity
-  self:apply_force_to_controlled_ojbects(dt, 0, force)
+  self:apply_force_to_controlled_ojbects(dt, 0, ControlledObject.MOVE_FORCE)
 end
 function Player:on_update_left(dt, vel)
   -- vel.x, vel.y = vel.x  - velocity, vel.y + 0
-  self:apply_force_to_controlled_ojbects(dt, -force, 0)
+  self:apply_force_to_controlled_ojbects(dt, -ControlledObject.MOVE_FORCE, 0)
 end
 
 function Player:apply_force_to_controlled_ojbects(dt, fx, fy)
