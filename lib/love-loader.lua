@@ -1,13 +1,37 @@
--- love-loaver v1.1.1 (2012-02)
--- Copyright (c) 2011 Enrique García Cota
--- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
--- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 require "love.filesystem"
 require "love.image"
 require "love.audio"
 require "love.sound"
+
+local loader = {
+  _VERSION     = 'love-loader v2.0.0',
+  _DESCRIPTION = 'Object Orientation for Lua',
+  _URL         = 'https://github.com/kikito/love-loader',
+  _LICENSE     = [[
+    MIT LICENSE
+
+    Copyright (c) 2014 Enrique García Cota, Tanner Rogalsky
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  ]]
+}
 
 local resourceKinds = {
   image = {
@@ -41,52 +65,34 @@ local resourceKinds = {
     requestKey  = "imageDataPath",
     resourceKey = "rawImageData",
     constructor = love.image.newImageData
-  },
-  json = {
-    requestKey  = "jsonPath",
-    resourceKey = "jsonData",
-    constructor = love.filesystem.read,
-    postProcess = function(data)
-      local json = require('json')
-      return json.decode(data)
-    end
   }
 }
 
--- compatibility with LÖVE v0.7.x and 0.8.x
-local function setInThread(thread, key, value)
-  local set = thread.set or thread.send
-  return set(thread, key, value)
-end
+local CHANNEL_PREFIX = "loader_"
 
-local function getFromThread(thread, key)
-  local get = thread.get or thread.receive
-  return get(thread, key)
-end
-
-local producer = love.thread.getThread('loader')
-
-if producer then
-
+local loaded = ...
+if loaded == true then
   local requestParam, resource
   local done = false
+
+  local doneChannel = love.thread.getChannel(CHANNEL_PREFIX .. "is_done")
 
   while not done do
 
     for _,kind in pairs(resourceKinds) do
-      requestParam = getFromThread(producer, kind.requestKey)
+      local loader = love.thread.getChannel(CHANNEL_PREFIX .. kind.requestKey)
+      requestParam = loader:pop()
       if requestParam then
         resource = kind.constructor(requestParam)
-        setInThread(producer, kind.resourceKey, resource)
+        local producer = love.thread.getChannel(CHANNEL_PREFIX .. kind.resourceKey)
+        producer:push(resource)
       end
     end
 
-    done = getFromThread(producer, "done")
+    done = doneChannel:pop()
   end
 
 else
-
-  local loader = {}
 
   local pending = {}
   local callbacks = {}
@@ -100,22 +106,16 @@ else
   end
 
   local function newResource(kind, holder, key, requestParam)
-    assert(type(kind) == "string")
-    assert(type(holder) == "table")
-    assert(type(key) == "string")
-    assert(type(requestParam) == "string")
     pending[#pending + 1] = {
       kind = kind, holder = holder, key = key, requestParam = requestParam
     }
   end
 
-  local function getResourceFromThreadIfAvailable(thread)
-    local errorMessage = getFromThread(thread,"error")
-    assert(not errorMessage, errorMessage)
-
+  local function getResourceFromThreadIfAvailable()
     local data, resource
     for name,kind in pairs(resourceKinds) do
-      data = getFromThread(thread, kind.resourceKey)
+      local channel = love.thread.getChannel(CHANNEL_PREFIX .. kind.resourceKey)
+      data = channel:pop()
       if data then
         resource = kind.postProcess and kind.postProcess(data, resourceBeingLoaded) or data
         resourceBeingLoaded.holder[resourceBeingLoaded.key] = resource
@@ -126,25 +126,21 @@ else
     end
   end
 
-  local function requestNewResourceToThread(thread)
+  local function requestNewResourceToThread()
     resourceBeingLoaded = shift(pending)
     local requestKey = resourceKinds[resourceBeingLoaded.kind].requestKey
-    setInThread(thread, requestKey, resourceBeingLoaded.requestParam)
+    local channel = love.thread.getChannel(CHANNEL_PREFIX .. requestKey)
+    channel:push(resourceBeingLoaded.requestParam)
   end
 
-  local function endThreadIfAllLoaded(thread)
+  local function endThreadIfAllLoaded()
     if not resourceBeingLoaded and #pending == 0 then
-      setInThread(thread,"done",true)
+      love.thread.getChannel(CHANNEL_PREFIX .. "is_done"):push(true)
       callbacks.allLoaded()
     end
   end
 
-
-  -- public interface starts here
-
-  function loader.newJson(holder, key, path)
-    newResource('json', holder, key, path)
-  end
+  -----------------------------------------------------
 
   function loader.newImage(holder, key, path)
     newResource('image', holder, key, path)
@@ -168,21 +164,27 @@ else
     callbacks.allLoaded = allLoadedCallback or function() end
     callbacks.oneLoaded = oneLoadedCallback or function() end
 
-    local thread = love.thread.newThread("loader", pathToThisFile)
+    local thread = love.thread.newThread(pathToThisFile)
 
     loader.loadedCount = 0
     loader.resourceCount = #pending
-    thread:start()
+    thread:start(true)
+    loader.thread = thread
   end
 
   function loader.update()
-    local thread = love.thread.getThread("loader")
-    if thread then
-      if resourceBeingLoaded then
-        getResourceFromThreadIfAvailable(thread)
-        endThreadIfAllLoaded(thread)
-      elseif #pending > 0 then
-        requestNewResourceToThread(thread)
+    if loader.thread then
+      if loader.thread:isRunning() then
+        if resourceBeingLoaded then
+          getResourceFromThreadIfAvailable()
+        elseif #pending > 0 then
+          requestNewResourceToThread()
+        else
+          endThreadIfAllLoaded()
+        end
+      else
+        local errorMessage = loader.thread:getError()
+        assert(not errorMessage, errorMessage)
       end
     end
   end

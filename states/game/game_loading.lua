@@ -2,20 +2,31 @@ local Loading = Game:addState('Loading')
 
 function Loading:enteredState()
   self.loader = require 'lib/love-loader'
-  self.preloaded_image = {}
+  self.preloaded_images = {}
+  self.preloaded_fonts = {}
 
-  -- puts loaded images into the preloaded_image hash with they key being the file name
-  for index, image in ipairs(love.filesystem.enumerate('images')) do
+  -- puts loaded images into the preloaded_images hash with they key being the file name
+  for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
     if image:match('(.*).png$') ~= nil or image:match('(.*).gif$') ~= nil or image:match('(.*).jpg$') ~= nil then
-      self.loader.newImage(self.preloaded_image, image, 'images/' .. image)
+      self.loader.newImage(self.preloaded_images, image, 'images/' .. image)
     end
   end
+
+  local sizes = {12, 14, 16, 20, 24}
+  -- for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do
+  --   if font:match('(.*).ttf$') ~= nil then
+  --     for _,size in ipairs(sizes) do
+  --       local key = font .. "_" .. tostring(size)
+  --       self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. font, size)
+  --     end
+  --   end
+  -- end
 
   self.loader.start(function()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Menu")
+    self:gotoState("Main")
   end)
 end
 
