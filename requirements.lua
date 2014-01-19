@@ -14,6 +14,7 @@ function math.attenuate(n, d)
   elseif n <= -d then return n + d
   else return 0 end
 end
+function table.sample(t) return t[math.random(#t)] end
 function pointInCircle(circle, point) return (point.x-circle.x)^2 + (point.y - circle.y)^2 < circle.radius^2 end
 function string:split(sep) return self:match((self:gsub("[^"..sep.."]*"..sep, "([^"..sep.."]*)"..sep))) end
 globalID = 0

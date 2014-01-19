@@ -4,6 +4,9 @@ function Loading:enteredState()
   self.loader = require 'lib/love-loader'
   self.preloaded_images = {}
   self.preloaded_fonts = {}
+  self.preloaded_sounds = {}
+  local preloaded_sound_data = {}
+  self.preloaded_sound_lengths = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -22,11 +25,22 @@ function Loading:enteredState()
   --   end
   -- end
 
+  for index, sound in ipairs(love.filesystem.getDirectoryItems('sounds')) do
+    if sound:match('(.*).ogg$') ~= nil then
+      self.loader.newSource(self.preloaded_sounds, sound, 'sounds/' .. sound)
+      self.loader.newSoundData(preloaded_sound_data, sound, 'sounds/' .. sound)
+    end
+  end
+
   self.loader.start(function()
     -- loader finished callback
     -- initialize game stuff here
+    for sound,data in pairs(preloaded_sound_data) do
+      local sound_length = data:getSize() / data:getSampleRate() / data:getChannels() / (data:getBitDepth() / 8)
+      self.preloaded_sound_lengths[self.preloaded_sounds[sound]] = sound_length
+    end
 
-    self:gotoState("Main")
+    self:gotoState("Menu")
   end)
 end
 
