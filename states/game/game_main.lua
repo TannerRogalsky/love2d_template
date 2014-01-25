@@ -64,11 +64,6 @@ function Main:enteredState()
     }
   }, COLORS.yellow, Direction.NORTH, love.joystick.getJoysticks()[3])
 
-  cron.every(0.5, function()
-    for _,player in pairs(Player.instances) do
-      player:spawn_controlled_object()
-    end
-  end)
 
   -- create level
   self.current_level = Level:new(require("levels/" .. Game.CURRENT_LEVEL))

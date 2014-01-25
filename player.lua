@@ -7,6 +7,9 @@ function Player:initialize(control_map, color, direction, joystick)
   self.score = 0
   self.score_font = game.preloaded_fonts["visitor1.ttf_60"]
 
+  self.time_to_spawn = 0.5
+  self.spawn_timer = 0
+
   self.color = color
   self.direction = direction
 
@@ -33,8 +36,9 @@ function Player:update(dt)
       action(self, dt)
     end
   end
-  -- joystick stick
+  -- joystick
   if self.joystick then
+    -- joystick stick
     local x, y = self.joystick:getAxis(1), self.joystick:getAxis(2)
     local fx, fy = ControlledObject.MOVE_FORCE * x, ControlledObject.MOVE_FORCE * y
     self:apply_force_to_controlled_ojbects(dt, fx, fy)
@@ -46,14 +50,15 @@ function Player:update(dt)
       if is_func(action) then action(self, dt) end
     end
   end
-  -- set velocity of controlled balls
-  -- for id, control_object in pairs(self.controlled_objects) do
-  --   local body = control_object.body
-  --   local vx, vy = body:getLinearVelocity()
-  --   body:setLinearVelocity(velocity.x, velocity.y)
-  -- end
+
   for _,controlled_object in pairs(self.controlled_objects) do
     controlled_object:update(dt)
+  end
+
+  self.spawn_timer = self.spawn_timer + dt
+  if self.spawn_timer > self.time_to_spawn then
+    self:spawn_controlled_object()
+    self.spawn_timer = self.spawn_timer - self.time_to_spawn
   end
 end
 
