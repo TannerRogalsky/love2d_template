@@ -6,7 +6,7 @@ function Level:initialize(data)
   local width, height = data.width, data.height
   self.offset = {x = (g.getWidth() - width) / 2, y = (g.getHeight() - height) / 2}
 
-  self.background_image = game.preloaded_images["background.png"]
+  self.background_image = game.preloaded_images["background2.png"]
   local iw, ih = self.background_image:getWidth(), self.background_image:getHeight()
   self.background_quad = g.newQuad(-self.offset.x, -self.offset.y, g.getWidth(), g.getHeight(), iw, ih)
   self.background_image:setWrap("repeat", "repeat")
@@ -56,7 +56,7 @@ function Level:update(dt)
 end
 
 function Level:render()
-  g.setColor(COLORS.dimgrey:rgb())
+  g.setColor(COLORS.white:rgb())
   g.draw(self.background_image, self.background_quad, -self.offset.x, -self.offset.y)
 
   g.setColor(COLORS.green:rgb())
