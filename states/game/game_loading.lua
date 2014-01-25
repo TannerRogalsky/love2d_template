@@ -15,15 +15,15 @@ function Loading:enteredState()
     end
   end
 
-  local sizes = {12, 14, 16, 20, 24}
-  -- for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do
-  --   if font:match('(.*).ttf$') ~= nil then
-  --     for _,size in ipairs(sizes) do
-  --       local key = font .. "_" .. tostring(size)
-  --       self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. font, size)
-  --     end
-  --   end
-  -- end
+  local sizes = {16, 24, 32, 48, 60}
+  for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do
+    if font:match('(.*).ttf$') ~= nil then
+      for _,size in ipairs(sizes) do
+        local key = font .. "_" .. tostring(size)
+        self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. font, size)
+      end
+    end
+  end
 
   for index, sound in ipairs(love.filesystem.getDirectoryItems('sounds')) do
     if sound:match('(.*).ogg$') ~= nil then

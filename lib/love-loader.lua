@@ -49,6 +49,17 @@ local resourceKinds = {
       return love.audio.newSource(path)
     end
   },
+  font = {
+    requestKey  = "fontPath",
+    resourceKey = "fontData",
+    constructor = function(path)
+      return love.filesystem.newFileData(path)
+    end,
+    postProcess = function(data, resource)
+      local path, size = unpack(resource.requestParams)
+      return love.graphics.newFont(data, size)
+    end
+  },
   stream = {
     requestKey  = "streamPath",
     resourceKey = "stream",
@@ -72,7 +83,7 @@ local CHANNEL_PREFIX = "loader_"
 
 local loaded = ...
 if loaded == true then
-  local requestParam, resource
+  local requestParams, resource
   local done = false
 
   local doneChannel = love.thread.getChannel(CHANNEL_PREFIX .. "is_done")
@@ -81,9 +92,9 @@ if loaded == true then
 
     for _,kind in pairs(resourceKinds) do
       local loader = love.thread.getChannel(CHANNEL_PREFIX .. kind.requestKey)
-      requestParam = loader:pop()
-      if requestParam then
-        resource = kind.constructor(requestParam)
+      requestParams = loader:pop()
+      if requestParams then
+        resource = kind.constructor(unpack(requestParams))
         local producer = love.thread.getChannel(CHANNEL_PREFIX .. kind.resourceKey)
         producer:push(resource)
       end
@@ -105,9 +116,9 @@ else
     return table.remove(t,1)
   end
 
-  local function newResource(kind, holder, key, requestParam)
+  local function newResource(kind, holder, key, ...)
     pending[#pending + 1] = {
-      kind = kind, holder = holder, key = key, requestParam = requestParam
+      kind = kind, holder = holder, key = key, requestParams = {...}
     }
   end
 
@@ -130,7 +141,7 @@ else
     resourceBeingLoaded = shift(pending)
     local requestKey = resourceKinds[resourceBeingLoaded.kind].requestKey
     local channel = love.thread.getChannel(CHANNEL_PREFIX .. requestKey)
-    channel:push(resourceBeingLoaded.requestParam)
+    channel:push(resourceBeingLoaded.requestParams)
   end
 
   local function endThreadIfAllLoaded()
@@ -144,6 +155,10 @@ else
 
   function loader.newImage(holder, key, path)
     newResource('image', holder, key, path)
+  end
+
+  function loader.newFont(holder, key, path, size)
+    newResource('font', holder, key, path, size)
   end
 
   function loader.newSource(holder, key, path, sourceType)

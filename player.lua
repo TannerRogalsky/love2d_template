@@ -4,6 +4,9 @@ Player.static.instances = {}
 function Player:initialize(control_map, color, direction, joystick)
   Base.initialize(self)
 
+  self.score = 0
+  self.score_font = game.preloaded_fonts["visitor1.ttf_60"]
+
   self.color = color
   self.direction = direction
 
@@ -58,6 +61,13 @@ function Player:render()
   for id, control_object in pairs(self.controlled_objects) do
     control_object:render(self.color)
   end
+
+  g.setFont(self.score_font)
+  g.print(self.score, self.score_text_position.x, self.score_text_position.y)
+end
+
+function Player:add_score(delta)
+  self.score = self.score + delta
 end
 
 function Player:mousepressed(x, y, button)

@@ -43,7 +43,7 @@ end
 
 function GoalObject:begin_contact(other, contact)
   if instanceOf(BallObject, other) then
-    print("award " .. self.player .. " some points")
+    self.player:add_score(1)
     other:destroy()
   end
 end

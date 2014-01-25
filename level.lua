@@ -37,6 +37,7 @@ function Level:initialize(data)
     local position = data.player_positions[player.direction]
     GoalObject:new(player, unpack(position.goal))
     player.spawn_point = position.spawn_point
+    player.score_text_position = position.score_text_position
   end
 
   -- the ball(s)
