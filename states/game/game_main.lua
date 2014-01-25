@@ -21,7 +21,7 @@ function Main:enteredState()
       down = Player.on_update_down,
       left = Player.on_update_left
     }
-  }, COLORS.red, {x = g.getWidth() / 4, y = g.getHeight() / 2})
+  }, COLORS.lavender, {x = g.getWidth() / 4, y = g.getHeight() / 2})
   player1:spawn_controlled_object()
 
   local player2 = Player:new({
@@ -46,33 +46,6 @@ function Main:enteredState()
 
   -- create level
   self.current_level = Level:new(require("levels/" .. Game.CURRENT_LEVEL))
-
-  -- set up obstacles
-  -- self.blocking_objects = {}
-  -- function new_blocking_object(x, y, w, h)
-  --   local object = {}
-  --   object.body = love.physics.newBody(World, x, y, "static")
-  --   object.shape = love.physics.newRectangleShape(w, h)
-  --   object.fixture = love.physics.newFixture(object.body, object.shape)
-  --   return object
-  -- end
-  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4, 50, 100))
-  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4 * 3, 50, 100))
-  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4 * 3, 50, 100))
-  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4, 50, 100))
-
-  -- set up bounds
-  function new_bound(x1, y1, x2, y2)
-    local object = {}
-    object.body = love.physics.newBody(World, 0, 0, "static")
-    object.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
-    object.fixture = love.physics.newFixture(object.body, object.shape)
-    return object
-  end
-  new_bound(0, 0, g.getWidth(), 0)
-  new_bound(0, 0, 0, g.getHeight())
-  new_bound(g.getWidth(), 0, g.getWidth(), g.getHeight())
-  new_bound(0, g.getHeight(), g.getWidth(), g.getHeight())
 
   -- the ball(s)
   BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
