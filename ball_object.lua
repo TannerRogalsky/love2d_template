@@ -7,6 +7,8 @@ BallObject.static.instances = {}
 function BallObject:initialize(x, y)
   Base.initialize(self)
 
+  self.image = game.preloaded_images["ball.png"]
+
   self.controlled_objects_touching = {}
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
@@ -35,13 +37,8 @@ end
 function BallObject:render()
   g.setColor(COLORS.white:rgb())
   local x, y = self.body:getPosition()
-  g.circle("fill", x, y, self.shape:getRadius())
-
-  local vx, vy = self.body:getLinearVelocity()
-  local vnx, vny = Vector.normalize(vx, vy)
-  local vnx, vny = vnx * self.shape:getRadius(), vny * self.shape:getRadius()
-  g.setColor(COLORS.black:rgb())
-  g.line(x, y, x + vnx, y + vny)
+  local iw, ih = self.image:getWidth(), self.image:getHeight()
+  g.draw(self.image, x, y, 0, 1, 1, iw / 2, ih / 2)
 end
 
 function BallObject:mousepressed(x, y, button)
