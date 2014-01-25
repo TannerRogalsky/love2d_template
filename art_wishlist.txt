@@ -8,3 +8,8 @@ Art assets wishlist:
 
 - title screen
 - game over screen
+
+
+Asset info:
+Ideal Dimensions: 800 x 800 and will tile in both directions
+Jam specific dimensions: 1280 x 800
