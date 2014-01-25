@@ -8,6 +8,9 @@ ControlledObject.static.LINEAR_DAMPING = 0.6
 function ControlledObject:initialize(x, y)
   Base.initialize(self)
 
+  self.image = game.preloaded_images["greyscale amoeba.png"]
+  self.width, self.height = self.image:getWidth(), self.image:getHeight()
+
   self.body = love.physics.newBody(World, x, y, "dynamic")
   self.shape = love.physics.newCircleShape(ControlledObject.RADIUS)
   self.fixture = love.physics.newFixture(self.body, self.shape)
@@ -63,16 +66,20 @@ end
 
 function ControlledObject:render(color)
   local x, y = self.body:getPosition()
-  g.setColor(color:rgb())
-  g.circle("fill", x, y, self.shape:getRadius())
-  g.setColor(COLORS.black:rgb())
-  g.circle("line", x, y, self.shape:getRadius())
 
-  local vx, vy = self.body:getLinearVelocity()
-  local vnx, vny = Vector.normalize(vx, vy)
-  local vnx, vny = vnx * self.shape:getRadius(), vny * self.shape:getRadius()
-  g.setColor(COLORS.black:rgb())
-  g.line(x, y, x + vnx, y + vny)
+  g.setColor(color:rgb())
+  g.draw(self.image, x, y, 0, 0.75, 0.75, self.width / 2, self.height / 2)
+
+  -- g.setColor(color:rgb())
+  -- g.circle("fill", x, y, self.shape:getRadius())
+  -- g.setColor(COLORS.black:rgb())
+  -- g.circle("line", x, y, self.shape:getRadius())
+
+  -- local vx, vy = self.body:getLinearVelocity()
+  -- local vnx, vny = Vector.normalize(vx, vy)
+  -- local vnx, vny = vnx * self.shape:getRadius(), vny * self.shape:getRadius()
+  -- g.setColor(COLORS.black:rgb())
+  -- g.line(x, y, x + vnx, y + vny)
 end
 
 function ControlledObject:mousepressed(x, y, button)
