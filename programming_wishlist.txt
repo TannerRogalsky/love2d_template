@@ -1,7 +1,4 @@
-- more levels
 - improve clustering
-- scoring infrastructure
-- 4 players
 
 - power up that increases your spawn rate
 - power up that makes your objects smaller or larger
