@@ -24,6 +24,7 @@ function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
+Vector = require 'lib/HardonCollider/vector-light'
 require 'lib/middleclass'
 Stateful = require 'lib/stateful'
 skiplist = require "lib/skiplist"
@@ -40,6 +41,7 @@ Grid = require 'lib/grid'
 require 'base'
 require 'game'
 require 'player'
+require 'level'
 require 'controlled_object'
 require 'ball_object'
 require 'goal_object'

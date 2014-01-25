@@ -1,4 +1,5 @@
 local Main = Game:addState('Main')
+Game.static.CURRENT_LEVEL = "level1"
 
 function Main:enteredState()
   love.physics.setMeter(64)
@@ -37,25 +38,28 @@ function Main:enteredState()
   }, COLORS.purple, {x = g.getWidth() / 4 * 3, y = g.getHeight() / 2}, love.joystick.getJoysticks()[1])
   player2:spawn_controlled_object()
 
-  cron.every(5, function()
+  cron.every(0.5, function()
     for _,player in pairs(Player.instances) do
       player:spawn_controlled_object()
     end
   end)
 
+  -- create level
+  self.current_level = Level:new(require("levels/" .. Game.CURRENT_LEVEL))
+
   -- set up obstacles
-  self.blocking_objects = {}
-  function new_blocking_object(x, y, w, h)
-    local object = {}
-    object.body = love.physics.newBody(World, x, y, "static")
-    object.shape = love.physics.newRectangleShape(w, h)
-    object.fixture = love.physics.newFixture(object.body, object.shape)
-    return object
-  end
-  table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4, 50, 100))
-  table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4 * 3, 50, 100))
-  table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4 * 3, 50, 100))
-  table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4, 50, 100))
+  -- self.blocking_objects = {}
+  -- function new_blocking_object(x, y, w, h)
+  --   local object = {}
+  --   object.body = love.physics.newBody(World, x, y, "static")
+  --   object.shape = love.physics.newRectangleShape(w, h)
+  --   object.fixture = love.physics.newFixture(object.body, object.shape)
+  --   return object
+  -- end
+  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4, 50, 100))
+  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4, g.getHeight() / 4 * 3, 50, 100))
+  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4 * 3, 50, 100))
+  -- table.insert(self.blocking_objects, new_blocking_object(g.getWidth() / 4 * 3, g.getHeight() / 4, 50, 100))
 
   -- set up bounds
   function new_bound(x1, y1, x2, y2)
@@ -90,6 +94,8 @@ function Main:update(dt)
     ball_object:update(dt)
   end
 
+  self.current_level:update(dt)
+
   World:update(dt)
 end
 
@@ -100,13 +106,10 @@ function Main:render()
     goal_object:render()
   end
 
+  self.current_level:render()
+
   for id,player in pairs(Player.instances) do
     player:render()
-  end
-
-  g.setColor(COLORS.blue:rgb())
-  for _,blocking_object in ipairs(self.blocking_objects) do
-    g.polygon("fill", blocking_object.body:getWorldPoints(blocking_object.shape:getPoints()))
   end
 
   for _,ball_object in pairs(BallObject.instances) do

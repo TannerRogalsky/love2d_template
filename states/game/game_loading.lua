@@ -40,7 +40,7 @@ function Loading:enteredState()
       self.preloaded_sound_lengths[self.preloaded_sounds[sound]] = sound_length
     end
 
-    self:gotoState("Menu")
+    self:gotoState("Main")
   end)
 end
 

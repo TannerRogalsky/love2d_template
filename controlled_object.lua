@@ -2,6 +2,8 @@ ControlledObject = class('ControlledObject', Base):include(Stateful)
 ControlledObject.static.RADIUS = 10
 ControlledObject.static.MAX_VEL = 150
 ControlledObject.static.MOVE_FORCE = 10000
+ControlledObject.static.MASS = 0.3
+ControlledObject.static.LINEAR_DAMPING = 0.6
 
 function ControlledObject:initialize(x, y)
   Base.initialize(self)
@@ -12,8 +14,8 @@ function ControlledObject:initialize(x, y)
   self.fixture:setUserData(self)
   self.fixture:setFriction(1)
 
-  self.body:setMass(1)
-  self.body:setLinearDamping(0.5)
+  self.body:setMass(ControlledObject.MASS)
+  self.body:setLinearDamping(ControlledObject.LINEAR_DAMPING)
   self.body:setAngularDamping(100)
 end
 
@@ -65,6 +67,12 @@ function ControlledObject:render(color)
   g.circle("fill", x, y, self.shape:getRadius())
   g.setColor(COLORS.black:rgb())
   g.circle("line", x, y, self.shape:getRadius())
+
+  local vx, vy = self.body:getLinearVelocity()
+  local vnx, vny = Vector.normalize(vx, vy)
+  local vnx, vny = vnx * self.shape:getRadius(), vny * self.shape:getRadius()
+  g.setColor(COLORS.black:rgb())
+  g.line(x, y, x + vnx, y + vny)
 end
 
 function ControlledObject:mousepressed(x, y, button)
