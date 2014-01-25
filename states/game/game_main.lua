@@ -2,6 +2,8 @@ local Main = Game:addState('Main')
 Game.static.CURRENT_LEVEL = "level1"
 
 function Main:enteredState()
+  love.window.setFullscreen(true, "desktop")
+
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
   World:setCallbacks(
@@ -22,7 +24,7 @@ function Main:enteredState()
       left = Player.on_update_left
     }
   }, COLORS.lavender, {x = g.getWidth() / 4, y = g.getHeight() / 2})
-  player1:spawn_controlled_object()
+  -- player1:spawn_controlled_object()
 
   local player2 = Player:new({
     pressed = {
@@ -36,7 +38,7 @@ function Main:enteredState()
       l = Player.on_update_left
     }
   }, COLORS.purple, {x = g.getWidth() / 4 * 3, y = g.getHeight() / 2}, love.joystick.getJoysticks()[1])
-  player2:spawn_controlled_object()
+  -- player2:spawn_controlled_object()
 
   cron.every(0.5, function()
     for _,player in pairs(Player.instances) do
@@ -52,10 +54,6 @@ function Main:enteredState()
   cron.every(10, function()
     BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
   end)
-
-  -- goals
-  GoalObject:new(player2, 0, g.getHeight() / 3, 50, g.getHeight() / 3)
-  GoalObject:new(player1, g.getWidth() - 50, g.getHeight() / 3, 50, g.getHeight() / 3)
 end
 
 function Main:update(dt)
@@ -74,10 +72,7 @@ end
 
 function Main:render()
   self.camera:set()
-
-  for _,goal_object in pairs(GoalObject.instances) do
-    goal_object:render()
-  end
+  self.camera:setPosition(-self.current_level.offset.x, -self.current_level.offset.y)
 
   self.current_level:render()
 
