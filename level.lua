@@ -26,14 +26,11 @@ function Level:initialize(data)
     object.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
     object.fixture = love.physics.newFixture(object.body, object.shape)
 
-    table.insert(self.bounds, object)
-
     return object
   end
-  new_bound(0, 0, width, 0)
-  new_bound(0, 0, 0, height)
-  new_bound(width, 0, width, height)
-  new_bound(0, height, width, height)
+  for _,bound_data in ipairs(data.bounds) do
+    table.insert(self.bounds, new_bound(unpack(bound_data.geometry)))
+  end
 
   -- goals & player tweaks
   local id, player = next(Player.instances)
@@ -43,6 +40,12 @@ function Level:initialize(data)
   id, player = next(Player.instances, id)
   GoalObject:new(player, 0, height / 3, 50, height / 3)
   player.spawn_point = {x = width / 4 * 3, y = height / 2}
+
+  -- the ball(s)
+  BallObject:new(width / 2, height / 2)
+  cron.every(10, function()
+    BallObject:new(width / 2, height / 2)
+  end)
 end
 
 function Level:update(dt)

@@ -1,5 +1,5 @@
 local Main = Game:addState('Main')
-Game.static.CURRENT_LEVEL = "level1"
+Game.static.CURRENT_LEVEL = "level2"
 
 function Main:enteredState()
   love.window.setFullscreen(true, "desktop")
@@ -48,12 +48,6 @@ function Main:enteredState()
 
   -- create level
   self.current_level = Level:new(require("levels/" .. Game.CURRENT_LEVEL))
-
-  -- the ball(s)
-  BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
-  cron.every(10, function()
-    BallObject:new(g.getWidth() / 2, g.getHeight() / 2)
-  end)
 end
 
 function Main:update(dt)

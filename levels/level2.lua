@@ -27,16 +27,29 @@ return {
   },
   bounds = {
     {
-      geometry = {0, 0, width, 0}
+      geometry = {width / 6, 0, width / 6 * 5, 0}
     },
     {
-      geometry = {0, 0, 0, height}
+      geometry = {0, height / 6, 0, height / 6 * 5}
     },
     {
-      geometry = {width, 0, width, height}
+      geometry = {width, height / 6, width, height / 6 * 5}
     },
     {
-      geometry = {0, height, width, height}
+      geometry = {width / 6, height, width / 6 * 5, height}
+    },
+    -- diagonals
+    {
+      geometry = {0, height / 6, width / 6, 0}
+    },
+    {
+      geometry = {width / 6 * 5, 0, width, height / 6}
+    },
+    {
+      geometry = {0, height / 6 * 5, width / 6, height}
+    },
+    {
+      geometry = {width / 6 * 5, height, width, height / 6 * 5}
     },
   }
 }
