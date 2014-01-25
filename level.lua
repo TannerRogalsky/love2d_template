@@ -6,6 +6,11 @@ function Level:initialize(data)
   local width, height = data.width, data.height
   self.offset = {x = (g.getWidth() - width) / 2, y = (g.getHeight() - height) / 2}
 
+  self.background_image = game.preloaded_images["background.png"]
+  local iw, ih = self.background_image:getWidth(), self.background_image:getHeight()
+  self.background_quad = g.newQuad(-self.offset.x, -self.offset.y, g.getWidth(), g.getHeight(), iw, ih)
+  self.background_image:setWrap("repeat", "repeat")
+
   self.obstructions = {}
   for _,obstructon_data in ipairs(data.obstructions) do
     local obstruction = Obstruction:new(unpack(obstructon_data.geometry))
@@ -51,6 +56,9 @@ function Level:update(dt)
 end
 
 function Level:render()
+  g.setColor(COLORS.dimgrey:rgb())
+  g.draw(self.background_image, self.background_quad, -self.offset.x, -self.offset.y)
+
   g.setColor(COLORS.green:rgb())
   for _,bound in ipairs(self.bounds) do
     g.line(bound.body:getWorldPoints(bound.shape:getPoints()))
