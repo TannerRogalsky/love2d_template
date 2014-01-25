@@ -38,7 +38,6 @@ function Level:render()
     obstruction:render()
   end
 
-  g.setColor(COLORS.red:rgb())
   for _,trap in pairs(self.traps) do
     trap:render()
   end
