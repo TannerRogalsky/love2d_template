@@ -16,6 +16,8 @@ end
 
 function Player:spawn_controlled_object(x, y)
   x, y = x or self.spawn_point.x, y or self.spawn_point.y
+  x, y = x + math.random(-5, 5), y + math.random(-5, 5)
+
   local controlled_object = ControlledObject:new(x, y)
   self.controlled_objects[controlled_object.id] = controlled_object
   return controlled_object
