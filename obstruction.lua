@@ -13,5 +13,6 @@ function Obstruction:update(dt)
 end
 
 function Obstruction:render()
+  g.setColor(COLORS.grey:rgb())
   g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
 end

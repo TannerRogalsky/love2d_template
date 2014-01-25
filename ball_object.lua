@@ -33,7 +33,7 @@ function BallObject:update(dt)
 end
 
 function BallObject:render()
-  g.setColor(COLORS.green:rgb())
+  g.setColor(COLORS.white:rgb())
   local x, y = self.body:getPosition()
   g.circle("fill", x, y, self.shape:getRadius())
 

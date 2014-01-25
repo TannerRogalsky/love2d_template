@@ -32,14 +32,12 @@ function Level:initialize(data)
     table.insert(self.bounds, new_bound(unpack(bound_data.geometry)))
   end
 
-  -- goals & player tweaks
-  local id, player = next(Player.instances)
-  GoalObject:new(player, width - 50, height / 3, 50, height / 3)
-  player.spawn_point = {x = width / 4, y = height / 2}
-
-  id, player = next(Player.instances, id)
-  GoalObject:new(player, 0, height / 3, 50, height / 3)
-  player.spawn_point = {x = width / 4 * 3, y = height / 2}
+  -- goals & spawn points
+  for id,player in pairs(Player.instances) do
+    local position = data.player_positions[player.direction]
+    GoalObject:new(player, unpack(position.goal))
+    player.spawn_point = position.spawn_point
+  end
 
   -- the ball(s)
   BallObject:new(width / 2, height / 2)
@@ -61,7 +59,6 @@ function Level:render()
     goal_object:render()
   end
 
-  g.setColor(COLORS.blue:rgb())
   for _,obstruction in pairs(self.obstructions) do
     obstruction:render()
   end

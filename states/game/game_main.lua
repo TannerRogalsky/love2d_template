@@ -23,8 +23,7 @@ function Main:enteredState()
       down = Player.on_update_down,
       left = Player.on_update_left
     }
-  }, COLORS.lavender, {x = g.getWidth() / 4, y = g.getHeight() / 2})
-  -- player1:spawn_controlled_object()
+  }, COLORS.red, Direction.WEST)
 
   local player2 = Player:new({
     pressed = {
@@ -37,8 +36,33 @@ function Main:enteredState()
       d = Player.on_update_down,
       l = Player.on_update_left
     }
-  }, COLORS.purple, {x = g.getWidth() / 4 * 3, y = g.getHeight() / 2}, love.joystick.getJoysticks()[1])
-  -- player2:spawn_controlled_object()
+  }, COLORS.green, Direction.EAST, love.joystick.getJoysticks()[1])
+
+  local player3 = Player:new({
+    pressed = {
+      [2] = Player.shoot_ball,
+      [3] = Player.cluster_controlled_objects
+    },
+    update = {
+      u = Player.on_update_up,
+      r = Player.on_update_right,
+      d = Player.on_update_down,
+      l = Player.on_update_left
+    }
+  }, COLORS.blue, Direction.SOUTH, love.joystick.getJoysticks()[2])
+
+  local player4 = Player:new({
+    pressed = {
+      [2] = Player.shoot_ball,
+      [3] = Player.cluster_controlled_objects
+    },
+    update = {
+      u = Player.on_update_up,
+      r = Player.on_update_right,
+      d = Player.on_update_down,
+      l = Player.on_update_left
+    }
+  }, COLORS.yellow, Direction.NORTH, love.joystick.getJoysticks()[3])
 
   cron.every(0.5, function()
     for _,player in pairs(Player.instances) do

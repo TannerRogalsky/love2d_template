@@ -1,11 +1,11 @@
 Player = class('Player', Base):include(Stateful)
 Player.static.instances = {}
 
-function Player:initialize(control_map, color, spawn_point, joystick)
+function Player:initialize(control_map, color, direction, joystick)
   Base.initialize(self)
 
   self.color = color
-  self.spawn_point = spawn_point
+  self.direction = direction
 
   self.joystick = joystick
   self.control_map = control_map
