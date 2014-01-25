@@ -1,0 +1,10 @@
+Art assets wishlist:
+- penguins
+- ball (egg, or something else)
+- background (artic)
+- "goal" (pile of eggs?)
+- obstructions (rocks, ice blocks)
+- traps (pits & pools)
+
+- title screen
+- game over screen
