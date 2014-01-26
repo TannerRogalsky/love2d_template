@@ -6,7 +6,9 @@ function Menu:enteredState()
   self.two_player_button = {414,444, 800,444, 800,530, 414,530}
   self.four_player_button = {414,565, 800,565, 800,650, 414,650}
 
-  love.audio.play(game.preloaded_sounds["sportball_music.ogg"])
+  local bg_music = game.preloaded_sounds["sportball_music.ogg"]
+  bg_music:setLooping(true)
+  love.audio.play()
 end
 
 function Menu:render()
