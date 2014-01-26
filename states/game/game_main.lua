@@ -1,7 +1,7 @@
 local Main = Game:addState('Main')
 Game.static.CURRENT_LEVEL = "level2"
 
-function Main:enteredState()
+function Main:enteredState(level_reference)
   love.window.setFullscreen(true, "desktop")
 
   love.physics.setMeter(64)
@@ -66,7 +66,8 @@ function Main:enteredState()
 
 
   -- create level
-  self.current_level = Level:new(require("levels/" .. Game.CURRENT_LEVEL))
+  level_reference = level_reference or Game.CURRENT_LEVEL
+  self.current_level = Level:new(require("levels/" .. level_reference))
 end
 
 function Main:update(dt)
