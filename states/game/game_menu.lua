@@ -5,6 +5,8 @@ function Menu:enteredState()
   self.background = game.preloaded_images["title.png"]
   self.two_player_button = {414,444, 800,444, 800,530, 414,530}
   self.four_player_button = {414,565, 800,565, 800,650, 414,650}
+
+  love.audio.play(game.preloaded_sounds["sportball_music.ogg"])
 end
 
 function Menu:render()
