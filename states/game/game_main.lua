@@ -1,6 +1,6 @@
 local Main = Game:addState('Main')
 Game.static.CURRENT_LEVEL = "level2"
-Game.static.SCORE_TO_WIN = 1
+Game.static.SCORE_TO_WIN = 5
 
 function Main:enteredState(level_reference)
   love.window.setFullscreen(true, "desktop")
