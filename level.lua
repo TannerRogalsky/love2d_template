@@ -54,10 +54,12 @@ function Level:initialize(data)
   cron.every(10, function()
     BallObject:new(width / 2, height / 2)
   end)
-  cron.every(10, function()
-    local geometry = table.sample(data.powerups).geometry
-    PowerUp:new(unpack(geometry))
-  end)
+  if data.powerups then
+    cron.every(data.powerup_spawn_time, function()
+      local geometry = table.sample(data.powerups).geometry
+      PowerUp:new(unpack(geometry))
+    end)
+  end
 end
 
 function Level:update(dt)

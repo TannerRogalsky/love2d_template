@@ -98,12 +98,13 @@ return {
       score_text_position = {x = 10, y = height - 60}
     },
   },
-  powerups = {
-    {
-      geometry = {width / 2, height / 4, 50, 50}
-    },
-    {
-      geometry = {width / 2, height / 4 * 3, 50, 50}
-    },
-  }
+  -- powerup_spawn_time = 20,
+  -- powerups = {
+  --   {
+  --     geometry = {width / 2, height / 4, 50, 50}
+  --   },
+  --   {
+  --     geometry = {width / 2, height / 4 * 3, 50, 50}
+  --   },
+  -- }
 }
