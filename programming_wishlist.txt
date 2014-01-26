@@ -1,6 +1,11 @@
+- add music
+- work with erica to do whatever she needs
+  - title screen
+  - game over screen
+
+- set max score and transition to game over
+- ensure that games can be repeated (nil out all object collections)
+
 - improve clustering
-
-- power up that increases your spawn rate
 - power up that makes your objects smaller or larger
-
 - implement that menu screen concept
