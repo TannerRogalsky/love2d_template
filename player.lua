@@ -1,5 +1,6 @@
 Player = class('Player', Base):include(Stateful)
 Player.static.instances = {}
+Player.static.SPAWN_TIME_DIVISOR = 1.2
 
 function Player:initialize(control_map, color, direction, joystick)
   Base.initialize(self)
