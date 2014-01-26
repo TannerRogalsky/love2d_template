@@ -39,5 +39,11 @@ end
 function Game:focus(has_focus)
 end
 
+function Game:begin_contact(fixture_a, fixture_b, contact)
+end
+
+function Game:end_contact(fixture_a, fixture_b, contact)
+end
+
 function Game:quit()
 end

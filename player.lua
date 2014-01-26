@@ -74,6 +74,17 @@ end
 
 function Player:add_score(delta)
   self.score = self.score + delta
+  if self.score >= Game.SCORE_TO_WIN then
+    game:gotoState("Over", self)
+  end
+end
+
+function Player:destroy()
+  for _,controlled_object in pairs(self.controlled_objects) do
+    controlled_object:destroy()
+  end
+
+  Player.instances[self.id] = nil
 end
 
 function Player:mousepressed(x, y, button)

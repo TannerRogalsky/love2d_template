@@ -21,6 +21,11 @@ function GoalObject:update(dt)
   self.animation:update(dt)
 end
 
+function GoalObject:destroy()
+  self.body:destroy()
+  GoalObject.instances[self.id] = nil
+end
+
 function GoalObject:render()
   g.setColor(self.player.color:rgb())
   g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
@@ -49,6 +54,8 @@ end
 function GoalObject:begin_contact(other, contact)
   if instanceOf(BallObject, other) then
     self.player:add_score(1)
+    other:destroy()
+  elseif instanceOf(ControlledObject, other) then
     other:destroy()
   end
 end

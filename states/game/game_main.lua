@@ -1,5 +1,6 @@
 local Main = Game:addState('Main')
 Game.static.CURRENT_LEVEL = "level2"
+Game.static.SCORE_TO_WIN = 1
 
 function Main:enteredState(level_reference)
   love.window.setFullscreen(true, "desktop")
@@ -108,6 +109,24 @@ function Main:end_contact(fixture_a, fixture_b, contact)
 end
 
 function Main:exitedState()
+  for _,ball_object in pairs(BallObject.instances) do
+    ball_object:destroy()
+  end
+
+  for _,goal in pairs(GoalObject.instances) do
+    goal:destroy()
+  end
+
+  for _,powerup in pairs(PowerUp.instances) do
+    powerup:destroy()
+  end
+
+  for _,player in pairs(Player.instances) do
+    player:destroy()
+  end
+
+  cron.reset()
+
   World:destroy()
   World = nil
 end
