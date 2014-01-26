@@ -1,4 +1,4 @@
-local width, height = g.getHeight(), g.getHeight()
+local width, height = g.getWidth(), g.getHeight()
 
 return {
   width = width,
@@ -95,21 +95,15 @@ return {
     [Direction.WEST] = {
       goal = {0, height / 12 * 5, 50, height / 6},
       spawn_point = {x = width / 4 * 3, y = height / 2},
-      score_text_position = {x = 0, y = height - 60}
+      score_text_position = {x = 10, y = height - 60}
     },
   },
   powerups = {
     {
-      geometry = {width / 6, height / 6, 50, 50}
+      geometry = {width / 2, height / 4, 50, 50}
     },
     {
-      geometry = {width / 6, height / 6 * 5, 50, 50}
-    },
-    {
-      geometry = {width / 6 * 5, height / 6 * 5, 50, 50}
-    },
-    {
-      geometry = {width / 6 * 5, height / 6, 50, 50}
+      geometry = {width / 2, height / 4 * 3, 50, 50}
     },
   }
 }
