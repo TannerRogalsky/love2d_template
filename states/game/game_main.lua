@@ -109,6 +109,8 @@ function Main:end_contact(fixture_a, fixture_b, contact)
 end
 
 function Main:exitedState()
+  self.screen_shot = g.newImage(g.newScreenshot(false))
+
   for _,ball_object in pairs(BallObject.instances) do
     ball_object:destroy()
   end
