@@ -4,7 +4,7 @@ GoalObject.static.instances = {}
 function GoalObject:initialize(player, x, y, w, h)
   Base.initialize(self)
 
-  self.animation = newAnimation(game.preloaded_images["goal_animation2.png"], 200, 220, 10 / 60)
+  self.animation = newAnimation(game.preloaded_images["goal_animation3.png"], 40, 150, 10 / 60)
 
   self.player = player
 

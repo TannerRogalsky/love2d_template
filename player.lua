@@ -45,11 +45,11 @@ function Player:update(dt)
     self:apply_force_to_controlled_ojbects(dt, fx, fy)
 
     -- joystick hat
-    local hat_action = self.joystick:getHat(1)
-    for i=1,#hat_action do
-      local action = self.control_map.update[hat_action:sub(i, i)]
-      if is_func(action) then action(self, dt) end
-    end
+    -- local hat_action = self.joystick:getHat(1)
+    -- for i=1,#hat_action do
+    --   local action = self.control_map.update[hat_action:sub(i, i)]
+    --   if is_func(action) then action(self, dt) end
+    -- end
   end
 
   for _,controlled_object in pairs(self.controlled_objects) do

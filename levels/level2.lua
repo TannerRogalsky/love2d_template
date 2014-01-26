@@ -15,7 +15,8 @@ return {
         }
       },
       COLORS.red,
-      Direction.WEST
+      Direction.WEST,
+      love.joystick.getJoysticks()[1]
     },
     {
       {
@@ -28,7 +29,8 @@ return {
         }
       },
       COLORS.green,
-      Direction.EAST
+      Direction.EAST,
+      love.joystick.getJoysticks()[2]
     }
   },
   traps = {
@@ -96,8 +98,8 @@ return {
           y = 2
         },
         offset = {
-          x = 75,
-          y = 220 / 2
+          x = 40 / 2,
+          y = 150 / 2
         }
       },
       spawn_point = {x = width / 4, y = height / 2},
@@ -112,8 +114,8 @@ return {
           y = 2
         },
         offset = {
-          x = 75,
-          y = 220 / 2
+          x = 40 / 2,
+          y = 150 / 2
         }
       },
       spawn_point = {x = width / 4 * 3, y = height / 2},

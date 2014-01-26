@@ -34,10 +34,10 @@ return {
       {
         pressed = {},
         update = {
-          u = Player.on_update_up,
-          r = Player.on_update_right,
-          d = Player.on_update_down,
-          l = Player.on_update_left
+          -- u = Player.on_update_up,
+          -- r = Player.on_update_right,
+          -- d = Player.on_update_down,
+          -- l = Player.on_update_left
         }
       },
       COLORS.blue,
@@ -48,10 +48,10 @@ return {
       {
         pressed = {},
         update = {
-          u = Player.on_update_up,
-          r = Player.on_update_right,
-          d = Player.on_update_down,
-          l = Player.on_update_left
+          -- u = Player.on_update_up,
+          -- r = Player.on_update_right,
+          -- d = Player.on_update_down,
+          -- l = Player.on_update_left
         }
       },
       COLORS.yellow,
@@ -116,22 +116,66 @@ return {
   },
   player_positions = {
     [Direction.NORTH] = {
-      goal = {width - width / 3 * 2, 0, width / 3, 50},
+      goal = {width - width / 3 * 2, 0, width / 3, 25},
+      goal_draw_hints = {
+        orientation = -90,
+        scale = {
+          x = 2,
+          y = 2
+        },
+        offset = {
+          x = 40 / 2,
+          y = 150 / 2
+        }
+      },
       spawn_point = {x = width / 2, y = height / 4 * 3},
       score_text_position = {x = 0, y = 0}
     },
     [Direction.EAST] = {
-      goal = {width - 50, height / 12 * 5, 50, height / 6},
+      goal = {width - 25, height / 12 * 5, 25, height / 6},
+      goal_draw_hints = {
+        orientation = 0,
+        scale = {
+          x = 2,
+          y = 2
+        },
+        offset = {
+          x = 40 / 2,
+          y = 150 / 2
+        }
+      },
       spawn_point = {x = width / 4, y = height / 2},
       score_text_position = {x = width - 60, y = 0}
     },
     [Direction.SOUTH] = {
-      goal = {width - width / 3 * 2, height - 50, width / 3, 50},
+      goal = {width - width / 3 * 2, height - 25, width / 3, 25},
+      goal_draw_hints = {
+        orientation = 90,
+        scale = {
+          x = 2,
+          y = 2
+        },
+        offset = {
+          x = 40 / 2,
+          y = 150 / 2
+        }
+      },
       spawn_point = {x = width / 2, y = height / 4},
       score_text_position = {x = width - 60, y = height - 60}
     },
     [Direction.WEST] = {
-      goal = {0, height / 12 * 5, 50, height / 6},
+      goal = {0, height / 12 * 5, 25, height / 6},
+      goal_draw_hints = {
+        orientation = 180,
+        scale = {
+          x = 2,
+          y = 2
+        },
+        offset = {
+          x = 40 / 2,
+          y = 150 / 2
+        }
+      },
       spawn_point = {x = width / 4 * 3, y = height / 2},
       score_text_position = {x = 0, y = height - 60}
     },
