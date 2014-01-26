@@ -4,7 +4,7 @@ GoalObject.static.instances = {}
 function GoalObject:initialize(player, x, y, w, h)
   Base.initialize(self)
 
-  self.animation = newAnimation(game.preloaded_images["goal_animation.png"], 200, 220, 10 / 60)
+  self.animation = newAnimation(game.preloaded_images["goal_animation2.png"], 200, 220, 10 / 60)
 
   self.player = player
 
@@ -28,9 +28,10 @@ end
 
 function GoalObject:render()
   g.setColor(self.player.color:rgb())
-  g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
+  -- g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
   local x, y = self.body:getWorldCenter()
-  self.animation:draw(x, y, 0, 1, 1, 200 / 2, 200 / 2)
+  local dh = self.draw_hints
+  self.animation:draw(x, y, math.rad(dh.orientation), dh.scale.x, dh.scale.y, dh.offset.x, dh.offset.y)
 end
 
 function GoalObject:mousepressed(x, y, button)

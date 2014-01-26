@@ -44,7 +44,8 @@ function Level:initialize(data)
   -- goals & spawn points
   for id,player in pairs(Player.instances) do
     local position = data.player_positions[player.direction]
-    GoalObject:new(player, unpack(position.goal))
+    local goal = GoalObject:new(player, unpack(position.goal))
+    goal.draw_hints = position.goal_draw_hints
     player.spawn_point = position.spawn_point
     player.score_text_position = position.score_text_position
   end

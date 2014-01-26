@@ -88,12 +88,34 @@ return {
   },
   player_positions = {
     [Direction.EAST] = {
-      goal = {width - 50, height / 12 * 5, 50, height / 6},
+      goal = {width - 25, height / 5 * 2, 25, height / 4},
+      goal_draw_hints = {
+        orientation = 0,
+        scale = {
+          x = 3,
+          y = 2
+        },
+        offset = {
+          x = 75,
+          y = 220 / 2
+        }
+      },
       spawn_point = {x = width / 4, y = height / 2},
       score_text_position = {x = width - 60, y = 0}
     },
     [Direction.WEST] = {
-      goal = {0, height / 12 * 5, 50, height / 6},
+      goal = {0, height / 5 * 2, 25, height / 4},
+      goal_draw_hints = {
+        orientation = 180,
+        scale = {
+          x = 3,
+          y = 2
+        },
+        offset = {
+          x = 75,
+          y = 220 / 2
+        }
+      },
       spawn_point = {x = width / 4 * 3, y = height / 2},
       score_text_position = {x = 10, y = height - 60}
     },
