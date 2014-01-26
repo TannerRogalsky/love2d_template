@@ -49,6 +49,7 @@ function newAnimation(image, fw, fh, delay, frames)
 	a.direction = 1
 	local imgw = image:getWidth()
 	local imgh = image:getHeight()
+	frames = frames or 0
 	if frames == 0 then
 		frames = imgw / fw * imgh / fh
 	end
@@ -127,7 +128,7 @@ end
 -- @param ox The X coordinate of the origin
 -- @param oy The Y coordinate of the origin
 function animation:draw(x, y, angle, sx, sy, ox, oy)
-	love.graphics.drawq(self.img, self.frames[self.position], x, y, angle, sx, sy, ox, oy)
+	love.graphics.draw(self.img, self.frames[self.position], x, y, angle, sx, sy, ox, oy)
 end
 
 --- Add a frame

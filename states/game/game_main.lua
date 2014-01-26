@@ -93,10 +93,6 @@ function Main:render()
     player:render()
   end
 
-  for _,ball_object in pairs(BallObject.instances) do
-    ball_object:render()
-  end
-
   self.camera:unset()
 end
 

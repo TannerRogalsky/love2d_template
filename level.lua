@@ -53,6 +53,9 @@ function Level:initialize(data)
 end
 
 function Level:update(dt)
+  for _,goal_object in pairs(GoalObject.instances) do
+    goal_object:update(dt)
+  end
 end
 
 function Level:render()
@@ -64,15 +67,19 @@ function Level:render()
     g.line(bound.body:getWorldPoints(bound.shape:getPoints()))
   end
 
+  for _,trap in pairs(self.traps) do
+    trap:render()
+  end
+
+  for _,ball_object in pairs(BallObject.instances) do
+    ball_object:render()
+  end
+
   for _,goal_object in pairs(GoalObject.instances) do
     goal_object:render()
   end
 
   for _,obstruction in pairs(self.obstructions) do
     obstruction:render()
-  end
-
-  for _,trap in pairs(self.traps) do
-    trap:render()
   end
 end

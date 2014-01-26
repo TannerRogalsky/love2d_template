@@ -4,6 +4,8 @@ GoalObject.static.instances = {}
 function GoalObject:initialize(player, x, y, w, h)
   Base.initialize(self)
 
+  self.animation = newAnimation(game.preloaded_images["goal_animation.png"], 200, 220, 10 / 60)
+
   self.player = player
 
   self.body = love.physics.newBody(World, x + w / 2, y + h / 2, "kinematic")
@@ -16,11 +18,14 @@ function GoalObject:initialize(player, x, y, w, h)
 end
 
 function GoalObject:update(dt)
+  self.animation:update(dt)
 end
 
 function GoalObject:render()
   g.setColor(self.player.color:rgb())
   g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
+  local x, y = self.body:getWorldCenter()
+  self.animation:draw(x, y, 0, 1, 1, 200 / 2, 200 / 2)
 end
 
 function GoalObject:mousepressed(x, y, button)
