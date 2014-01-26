@@ -50,6 +50,10 @@ function Level:initialize(data)
   cron.every(10, function()
     BallObject:new(width / 2, height / 2)
   end)
+  cron.every(10, function()
+    local geometry = table.sample(data.powerups).geometry
+    PowerUp:new(unpack(geometry))
+  end)
 end
 
 function Level:update(dt)
@@ -69,6 +73,10 @@ function Level:render()
 
   for _,trap in pairs(self.traps) do
     trap:render()
+  end
+
+  for _,powerup in pairs(PowerUp.instances) do
+    powerup:render()
   end
 
   for _,ball_object in pairs(BallObject.instances) do
