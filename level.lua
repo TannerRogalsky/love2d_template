@@ -37,6 +37,10 @@ function Level:initialize(data)
     table.insert(self.bounds, new_bound(unpack(bound_data.geometry)))
   end
 
+  for _,player_data in ipairs(data.players) do
+    Player:new(unpack(player_data))
+  end
+
   -- goals & spawn points
   for id,player in pairs(Player.instances) do
     local position = data.player_positions[player.direction]
