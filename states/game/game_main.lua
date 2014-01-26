@@ -3,8 +3,6 @@ Game.static.CURRENT_LEVEL = "level2"
 Game.static.SCORE_TO_WIN = 5
 
 function Main:enteredState(level_reference)
-  love.window.setFullscreen(true, "desktop")
-
   love.physics.setMeter(64)
   World = love.physics.newWorld(0, 0, true)
   World:setCallbacks(
