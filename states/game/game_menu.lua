@@ -8,7 +8,7 @@ function Menu:enteredState()
 
   local bg_music = game.preloaded_sounds["sportball_music.ogg"]
   bg_music:setLooping(true)
-  love.audio.play()
+  love.audio.play(bg_music)
 end
 
 function Menu:render()
