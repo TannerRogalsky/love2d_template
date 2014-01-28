@@ -1,4 +1,6 @@
 local width, height = g.getHeight(), g.getHeight()
+local trap_width, trap_height = height / 16, height / 16
+local obstruction_width, obstruction_height = height / 25, height / 25
 
 return {
   width = width,
@@ -61,30 +63,30 @@ return {
   },
   traps = {
     {
-      geometry = {width / 4, height / 4, 50, 50}
+      geometry = {width / 4, height / 4, trap_width, trap_height}
     },
     {
-      geometry = {width / 4, height / 4 * 3, 50, 50}
+      geometry = {width / 4, height / 4 * 3, trap_width, trap_height}
     },
     {
-      geometry = {width / 4 * 3, height / 4 * 3, 50, 50}
+      geometry = {width / 4 * 3, height / 4 * 3, trap_width, trap_height}
     },
     {
-      geometry = {width / 4 * 3, height / 4, 50, 50}
+      geometry = {width / 4 * 3, height / 4, trap_width, trap_height}
     },
   },
   obstructions = {
     {
-      geometry = {width / 2, height / 8 * 3, 30, 30}
+      geometry = {width / 2, height / 8 * 3, obstruction_width, obstruction_height}
     },
     {
-      geometry = {width / 2, height / 8 * 5, 30, 30}
+      geometry = {width / 2, height / 8 * 5, obstruction_width, obstruction_height}
     },
     {
-      geometry = {width / 8 * 3, height / 2, 30, 30}
+      geometry = {width / 8 * 3, height / 2, obstruction_width, obstruction_height}
     },
     {
-      geometry = {width / 8 * 5, height / 2, 30, 30}
+      geometry = {width / 8 * 5, height / 2, obstruction_width, obstruction_height}
     },
   },
   bounds = {
