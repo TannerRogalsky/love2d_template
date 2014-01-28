@@ -1,5 +1,5 @@
 ControlledObject = class('ControlledObject', Base):include(Stateful)
-ControlledObject.static.RADIUS = 10
+ControlledObject.static.RADIUS_RATIO = 80
 ControlledObject.static.MAX_VEL = 150
 ControlledObject.static.MOVE_FORCE = 10000
 ControlledObject.static.MASS = 0.3
@@ -12,7 +12,7 @@ function ControlledObject:initialize(x, y)
   self.width, self.height = self.image:getWidth(), self.image:getHeight()
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
-  self.shape = love.physics.newCircleShape(ControlledObject.RADIUS)
+  self.shape = love.physics.newCircleShape(g.getHeight() / ControlledObject.RADIUS_RATIO)
   self.fixture = love.physics.newFixture(self.body, self.shape)
   self.fixture:setUserData(self)
   self.fixture:setFriction(1)

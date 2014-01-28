@@ -1,5 +1,5 @@
 BallObject = class('BallObject', Base):include(Stateful)
-BallObject.static.RADIUS = 20
+BallObject.static.RADIUS_RATIO = 40
 BallObject.static.MASS = 0.1
 BallObject.static.LINEAR_DAMPING = 0.8
 BallObject.static.instances = {}
@@ -12,7 +12,7 @@ function BallObject:initialize(x, y)
   self.controlled_objects_touching = {}
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
-  self.shape = love.physics.newCircleShape(BallObject.RADIUS)
+  self.shape = love.physics.newCircleShape(g.getHeight() / BallObject.RADIUS_RATIO)
   self.fixture = love.physics.newFixture(self.body, self.shape)
 
   self.fixture:setUserData(self)
