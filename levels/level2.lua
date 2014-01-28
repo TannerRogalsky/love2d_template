@@ -1,6 +1,7 @@
 local width, height = g.getWidth(), g.getHeight()
 local trap_width, trap_height = height / 16, height / 16
 local obstruction_width, obstruction_height = height / 25, height / 25
+local goal_width, goal_height = width / 50, height / 6
 
 return {
   width = width,
@@ -92,7 +93,7 @@ return {
   },
   player_positions = {
     [Direction.EAST] = {
-      goal = {width - 25, height / 5 * 2, 25, height / 4},
+      goal = {width - goal_width, height / 2 - goal_height / 2, goal_width, goal_height},
       goal_draw_hints = {
         orientation = 0,
         scale = {
@@ -108,7 +109,7 @@ return {
       score_text_position = {x = width - 60, y = 0}
     },
     [Direction.WEST] = {
-      goal = {0, height / 5 * 2, 25, height / 4},
+      goal = {0, height / 2 - goal_height / 2, goal_width, goal_height},
       goal_draw_hints = {
         orientation = 180,
         scale = {
