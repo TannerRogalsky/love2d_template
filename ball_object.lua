@@ -8,11 +8,13 @@ function BallObject:initialize(x, y)
   Base.initialize(self)
 
   self.image = game.preloaded_images["ball.png"]
+  local radius = g.getHeight() / BallObject.RADIUS_RATIO
+  self.width, self.height = radius * 2, radius * 2
 
   self.controlled_objects_touching = {}
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
-  self.shape = love.physics.newCircleShape(g.getHeight() / BallObject.RADIUS_RATIO)
+  self.shape = love.physics.newCircleShape(radius)
   self.fixture = love.physics.newFixture(self.body, self.shape)
 
   self.fixture:setUserData(self)
@@ -35,10 +37,18 @@ function BallObject:update(dt)
 end
 
 function BallObject:render()
-  g.setColor(COLORS.white:rgb())
   local x, y = self.body:getPosition()
+  local w, h = self.width, self.height
   local iw, ih = self.image:getWidth(), self.image:getHeight()
-  g.draw(self.image, x, y, 0, 1, 1, iw / 2, ih / 2)
+  local sx, sy = w / iw, h / ih
+
+  g.setColor(COLORS.blue:rgb())
+  g.circle("fill", x, y, self.shape:getRadius())
+  g.setColor(COLORS.black:rgb())
+  g.circle("line", x, y, self.shape:getRadius())
+
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.image, x, y, 0, sx, sy, iw / 2, ih / 2)
 end
 
 function BallObject:mousepressed(x, y, button)

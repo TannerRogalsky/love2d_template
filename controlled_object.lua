@@ -9,10 +9,11 @@ function ControlledObject:initialize(x, y)
   Base.initialize(self)
 
   self.image = game.preloaded_images["greyscale amoeba.png"]
-  self.width, self.height = self.image:getWidth(), self.image:getHeight()
+  local radius = g.getHeight() / ControlledObject.RADIUS_RATIO
+  self.width, self.height = radius * 2, radius * 2
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
-  self.shape = love.physics.newCircleShape(g.getHeight() / ControlledObject.RADIUS_RATIO)
+  self.shape = love.physics.newCircleShape(radius)
   self.fixture = love.physics.newFixture(self.body, self.shape)
   self.fixture:setUserData(self)
   self.fixture:setFriction(1)
@@ -67,13 +68,17 @@ end
 function ControlledObject:render(color)
   local x, y = self.body:getPosition()
 
-  g.setColor(color:rgb())
-  g.draw(self.image, x, y, 0, 0.75, 0.75, self.width / 2, self.height / 2)
-
   -- g.setColor(color:rgb())
   -- g.circle("fill", x, y, self.shape:getRadius())
   -- g.setColor(COLORS.black:rgb())
   -- g.circle("line", x, y, self.shape:getRadius())
+
+  g.setColor(color:rgb())
+  local r = self.shape:getRadius()
+  local w, h = self.width, self.height
+  local iw, ih = self.image:getWidth(), self.image:getHeight()
+  local sx, sy = iw / w, ih / h
+  g.draw(self.image, x, y, 0, sx * 0.75, sy * 0.75, sx * w / 2, sy * h / 2)
 
   -- local vx, vy = self.body:getLinearVelocity()
   -- local vnx, vny = Vector.normalize(vx, vy)
