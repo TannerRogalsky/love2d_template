@@ -5,6 +5,7 @@ function Menu:enteredState()
 
   self.background = game.preloaded_images["title.png"]
   local width, height = self.background:getWidth(), self.background:getHeight()
+  print(g.getWidth(), g.getHeight(), width, height)
   self.offset = {x = (g.getWidth() - width) / 2, y = (g.getHeight() - height) / 2}
 
   self.two_player_button = {414,444, 800,444, 800,530, 414,530}
@@ -16,9 +17,11 @@ function Menu:enteredState()
 end
 
 function Menu:render()
+  self.camera:set()
   self.camera:setPosition(-self.offset.x, -self.offset.y)
   g.setColor(COLORS.white:rgb())
   g.draw(self.background, 0, 0)
+  self.camera:unset()
 end
 
 function Menu:check_point(rect, x, y)
@@ -36,6 +39,7 @@ function Menu:keypressed(key, unicode)
 end
 
 function Menu:mousepressed(x, y, button)
+  x,y = x - self.offset.x, y - self.offset.y
   if self:check_point(self.two_player_button, x, y) then
     self:gotoState("Main", "level2")
   elseif self:check_point(self.four_player_button, x, y) then
