@@ -2,7 +2,11 @@ local Menu = Game:addState('Menu')
 
 function Menu:enteredState()
   love.window.setFullscreen(true, "desktop")
+
   self.background = game.preloaded_images["title.png"]
+  local width, height = self.background:getWidth(), self.background:getHeight()
+  self.offset = {x = (g.getWidth() - width) / 2, y = (g.getHeight() - height) / 2}
+
   self.two_player_button = {414,444, 800,444, 800,530, 414,530}
   self.four_player_button = {414,565, 800,565, 800,650, 414,650}
 
@@ -12,6 +16,7 @@ function Menu:enteredState()
 end
 
 function Menu:render()
+  self.camera:setPosition(-self.offset.x, -self.offset.y)
   g.setColor(COLORS.white:rgb())
   g.draw(self.background, 0, 0)
 end
@@ -39,6 +44,9 @@ function Menu:mousepressed(x, y, button)
 end
 
 function Menu:exitedState()
+  self.offset = nil
+  self.two_player_button = nil
+  self.four_player_button = nil
   self.background = nil
 end
 
