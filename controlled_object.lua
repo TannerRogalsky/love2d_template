@@ -1,6 +1,6 @@
 ControlledObject = class('ControlledObject', Base):include(Stateful)
 ControlledObject.static.RADIUS_RATIO = 80
-ControlledObject.static.MAX_VEL = 150
+ControlledObject.static.MAX_VEL_RATIO = 5
 ControlledObject.static.MOVE_FORCE = 10000
 ControlledObject.static.MASS = 0.3
 ControlledObject.static.LINEAR_DAMPING = 0.6
@@ -11,6 +11,8 @@ function ControlledObject:initialize(x, y)
   self.image = game.preloaded_images["greyscale amoeba.png"]
   local radius = g.getHeight() / ControlledObject.RADIUS_RATIO
   self.width, self.height = radius * 2, radius * 2
+
+  self.max_vel = g.getHeight() / ControlledObject.MAX_VEL_RATIO
 
   self.body = love.physics.newBody(World, x, y, "dynamic")
   self.shape = love.physics.newCircleShape(radius)
@@ -59,14 +61,17 @@ end
 function ControlledObject:update(dt)
   local body = self.body
   local vx, vy = body:getLinearVelocity()
-  vx = math.clamp(-ControlledObject.MAX_VEL, vx, ControlledObject.MAX_VEL)
-  vy = math.clamp(-ControlledObject.MAX_VEL, vy, ControlledObject.MAX_VEL)
+  vx = math.clamp(-self.max_vel, vx, self.max_vel)
+  vy = math.clamp(-self.max_vel, vy, self.max_vel)
 
   body:setLinearVelocity(vx, vy)
 end
 
 function ControlledObject:render(color)
   local x, y = self.body:getPosition()
+  local w, h = self.width, self.height
+  local iw, ih = self.image:getWidth(), self.image:getHeight()
+  local sx, sy = w / iw, h / ih
 
   -- g.setColor(color:rgb())
   -- g.circle("fill", x, y, self.shape:getRadius())
@@ -74,11 +79,7 @@ function ControlledObject:render(color)
   -- g.circle("line", x, y, self.shape:getRadius())
 
   g.setColor(color:rgb())
-  local r = self.shape:getRadius()
-  local w, h = self.width, self.height
-  local iw, ih = self.image:getWidth(), self.image:getHeight()
-  local sx, sy = iw / w, ih / h
-  g.draw(self.image, x, y, 0, sx * 0.75, sy * 0.75, sx * w / 2, sy * h / 2)
+  g.draw(self.image, x, y, 0, sx * 1.25, sy * 1.25, iw / 2, ih / 2)
 
   -- local vx, vy = self.body:getLinearVelocity()
   -- local vnx, vny = Vector.normalize(vx, vy)
