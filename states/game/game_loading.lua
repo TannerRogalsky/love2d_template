@@ -6,11 +6,27 @@ function Loading:enteredState()
   self.preloaded_fonts = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
-  for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
-    if image:match('(.*).png$') ~= nil or image:match('(.*).gif$') ~= nil or image:match('(.*).jpg$') ~= nil then
-      self.loader.newImage(self.preloaded_images, image, 'images/' .. image)
+  local filetypes = {png = true, gif = true, jpg = true}
+  local function load_images(container, directory)
+    for index, file_name in ipairs(love.filesystem.getDirectoryItems(directory)) do
+      -- build the full, relative path of the file
+      local full_name = directory .. '/' .. file_name
+      if love.filesystem.isDirectory(full_name) then
+        -- recurse
+        local subcontainer = {}
+        container[file_name] = subcontainer
+        load_images(subcontainer, full_name)
+      else
+        -- match the filetype and then queue the image for loading
+        local file_name, filetype = full_name:match("^.*/(.+)%.(%a+)$")
+        if filetypes[filetype] then
+          local key = file_name .. "." .. filetype
+          self.loader.newImage(container, key, full_name)
+        end
+      end
     end
   end
+  -- load_images(self.preloaded_images, "images")
 
   local sizes = {12, 14, 16, 20, 24}
   -- for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do

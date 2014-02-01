@@ -30,9 +30,15 @@ COLORS = require 'lib/colors'
 tween = require 'lib/tween'
 beholder = require 'lib/beholder'
 Grid = require 'lib/grid'
+bit = require("bit")
+function bit.is_set(byte, index)
+  return bit.band(byte, math.pow(2, index)) ~= 0
+end
+
 
 require 'base'
 require 'game'
+require 'tile'
 
 require 'direction'
 

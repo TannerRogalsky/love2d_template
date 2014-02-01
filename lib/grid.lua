@@ -15,9 +15,12 @@ function Grid:initialize(width, height)
 end
 
 -- TODO I don't actually trust this iterator, double check it all
-function Grid:each(x, y, width, height)
+function Grid:each(x, y, width, height, incr_x, incr_y, override_offsetting)
+  override_offsetting = override_offsetting or false
   x = x or 1
   y = y or 1
+  incr_x = incr_x or 1
+  incr_y = incr_y or 1
   width = width or self.width
   height = height or self.height
   width, height = width - 1, height - 1
@@ -33,24 +36,26 @@ function Grid:each(x, y, width, height)
     y = 1
   end
   -- if you bump up x or y, bump down the width or height the same amount
-  width, height = width - x_diff, height - y_diff
-  if x + width > self.width then width = self.width - x end
-  if y + height > self.height then height = self.height - y end
+  if override_offsetting == false then
+    width, height = width - x_diff, height - y_diff
+    if x + width > self.width then width = self.width - x end
+    if y + height > self.height then height = self.height - y end
+  end
 
   local function iterator(state)
     while state.childIndex <= x + width do
       local child           = self[state.childIndex]
-      state.grandChildIndex = state.grandChildIndex + 1
+      state.grandChildIndex = state.grandChildIndex + incr_y
       if state.grandChildIndex > y + height then
-        state.childIndex = state.childIndex + 1
-        state.grandChildIndex = y - 1
+        state.childIndex = state.childIndex + incr_x
+        state.grandChildIndex = y - incr_y
       else
         return state.childIndex, state.grandChildIndex, child[state.grandChildIndex]
       end
     end
   end
 
-  return iterator, {childIndex = x, grandChildIndex = y - 1}
+  return iterator, {childIndex = x, grandChildIndex = y - incr_y}
 end
 
 function Grid:rotate(angle)

@@ -99,6 +99,7 @@ colors.burlywood =            { r = 222, g = 184, b = 135 }
 colors.cadetblue =            { r = 95,  g = 158, b = 160 }
 colors.chartreuse =           { r = 127, g = 255, b = 0   }
 colors.chocolate =            { r = 210, g = 105, b = 30  }
+colors.clear =                { r = 0,   g = 0,   b = 0,  a = 0 }
 colors.coral =                { r = 255, g = 127, b = 80  }
 colors.cornflowerblue =       { r = 100, g = 149, b = 237 }
 colors.cornsilk =             { r = 255, g = 248, b = 220 }
