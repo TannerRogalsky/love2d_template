@@ -1,5 +1,5 @@
 local Generator = class('Generator', Base)
-Generator.static.mask_data = require("mask_data")
+Generator.static.mask_data = require("data/mask_data2")
 
 TileGenerator = require 'tile_generator'
 
@@ -39,13 +39,6 @@ function Generator:generate(w, h)
         end
       end
     end
-    -- for ax, ay, adjacent_tile in grid:each(x - 1, y - 1, 3, 3) do
-    --   if (ax == x or ay == y) and (ax ~= x or ay ~= y) then
-    --     local tile_mask_value = adjacent_tile.bit_value * math.pow(2, index)
-    --     mask_value = mask_value + tile_mask_value
-    --     index = index + 1
-    --   end
-    -- end
     return mask_value
   end
 

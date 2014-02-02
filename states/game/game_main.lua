@@ -1,6 +1,6 @@
 local Main = Game:addState('Main')
-Game.static.WIDTH = 32
-Game.static.HEIGHT = 32
+Game.static.WIDTH = 5
+Game.static.HEIGHT = 5
 
 function Main:enteredState()
   love.physics.setMeter(Game.HEIGHT)
@@ -21,20 +21,7 @@ function Main:enteredState()
   self.grid = self.generator:generate(self.width, self.height)
 
   love.window.setMode(self.tile_width * self.width, self.tile_height * self.height)
-
-  local function new_bound(x1, y1, x2, y2)
-    local object = {}
-    object.body = love.physics.newBody(World, 0, 0, "static")
-    object.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
-    object.fixture = love.physics.newFixture(object.body, object.shape)
-
-    return object
-  end
-  local w, h = self.tile_width * self.width, self.tile_height * self.height
-  new_bound(0, 0, w, 0)
-  new_bound(w, 0, w, h)
-  new_bound(w, h, 0, h)
-  new_bound(0, h, 0, 0)
+  self:new_bounds()
 
   self.circles = {}
 end
@@ -84,11 +71,14 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
-  self.circles = {}
-  for _,body in ipairs(World:getBodyList()) do
-    body:destroy()
+  if key == "r" then
+    self.circles = {}
+    for _,body in ipairs(World:getBodyList()) do
+      body:destroy()
+    end
+    self:new_bounds()
+    self.grid = self.generator:generate(self.width, self.height)
   end
-  self.grid = self.generator:generate(self.width, self.height)
 end
 
 function Main:keyreleased(key, unicode)
@@ -101,6 +91,22 @@ function Main:joystickreleased(joystick, button)
 end
 
 function Main:focus(has_focus)
+end
+
+function Main:new_bounds()
+  local function new_bound(x1, y1, x2, y2)
+    local object = {}
+    object.body = love.physics.newBody(World, 0, 0, "static")
+    object.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
+    object.fixture = love.physics.newFixture(object.body, object.shape)
+
+    return object
+  end
+  local w, h = self.tile_width * self.width, self.tile_height * self.height
+  new_bound(0, 0, w, 0)
+  new_bound(w, 0, w, h)
+  new_bound(w, h, 0, h)
+  new_bound(0, h, 0, 0)
 end
 
 -- shape_one and shape_two are the colliding shapes. mtv_x and mtv_y define the minimum translation vector,
