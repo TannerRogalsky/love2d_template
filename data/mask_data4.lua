@@ -59,7 +59,7 @@ return {
   },
   [7] = {
     color = COLORS.tile_grey,
-    geometry = lu_tri
+    geometry = square
   },
   [8] = {
     color = COLORS.tile_grey,
@@ -83,7 +83,7 @@ return {
   },
   [13] = {
     color = COLORS.tile_grey,
-    geometry = ld_tri
+    geometry = square
   },
   [14] = {
     color = COLORS.tile_grey,
@@ -119,7 +119,7 @@ return {
   },
   [22] = {
     color = COLORS.tile_grey,
-    geometry = ru_tri
+    geometry = square
   },
   [23] = {
     color = COLORS.tile_grey,
@@ -143,7 +143,7 @@ return {
   },
   [28] = {
     color = COLORS.tile_grey,
-    geometry = rd_tri
+    geometry = square
   },
   [29] = {
     color = COLORS.tile_grey,

@@ -1,6 +1,6 @@
 local Main = Game:addState('Main')
-Game.static.WIDTH = 5
-Game.static.HEIGHT = 5
+Game.static.WIDTH = 32
+Game.static.HEIGHT = 32
 
 function Main:enteredState()
   love.physics.setMeter(Game.HEIGHT)
@@ -33,7 +33,7 @@ end
 function Main:render()
   self.camera:set()
 
-  g.setColor(COLORS.lightblue:rgb())
+  g.setColor(COLORS.background_grey:rgb())
   local w, h = self.tile_width, self.tile_height
   g.rectangle("fill", 0, 0, self.grid.width * w, self.grid.height * h)
   for x, y, tile in self.grid:each() do

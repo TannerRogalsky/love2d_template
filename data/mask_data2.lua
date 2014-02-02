@@ -33,11 +33,11 @@ return {
     geometry = square
   },
   [1] = {
-    color = COLORS.white,
+    color = COLORS.clear,
     geometry = square
   },
   [2] = {
-    color = COLORS.white,
+    color = COLORS.clear,
     geometry = square
   },
   [3] = {
@@ -45,7 +45,7 @@ return {
     geometry = square
   },
   [4] = {
-    color = COLORS.white,
+    color = COLORS.clear,
     geometry = square
   },
   [5] = {
@@ -61,11 +61,11 @@ return {
     geometry = square
   },
   [8] = {
-    color = COLORS.white,
+    color = COLORS.clear,
     geometry = square
   },
   [9] = {
-    color = COLORS.white,
+    color = COLORS.clear,
     geometry = square
   },
   [10] = {

@@ -10,17 +10,17 @@ function Tile:render()
   local w, h = self.width, self.height
   local px, py = (self.x - 1) * w, (self.y - 1) * h
 
-  if self.bit_value == 1 then
-    g.setColor(COLORS.yellow:rgb())
-    g.rectangle("fill", px, py, self.width, self.height)
-  end
+  -- if self.bit_value == 1 then
+  --   g.setColor(COLORS.yellow:rgb())
+  --   g.rectangle("fill", px, py, self.width, self.height)
+  -- end
 
   if self.body then
     g.setColor(self.color:rgba())
     g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
   end
-  g.setColor(COLORS.black:rgba())
-  g.print(self.masked_value, px, py)
+  -- g.setColor(COLORS.black:rgba())
+  -- g.print(self.masked_value, px, py)
 end
 
 function Tile:set_mask_data(masked_value)

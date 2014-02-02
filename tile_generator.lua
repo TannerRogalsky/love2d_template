@@ -20,22 +20,21 @@ function TileGenerator:generate(w, h)
     grid:set(x, y, Tile:new(attributes))
   end
 
-  -- local tile_fill_ratio = 8 / 20
-  -- for x, y, tile in grid:each() do
-  --   if math.random() < tile_fill_ratio then
-  --     tile.bit_value = 1
-  --   end
-  -- end
-  grid:get(3,3).bit_value = 1
-  -- TileGenerator.fill_or_empty_on_ratio(5 / 10, grid, 1, 1, grid.width, grid.height, 3, 3)
-  -- TileGenerator.fill_on(function(grid, x, y, dx, dy)
-  --   local g = function(...) return grid:get(...) end
-  --   local f = function(t) return t and t.bit_value == 1 end
-  --   local a, b = g(x, y), g(x + 1, y + 1)
-  --   local c, d = g(x + 1, y), g(x, y + 1)
-  --   -- x0y0 & x1y1 | x1y0 & x0y1 exist and are set
-  --   return f(a) and f(b) or f(c) and f(d)
-  -- end, grid, 1, 1, grid.width, grid.height, 2, 2)
+  local tile_fill_ratio = 8 / 20
+  for x, y, tile in grid:each() do
+    if math.random() < tile_fill_ratio then
+      tile.bit_value = 1
+    end
+  end
+  TileGenerator.fill_or_empty_on_ratio(5 / 10, grid, 1, 1, grid.width, grid.height, 3, 3)
+  TileGenerator.fill_on(function(grid, x, y, dx, dy)
+    local g = function(...) return grid:get(...) end
+    local f = function(t) return t and t.bit_value == 1 end
+    local nw, se = g(x, y), g(x + 1, y + 1)
+    local ne, sw = g(x + 1, y), g(x, y + 1)
+    return  (f(nw) and f(se) and not f(sw) and not f(ne)) or
+            (f(sw) and f(ne) and not f(nw) and not f(se))
+  end, grid, 1, 1, grid.width, grid.height, 2, 2)
 
   return grid
 end

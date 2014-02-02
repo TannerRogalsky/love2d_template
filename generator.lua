@@ -1,5 +1,5 @@
 local Generator = class('Generator', Base)
-Generator.static.mask_data = require("data/mask_data2")
+Generator.static.mask_data = require("data/mask_data3")
 
 TileGenerator = require 'tile_generator'
 
@@ -16,6 +16,9 @@ function Generator:initialize(attributes)
     end
     return sum
   end
+
+  -- love.math.setRandomSeed(1391372537)
+  print(love.math.getRandomSeed())
 end
 
 function Generator:generate(w, h)
@@ -30,11 +33,13 @@ function Generator:generate(w, h)
       for dy=-1,1 do
         local ax, ay = x + dx, y + dy
         local adjacent_tile = grid:get(ax, ay)
-        if (ax == x or ay == y) and (ax ~= x or ay ~= y) then
+        if ax == x or ay == y then
+          local bit_value = 1
           if adjacent_tile then
-            local tile_mask_value = adjacent_tile.bit_value * math.pow(2, index)
-            mask_value = mask_value + tile_mask_value
+            bit_value = adjacent_tile.bit_value
           end
+          local tile_mask_value = bit_value * math.pow(2, index)
+          mask_value = mask_value + tile_mask_value
           index = index + 1
         end
       end
