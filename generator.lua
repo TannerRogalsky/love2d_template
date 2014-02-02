@@ -17,13 +17,34 @@ function Generator:initialize(attributes)
     return sum
   end
 
-  -- love.math.setRandomSeed(1391372537)
+  -- love.math.setRandomSeed(1391375350)
   print(love.math.getRandomSeed())
 end
 
 function Generator:generate(w, h)
+  local map = Map:new()
+
   local tile_generator = TileGenerator:new()
   local grid = tile_generator:generate(w, h)
+
+
+  -- identify contiguous regions
+  local regions = {}
+  local function visit(current_region, tile)
+    if tile.region or tile.bit_value == 1 then return end
+
+    tile.region = current_region
+    for _, _, adjacent in grid:each(tile.x - 1, tile.y - 1, 3, 3) do
+      visit(current_region, adjacent)
+    end
+  end
+  for x, y, tile in grid:each() do
+    if tile.region == nil and tile.bit_value == 0 then
+      local new_region = {index = #regions}
+      table.insert(regions, new_region)
+      visit(new_region, tile)
+    end
+  end
 
   -- bitmask the grid
   local function mask_neighbors(x, y, tile)

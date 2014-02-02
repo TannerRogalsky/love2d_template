@@ -38,6 +38,7 @@ end
 
 require 'base'
 require 'game'
+require 'map'
 require 'tile'
 
 require 'direction'

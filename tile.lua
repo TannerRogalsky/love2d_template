@@ -21,6 +21,9 @@ function Tile:render()
   end
   -- g.setColor(COLORS.black:rgba())
   -- g.print(self.masked_value, px, py)
+  -- if self.region then
+  --   g.print(self.region.index, px, py)
+  -- end
 end
 
 function Tile:set_mask_data(masked_value)
