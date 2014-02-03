@@ -38,7 +38,7 @@ end
 
 require 'base'
 require 'game'
-require 'map'
+require 'section'
 require 'tile'
 
 require 'direction'

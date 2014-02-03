@@ -1,5 +1,4 @@
 local Generator = class('Generator', Base)
-TileGenerator = require 'tile_generator'
 
 function Generator:initialize(attributes)
   for k,v in pairs(attributes or {}) do
@@ -20,6 +19,7 @@ function Generator:initialize(attributes)
 end
 
 function Generator:generate(w, h)
+  local TileGenerator = require('tile_generator')
   local tile_generator = TileGenerator:new()
   local grid = tile_generator:generate(w, h)
   local mask_data = require("data/mask_data3")
@@ -30,6 +30,7 @@ function Generator:generate(w, h)
     if tile.region or tile.bit_value == 1 then return end
 
     tile.region = current_region
+    table.insert(current_region, tile)
     for _, _, adjacent in grid:each(tile.x - 1, tile.y - 1, 3, 3) do
       visit(current_region, adjacent)
     end
@@ -41,6 +42,7 @@ function Generator:generate(w, h)
       visit(new_region, tile)
     end
   end
+  table.sort(regions, function(a, b) return #a > #b end)
 
   -- bitmask the grid
   local function mask_neighbors(x, y, tile)
@@ -69,12 +71,11 @@ function Generator:generate(w, h)
     tile:set_mask_data(mask_data[mask_value], mask_value)
   end
 
-  local map_attributes = {
+  local section_attributes = {
     grid = grid,
     regions = regions,
-    mask_data = mask_data,
   }
-  return Map:new(map_attributes)
+  return Section:new(section_attributes)
 end
 
 return Generator

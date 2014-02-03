@@ -5,10 +5,10 @@ Game.static.HEIGHT = 32
 function Main:enteredState()
   love.physics.setMeter(Game.HEIGHT)
   World = love.physics.newWorld(0, 10 * Game.HEIGHT, true)
-  -- World:setCallbacks(
-  --   function(a, b, c) self:begin_contact(a, b, c) end,
-  --   function(a, b, c) self:end_contact(a, b, c) end
-  -- )
+  World:setCallbacks(
+    function(a, b, c) self:begin_contact(a, b, c) end,
+    function(a, b, c) self:end_contact(a, b, c) end
+  )
 
   self.default_font = g.newFont(12)
   g.setFont(self.default_font)
@@ -17,7 +17,7 @@ function Main:enteredState()
   self.tile_width, self.tile_height = 16, 16
 
   self.generator = Generator:new()
-  self.map = self.generator:generate(self.width, self.height)
+  self.section = self.generator:generate(self.width, self.height)
 
   love.window.setMode(self.tile_width * self.width, self.tile_height * self.height)
   self:new_bounds()
@@ -32,8 +32,8 @@ function Main:render()
 
   g.setColor(COLORS.background_grey:rgb())
   local w, h = self.tile_width, self.tile_height
-  g.rectangle("fill", 0, 0, self.map.grid.width * w, self.map.grid.height * h)
-  for x, y, tile in self.map.grid:each() do
+  g.rectangle("fill", 0, 0, self.section.grid.width * w, self.section.grid.height * h)
+  for x, y, tile in self.section.grid:each() do
     tile:render(w, h)
   end
   -- for _,body in ipairs(World:getBodyList()) do
@@ -61,7 +61,7 @@ function Main:keypressed(key, unicode)
       body:destroy()
     end
     self:new_bounds()
-    self.map = self.generator:generate(self.width, self.height)
+    self.section = self.generator:generate(self.width, self.height)
   end
 end
 

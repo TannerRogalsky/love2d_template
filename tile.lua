@@ -39,6 +39,5 @@ function Tile:set_mask_data(mask_data, masked_value)
     self.shape = love.physics.newPolygonShape(unpack(vertices))
     self.fixture = love.physics.newFixture(self.body, self.shape)
     self.fixture:setUserData(self)
-    self.fixture:setGroupIndex(-1)
   end
 end
