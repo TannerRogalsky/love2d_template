@@ -16,14 +16,11 @@ function Main:enteredState()
   self.width, self.height = Game.WIDTH, Game.HEIGHT
   self.tile_width, self.tile_height = 16, 16
 
-  Generator = require("generator")
   self.generator = Generator:new()
-  self.grid = self.generator:generate(self.width, self.height)
+  self.map = self.generator:generate(self.width, self.height)
 
   love.window.setMode(self.tile_width * self.width, self.tile_height * self.height)
   self:new_bounds()
-
-  self.circles = {}
 end
 
 function Main:update(dt)
@@ -35,8 +32,8 @@ function Main:render()
 
   g.setColor(COLORS.background_grey:rgb())
   local w, h = self.tile_width, self.tile_height
-  g.rectangle("fill", 0, 0, self.grid.width * w, self.grid.height * h)
-  for x, y, tile in self.grid:each() do
+  g.rectangle("fill", 0, 0, self.map.grid.width * w, self.map.grid.height * h)
+  for x, y, tile in self.map.grid:each() do
     tile:render(w, h)
   end
   -- for _,body in ipairs(World:getBodyList()) do
@@ -49,22 +46,10 @@ function Main:render()
   --   end
   -- end
 
-  g.setColor(COLORS.black:rgb())
-  for _,circle in ipairs(self.circles) do
-    local x, y = circle.body:getWorldCenter()
-    g.circle("fill", x, y, 8)
-  end
-
   self.camera:unset()
 end
 
 function Main:mousepressed(x, y, button)
-  local circle = {}
-  circle.body = love.physics.newBody(World, x, y, "dynamic")
-  circle.shape = love.physics.newCircleShape(8)
-  circle.fixture = love.physics.newFixture(circle.body, circle.shape)
-
-  table.insert(self.circles, circle)
 end
 
 function Main:mousereleased(x, y, button)
@@ -72,12 +57,11 @@ end
 
 function Main:keypressed(key, unicode)
   if key == "r" then
-    self.circles = {}
     for _,body in ipairs(World:getBodyList()) do
       body:destroy()
     end
     self:new_bounds()
-    self.grid = self.generator:generate(self.width, self.height)
+    self.map = self.generator:generate(self.width, self.height)
   end
 end
 

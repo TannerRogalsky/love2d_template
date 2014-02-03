@@ -1,6 +1,4 @@
 local Generator = class('Generator', Base)
-Generator.static.mask_data = require("data/mask_data3")
-
 TileGenerator = require 'tile_generator'
 
 function Generator:initialize(attributes)
@@ -22,11 +20,9 @@ function Generator:initialize(attributes)
 end
 
 function Generator:generate(w, h)
-  local map = Map:new()
-
   local tile_generator = TileGenerator:new()
   local grid = tile_generator:generate(w, h)
-
+  local mask_data = require("data/mask_data3")
 
   -- identify contiguous regions
   local regions = {}
@@ -69,11 +65,16 @@ function Generator:generate(w, h)
   end
 
   for x, y, tile in grid:each() do
-    local masked_value = mask_neighbors(x, y, tile)
-    tile:set_mask_data(masked_value)
+    local mask_value = mask_neighbors(x, y, tile)
+    tile:set_mask_data(mask_data[mask_value], mask_value)
   end
 
-  return grid
+  local map_attributes = {
+    grid = grid,
+    regions = regions,
+    mask_data = mask_data,
+  }
+  return Map:new(map_attributes)
 end
 
 return Generator

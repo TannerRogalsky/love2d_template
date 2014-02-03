@@ -43,6 +43,8 @@ require 'tile'
 
 require 'direction'
 
+Generator = require("generator")
+
 local function require_all(directory)
   local lfs = love.filesystem
   for index,filename in ipairs(lfs.getDirectoryItems(directory)) do

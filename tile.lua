@@ -26,10 +26,8 @@ function Tile:render()
   -- end
 end
 
-function Tile:set_mask_data(masked_value)
+function Tile:set_mask_data(mask_data, masked_value)
   self.masked_value = masked_value
-  local mask_data = Generator.mask_data[self.masked_value]
-
   self.color = mask_data.color
 
   local vertices = mask_data.geometry
