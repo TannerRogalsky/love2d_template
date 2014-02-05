@@ -18,7 +18,9 @@ function Map:add_section(x, y, section)
 end
 
 function Map:remove_section(x, y)
-
+  local section = self.sections:get(x, y)
+  section:destroy()
+  self.sections:set(x, y, nil)
 end
 
 function Map:render()
@@ -60,15 +62,15 @@ end
 function Map:create_section_bounds(section)
   local w, h = game.tile_width * section.width, game.tile_height * section.height
   local x, y = (section.x - 1) * w, (section.y - 1) * h
-  local bound = Bound:new(x, y, x + w, y)
+  local bound = Bound:new(x, y, x + w, y, section, Direction.NORTH)
   section.bounds[bound.id] = bound
 
-  bound = Bound:new(x + w, y, x + w, y + h)
+  bound = Bound:new(x + w, y, x + w, y + h, section, Direction.EAST)
   section.bounds[bound.id] = bound
 
-  bound = Bound:new(x + w, y + h, x, y + h)
+  bound = Bound:new(x + w, y + h, x, y + h, section, Direction.SOUTH)
   section.bounds[bound.id] = bound
 
-  bound = Bound:new(x, y + h, x, y)
+  bound = Bound:new(x, y + h, x, y, section, Direction.WEST)
   section.bounds[bound.id] = bound
 end

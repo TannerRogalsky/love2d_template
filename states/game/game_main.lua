@@ -5,10 +5,23 @@ Game.static.HEIGHT = 16
 function Main:enteredState()
   love.physics.setMeter(Game.HEIGHT)
   World = love.physics.newWorld(0, 10 * Game.HEIGHT, true)
-  World:setCallbacks(
-    function(a, b, c) self:begin_contact(a, b, c) end,
-    function(a, b, c) self:end_contact(a, b, c) end
-  )
+  local physics_callback_names = {"begin_contact", "end_contact", "presolve", "postsolve"}
+  local physics_callbacks = {}
+  for _,callback_name in ipairs(physics_callback_names) do
+    local function callback(fixture_a, fixture_b, contact, ...)
+      -- print(callback_name, fixture_a, fixture_b, contact, ...)
+      local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
+      if object_one and is_func(object_one[callback_name]) then
+        object_one[callback_name](object_one, object_two, contact, ...)
+      end
+      if object_two and is_func(object_two[callback_name]) then
+        object_two[callback_name](object_two, object_one, contact, ...)
+      end
+    end
+    self[callback_name] = callback
+    table.insert(physics_callbacks, callback)
+  end
+  World:setCallbacks(unpack(physics_callbacks))
 
   self.default_font = g.newFont(12)
   g.setFont(self.default_font)
@@ -88,30 +101,6 @@ function Main:joystickreleased(joystick, button)
 end
 
 function Main:focus(has_focus)
-end
-
-function Main:begin_contact(fixture_a, fixture_b, contact)
-  local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
-
-  if object_one and is_func(object_one.begin_contact) then
-    object_one:begin_contact(object_two, contact)
-  end
-
-  if object_two and is_func(object_two.begin_contact) then
-    object_two:begin_contact(object_one, contact)
-  end
-end
-
-function Main:end_contact(fixture_a, fixture_b, contact)
-  local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
-
-  if object_one and is_func(object_one.end_contact) then
-    object_one:end_contact(object_two, contact)
-  end
-
-  if object_two and is_func(object_two.end_contact) then
-    object_two:end_contact(object_one, contact)
-  end
 end
 
 function Main:exitedState()

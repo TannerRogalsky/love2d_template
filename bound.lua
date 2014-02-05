@@ -1,7 +1,10 @@
 Bound = class('Bound', Base)
 
-function Bound:initialize(x1, y1, x2, y2)
+function Bound:initialize(x1, y1, x2, y2, section, direction)
   Base.initialize(self)
+
+  self.section = section
+  self.direction = direction
 
   self.body = love.physics.newBody(World, 0, 0, "static")
   self.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
@@ -16,5 +19,10 @@ function Bound:render()
 end
 
 function Bound:begin_contact(other, contact)
-  print("i'm a bound")
+  local x, y = contact:getNormal()
+  print(self.direction.cardinal_name, x, y)
+end
+
+function Bound:destroy()
+  self.body:destroy()
 end

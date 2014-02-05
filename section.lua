@@ -26,3 +26,9 @@ function Section:render()
     bound:render()
   end
 end
+
+function Section:destroy()
+  for _,bound in pairs(self.bounds) do
+    bound:destroy()
+  end
+end
