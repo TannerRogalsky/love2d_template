@@ -13,6 +13,7 @@ function pointInCircle(circle, point) return (point.x-circle.x)^2 + (point.y - c
 function string:split(sep) return self:match((self:gsub("[^"..sep.."]*"..sep, "([^"..sep.."]*)"..sep))) end
 globalID = 0
 function generateID() globalID = globalID + 1 return globalID end
+function is_table(t) return type(t) == "table" end
 function is_func(f) return type(f) == "function" end
 function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
@@ -30,6 +31,7 @@ COLORS = require 'lib/colors'
 tween = require 'lib/tween'
 beholder = require 'lib/beholder'
 Grid = require 'lib/grid'
+DictGrid = require 'lib/dict_grid'
 bit = require("bit")
 function bit.is_set(byte, index)
   return bit.band(byte, math.pow(2, index)) ~= 0
@@ -38,6 +40,7 @@ end
 
 require 'base'
 require 'game'
+require 'map'
 require 'section'
 require 'tile'
 
