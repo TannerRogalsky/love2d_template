@@ -8,6 +8,8 @@ function Section:initialize(attributes)
 
   self.get = function(self, ...) return self.grid:get(...) end
   self.set = function(self, ...) return self.grid:set(...) end
+
+  self.bounds = {}
 end
 
 function Section:render()
@@ -18,5 +20,9 @@ function Section:render()
   g.rectangle("fill", px, py, self.grid.width * w, self.grid.height * h)
   for x, y, tile in self.grid:each() do
     tile:render()
+  end
+
+  for _,bound in pairs(self.bounds) do
+    bound:render()
   end
 end

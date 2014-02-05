@@ -43,6 +43,8 @@ require 'game'
 require 'map'
 require 'section'
 require 'tile'
+require 'bound'
+require 'ball'
 
 require 'direction'
 

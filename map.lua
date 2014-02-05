@@ -14,6 +14,7 @@ function Map:add_section(x, y, section)
   section.x, section.y = x, y
   self.sections:set(x, y, section)
   self:bitmask_section(section)
+  self:create_section_bounds(section)
 end
 
 function Map:remove_section(x, y)
@@ -54,4 +55,20 @@ function Map:bitmask_section(section)
     tile.section = section
     tile:set_mask_data(self.mask_data[mask_value], mask_value)
   end
+end
+
+function Map:create_section_bounds(section)
+  local w, h = game.tile_width * section.width, game.tile_height * section.height
+  local x, y = (section.x - 1) * w, (section.y - 1) * h
+  local bound = Bound:new(x, y, x + w, y)
+  section.bounds[bound.id] = bound
+
+  bound = Bound:new(x + w, y, x + w, y + h)
+  section.bounds[bound.id] = bound
+
+  bound = Bound:new(x + w, y + h, x, y + h)
+  section.bounds[bound.id] = bound
+
+  bound = Bound:new(x, y + h, x, y)
+  section.bounds[bound.id] = bound
 end
