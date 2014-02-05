@@ -46,6 +46,8 @@ function Generator:generate(w, h)
   local section_attributes = {
     grid = grid,
     regions = regions,
+    width = w,
+    height = h,
   }
   return Section:new(section_attributes)
 end

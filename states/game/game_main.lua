@@ -95,6 +95,7 @@ function Main:new_bounds()
     object.body = love.physics.newBody(World, 0, 0, "static")
     object.shape = love.physics.newEdgeShape(x1, y1, x2, y2)
     object.fixture = love.physics.newFixture(object.body, object.shape)
+    object.fixture:setSensor(true)
 
     return object
   end
