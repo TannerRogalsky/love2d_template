@@ -25,9 +25,18 @@ function Section:render()
   for _,bound in pairs(self.bounds) do
     bound:render()
   end
+
+  g.setColor(COLORS.black:rgb())
+  g.print(self.x .. ", " .. self.y, px + (self.grid.width * w / 2), py + (self.grid.height * h / 2))
 end
 
 function Section:destroy()
+  for x, y, tile in self.grid:each() do
+    if tile.body then
+      tile.body:destroy()
+    end
+  end
+
   for _,bound in pairs(self.bounds) do
     bound:destroy()
   end

@@ -1,4 +1,5 @@
 Ball = class('Ball', Base)
+Ball.static.RADIUS = 7
 
 function Ball:initialize(x, y, radius)
   Base.initialize(self)
@@ -17,5 +18,6 @@ function Ball:render()
 end
 
 function Ball:destroy()
+  self.destroying = true
   self.body:destroy()
 end

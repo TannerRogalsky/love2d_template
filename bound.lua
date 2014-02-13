@@ -26,17 +26,28 @@ end
 
 function Bound:end_contact(other, contact)
   -- print("end", self.section.x, self.section.y)
-  if instanceOf(Ball, other) then
+  if instanceOf(Ball, other) and other.destroying ~= true then
     local new_section = other.current_section
     local old_section = self.section
     local dx, dy = new_section.x - old_section.x, new_section.y - old_section.y
     local rx, ry = old_section.x - dx, old_section.y - dy
     local nx, ny = new_section.x + dx, new_section.y + dy
-    print(dx, dy, rx, ry, nx, ny)
-    cron.after(0.1, function()
-      game.map:remove_section(rx, ry)
-      local section = game.generator:generate(game.width, game.height)
-      game.map:add_section(nx, ny, section)
+    local px, py = math.abs(dy), math.abs(dx) -- perpendicularish
+    cron.after(0.01, function()
+      -- print("*****")
+      -- print(rx, ry, px, py)
+      -- print(rx - px, rx + px, ry - py, ry + py)
+      for x = rx - px, rx + px do
+        for y = ry - py, ry + py do
+          game.map:remove_section(x, y)
+        end
+      end
+      for x = nx - px, nx + px do
+        for y = ny - py, ny + py do
+          local section = game.generator:generate(game.width, game.height)
+          game.map:add_section(x, y, section)
+        end
+      end
     end)
   end
 end

@@ -69,13 +69,15 @@ function Main:new_map(w, h)
       self.map:add_section(x, y, section)
     end
   end
-  -- self.camera:setPosition(self.pixel_width, self.pixel_height)
+  self.camera:setPosition(self.pixel_width, self.pixel_height)
 end
 
 function Main:mousepressed(x, y, button)
   x, y = self.camera:mousePosition(x, y)
-  if self.circle then self.circle:destroy() end
-  self.circle = Ball:new(x, y, 8)
+  if self.circle then
+    self.circle:destroy()
+  end
+  self.circle = Ball:new(x, y, Ball.RADIUS)
 end
 
 function Main:mousereleased(x, y, button)
@@ -87,6 +89,7 @@ function Main:keypressed(key, unicode)
     for _,body in ipairs(World:getBodyList()) do
       body:destroy()
     end
+    cron.reset()
     self:new_map(3, 3)
   end
 end
