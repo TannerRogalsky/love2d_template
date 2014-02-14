@@ -61,6 +61,9 @@ function Main:render()
     g.setColor(COLORS.black:rgb())
     g.print("Click anywhere in the light grey.", 5, 5)
   end
+
+  g.setColor(COLORS.green:rgb())
+  g.print(love.timer.getFPS(), 0, 0)
 end
 
 function Main:new_map(w, h)

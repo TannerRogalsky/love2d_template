@@ -28,8 +28,7 @@ function Tile:render()
 end
 
 function Tile:set_mask_data(mask_data, masked_value)
-  -- keep from leaking physics objects
-  if self.body then self.body:destroy() end
+  local old_mask = self.masked_value
 
   self.masked_value = masked_value
   self.color = mask_data.color
@@ -40,10 +39,16 @@ function Tile:set_mask_data(mask_data, masked_value)
   local offset_y = (self.section.y - 1) * self.section.height * game.tile_height
   local px, py = (self.x - 1) * w + offset_x, (self.y - 1) * h + offset_y
 
-  if self.bit_value == 1 then
-    self.body = love.physics.newBody(World, px, py, "static")
-    self.shape = love.physics.newPolygonShape(unpack(vertices))
-    self.fixture = love.physics.newFixture(self.body, self.shape)
-    self.fixture:setUserData(self)
+  if old_mask ~= self.masked_value then
+    if self.body then
+      self.body:destroy()
+    end
+
+    if self.bit_value == 1 then
+      self.body = love.physics.newBody(World, px, py, "static")
+      self.shape = love.physics.newPolygonShape(unpack(vertices))
+      self.fixture = love.physics.newFixture(self.body, self.shape)
+      self.fixture:setUserData(self)
+    end
   end
 end
