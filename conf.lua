@@ -1,10 +1,10 @@
 function love.conf(t)
   t.author = "Tanner Rogalsky"
-  t.identity = "love2d_template"                   -- The name of the save directory (string)
+  t.identity = "zenball"                   -- The name of the save directory (string)
   t.version = "0.9.0"                -- The LÖVE version this game was made for (string)
   t.console = true                  -- Attach a console (boolean, Windows only)
 
-  t.window.title = "Template"        -- The window title (string)
+  t.window.title = "ZenBall"        -- The window title (string)
   t.window.icon = nil                -- Filepath to an image to use as the window's icon (string)
   t.window.width = 1024               -- The window width (number)
   t.window.height = 600              -- The window height (number)
