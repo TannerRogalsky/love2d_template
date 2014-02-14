@@ -22,12 +22,12 @@ function Section:render()
     tile:render()
   end
 
-  for _,bound in pairs(self.bounds) do
-    bound:render()
-  end
+  -- for _,bound in pairs(self.bounds) do
+  --   bound:render()
+  -- end
 
-  g.setColor(COLORS.black:rgb())
-  g.print(self.x .. ", " .. self.y, px + (self.grid.width * w / 2), py + (self.grid.height * h / 2))
+  -- g.setColor(COLORS.black:rgb())
+  -- g.print(self.x .. ", " .. self.y, px + (self.grid.width * w / 2), py + (self.grid.height * h / 2))
 end
 
 function Section:destroy()

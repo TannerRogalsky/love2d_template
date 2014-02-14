@@ -28,6 +28,9 @@ function Tile:render()
 end
 
 function Tile:set_mask_data(mask_data, masked_value)
+  -- keep from leaking physics objects
+  if self.body then self.body:destroy() end
+
   self.masked_value = masked_value
   self.color = mask_data.color
 

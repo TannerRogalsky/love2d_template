@@ -13,7 +13,6 @@ end
 function Map:add_section(x, y, section)
   section.x, section.y = x, y
   self.sections:set(x, y, section)
-  self:bitmask_section(section)
   self:create_section_bounds(section)
 end
 
@@ -41,6 +40,16 @@ function Map:bitmask_section(section)
           local bit_value = 1
           if adjacent_tile then
             bit_value = adjacent_tile.bit_value
+          else
+            local asx, asy = section.x + dx, section.y + dy
+            local adjacent_section = self.sections:get(asx, asy)
+            if adjacent_section then
+              local nax, nay = math.abs(ax - section.width * dx), math.abs(ay - section.height * dy)
+              adjacent_tile = adjacent_section:get(nax, nay)
+              if adjacent_tile then
+                bit_value = adjacent_tile.bit_value
+              end
+            end
           end
           -- do the mask
           local tile_mask_value = bit_value * math.pow(2, index)
@@ -56,6 +65,12 @@ function Map:bitmask_section(section)
     local mask_value = mask_neighbors(x, y, tile)
     tile.section = section
     tile:set_mask_data(self.mask_data[mask_value], mask_value)
+  end
+end
+
+function Map:bitmask_sections()
+  for _, _, section in self.sections:each() do
+    self:bitmask_section(section)
   end
 end
 

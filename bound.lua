@@ -39,6 +39,7 @@ function Bound:begin_contact(other, contact)
           end
         end
       end
+      game.map:bitmask_sections()
     end)
   end
 end

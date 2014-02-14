@@ -1,10 +1,10 @@
 local Main = Game:addState('Main')
-Game.static.WIDTH = 16
-Game.static.HEIGHT = 16
+Game.static.WIDTH = 32
+Game.static.HEIGHT = 32
 
 function Main:enteredState()
   love.physics.setMeter(Game.HEIGHT)
-  World = love.physics.newWorld(0, 10 * Game.HEIGHT, true)
+  World = love.physics.newWorld(0, 10 * 16, true)
   local physics_callback_names = {"begin_contact", "end_contact", "presolve", "postsolve"}
   local physics_callbacks = {}
   for _,callback_name in ipairs(physics_callback_names) do
@@ -33,7 +33,7 @@ function Main:enteredState()
   self.generator = Generator:new()
   self:new_map(3, 3)
 
-  love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
+  love.window.setMode(self.pixel_width, self.pixel_height)
 end
 
 function Main:update(dt)
@@ -69,6 +69,7 @@ function Main:new_map(w, h)
       self.map:add_section(x, y, section)
     end
   end
+  self.map:bitmask_sections()
   self.camera:setPosition(self.pixel_width, self.pixel_height)
 end
 
