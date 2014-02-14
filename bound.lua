@@ -18,16 +18,8 @@ function Bound:render()
 end
 
 function Bound:begin_contact(other, contact)
-  -- print("begin", self.section.x, self.section.y)
-  if instanceOf(Ball, other) then
-    other.current_section = self.section
-  end
-end
-
-function Bound:end_contact(other, contact)
-  -- print("end", self.section.x, self.section.y)
   if instanceOf(Ball, other) and other.destroying ~= true then
-    local new_section = other.current_section
+    local new_section = self.section
     local nx, ny = new_section.x, new_section.y
     cron.after(0.01, function()
       local to_remove = {}
