@@ -6,10 +6,8 @@ end
 
 function DictGrid:each()
   local function iterator()
-    for y,column in pairs(self._internal_data) do
-      -- print("column", y)
-      for x,cell in pairs(column) do
-        -- print("row", x)
+    for x,column in pairs(self._internal_data) do
+      for y,cell in pairs(column) do
         coroutine.yield(x, y, cell)
       end
     end
@@ -29,6 +27,11 @@ end
 function DictGrid:set(x, y, value)
   if self._internal_data[x] == nil then self._internal_data[x] = {} end
   self._internal_data[x][y] = value
+end
+
+function DictGrid:contains(x, y)
+  if self._internal_data[x] == nil then return false end
+  return self._internal_data[x][y] ~= nil
 end
 
 return DictGrid

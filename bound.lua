@@ -28,24 +28,23 @@ function Bound:end_contact(other, contact)
   -- print("end", self.section.x, self.section.y)
   if instanceOf(Ball, other) and other.destroying ~= true then
     local new_section = other.current_section
-    local old_section = self.section
-    local dx, dy = new_section.x - old_section.x, new_section.y - old_section.y
-    local rx, ry = old_section.x - dx, old_section.y - dy
-    local nx, ny = new_section.x + dx, new_section.y + dy
-    local px, py = math.abs(dy), math.abs(dx) -- perpendicularish
+    local nx, ny = new_section.x, new_section.y
     cron.after(0.01, function()
-      -- print("*****")
-      -- print(rx, ry, px, py)
-      -- print(rx - px, rx + px, ry - py, ry + py)
-      for x = rx - px, rx + px do
-        for y = ry - py, ry + py do
-          game.map:remove_section(x, y)
+      local to_remove = {}
+      for x, y, section in game.map.sections:each() do
+        if x < nx - 1 or x > nx + 1 or y < ny - 1 or y > ny + 1 then
+          table.insert(to_remove, {x, y})
         end
       end
-      for x = nx - px, nx + px do
-        for y = ny - py, ny + py do
-          local section = game.generator:generate(game.width, game.height)
-          game.map:add_section(x, y, section)
+      for _, coords in ipairs(to_remove) do
+        game.map:remove_section(unpack(coords))
+      end
+      for x = nx - 1, nx + 1 do
+        for y = ny - 1, ny + 1 do
+          if not game.map.sections:contains(x, y) then
+            local section = game.generator:generate(game.width, game.height)
+            game.map:add_section(x, y, section)
+          end
         end
       end
     end)
