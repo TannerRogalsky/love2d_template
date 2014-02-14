@@ -23,7 +23,7 @@ function Main:enteredState()
   end
   World:setCallbacks(unpack(physics_callbacks))
 
-  self.default_font = g.newFont(12)
+  self.default_font = g.newFont(18)
   g.setFont(self.default_font)
 
   self.width, self.height = Game.WIDTH, Game.HEIGHT
@@ -56,6 +56,11 @@ function Main:render()
   end
 
   self.camera:unset()
+
+  if self.circle == nil then
+    g.setColor(COLORS.black:rgb())
+    g.print("Click anywhere in the light grey.", 5, 5)
+  end
 end
 
 function Main:new_map(w, h)
