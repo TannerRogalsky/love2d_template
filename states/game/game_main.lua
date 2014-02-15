@@ -32,12 +32,7 @@ function Main:enteredState()
 
   self.generator = Generator:new()
   self:new_map(3, 3)
-  cron.after(0.1, function()
-    self.circle = nil
-    for _,body in ipairs(World:getBodyList()) do
-      body:destroy()
-    end
-    cron.reset()
+  cron.after(0.001, function()
     self:new_map(3, 3)
   end)
 
@@ -76,6 +71,11 @@ function Main:render()
 end
 
 function Main:new_map(w, h)
+  self.circle = nil
+  for _,body in ipairs(World:getBodyList()) do
+    body:destroy()
+  end
+  cron.reset()
   self.map = Map:new({
     width = Game.WIDTH,
     height = Game.HEIGHT
@@ -103,11 +103,6 @@ end
 
 function Main:keypressed(key, unicode)
   if key == "r" then
-    self.circle = nil
-    for _,body in ipairs(World:getBodyList()) do
-      body:destroy()
-    end
-    cron.reset()
     self:new_map(3, 3)
   end
 end

@@ -10,6 +10,8 @@ function Section:initialize(attributes)
   self.set = function(self, ...) return self.grid:set(...) end
 
   self.bounds = {}
+
+  self.canvas = g.newCanvas(game.pixel_width, game.pixel_height)
 end
 
 function Section:render()
