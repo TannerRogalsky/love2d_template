@@ -33,6 +33,7 @@ beholder = require 'lib/beholder'
 Grid = require 'lib/grid'
 DictGrid = require 'lib/dict_grid'
 bit = require("bit")
+vector = require 'lib/HardonCollider/vector-light'
 function bit.is_set(byte, index)
   return bit.band(byte, math.pow(2, index)) ~= 0
 end

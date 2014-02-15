@@ -44,9 +44,14 @@ function Main:update(dt)
   World:update(dt)
 
   if self.circle then
-    local cx, cy = self.circle.body:getWorldCenter()
-    cx, cy = cx - g.getWidth() / 2, cy - g.getHeight() / 2
-    self.camera:setPosition(cx, cy)
+    local bx, by = self.circle.body:getWorldCenter()
+    local cx, cy = self.camera.x, self.camera.y
+    bx, by = bx - g.getWidth() / 2, by - g.getHeight() / 2
+    local mag = vector.dist(bx, by, cx, cy)
+    local dx, dy = vector.normalize(bx - cx, by - cy)
+    dx, dy = dx * mag, dy * mag
+    dx, dy = math.clamp(-mag / 10, dx, mag / 10), math.clamp(-mag / 10, dy, mag / 10)
+    self.camera:move(dx, dy)
   end
 end
 
