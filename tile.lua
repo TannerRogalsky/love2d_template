@@ -28,25 +28,24 @@ function Tile:render()
 end
 
 function Tile:set_mask_data(mask_data, masked_value)
-  local old_mask = self.masked_value
+  local different_mask = masked_value ~= self.masked_value
+  if different_mask then
+    self.masked_value = masked_value
+    self.color = mask_data.color
 
-  self.masked_value = masked_value
-  self.color = mask_data.color
+    local vertices = mask_data.geometry
+    local w, h = self.width, self.height
+    local offset_x = (self.section.x - 1) * self.section.width * game.tile_width
+    local offset_y = (self.section.y - 1) * self.section.height * game.tile_height
+    local tx, ty = (self.x - 1) * w, (self.y - 1) * h
+    local px, py = (self.x - 1) * w + offset_x, (self.y - 1) * h + offset_y
 
-  local vertices = mask_data.geometry
-  local w, h = self.width, self.height
-  local offset_x = (self.section.x - 1) * self.section.width * game.tile_width
-  local offset_y = (self.section.y - 1) * self.section.height * game.tile_height
-  local tx, ty = (self.x - 1) * w, (self.y - 1) * h
-  local px, py = (self.x - 1) * w + offset_x, (self.y - 1) * h + offset_y
+    self.vertices = {}
+    for i=1,#vertices,2 do
+      local x, y = vertices[i], vertices[i + 1]
+      self.vertices[i], self.vertices[i + 1] = x + tx, y + ty
+    end
 
-  self.vertices = {}
-  for i=1,#vertices,2 do
-    local x, y = vertices[i], vertices[i + 1]
-    self.vertices[i], self.vertices[i + 1] = x + tx, y + ty
-  end
-
-  if old_mask ~= self.masked_value then
     if self.body then
       self.body:destroy()
     end
@@ -58,4 +57,5 @@ function Tile:set_mask_data(mask_data, masked_value)
       self.fixture:setUserData(self)
     end
   end
+  return different_mask
 end

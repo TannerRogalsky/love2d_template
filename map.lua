@@ -61,19 +61,45 @@ function Map:bitmask_section(section)
     return mask_value
   end
 
-  for x, y, tile in section.grid:each() do
+  local section_changed = false
+  local function mask_tile(x, y, tile)
     local mask_value = mask_neighbors(x, y, tile)
     tile.section = section
-    tile:set_mask_data(self.mask_data[mask_value], mask_value)
+    local different_mask = tile:set_mask_data(self.mask_data[mask_value], mask_value)
+    if different_mask then section_changed = true end
   end
 
-  g.setCanvas(section.canvas)
-  g.setColor(COLORS.background_grey:rgb())
-  g.rectangle("fill", 0, 0, section.canvas:getWidth(), section.canvas:getHeight())
-  for x, y, tile in section.grid:each() do
-    tile:render()
+  if section.masked then
+    -- we've already masked this section once so only check the edges
+    for x, y, tile in section.grid:each(1,1, section.width, 1) do
+      mask_tile(x, y, tile)
+    end
+    for x, y, tile in section.grid:each(1,2, 1, section.height - 1) do
+      mask_tile(x, y, tile)
+    end
+    for x, y, tile in section.grid:each(section.width,2, 1, section.height - 1) do
+      mask_tile(x, y, tile)
+    end
+    for x, y, tile in section.grid:each(2,section.height, section.width - 2, 1) do
+      mask_tile(x, y, tile)
+    end
+  else
+    for x, y, tile in section.grid:each() do
+      mask_tile(x, y, tile)
+    end
   end
-  g.setCanvas()
+  section.masked = true
+
+  -- the section is different since we masked it so redraw
+  if section_changed then
+    g.setCanvas(section.canvas)
+    g.setColor(COLORS.background_grey:rgb())
+    g.rectangle("fill", 0, 0, section.canvas:getWidth(), section.canvas:getHeight())
+    for x, y, tile in section.grid:each() do
+      tile:render()
+    end
+    g.setCanvas()
+  end
 end
 
 function Map:bitmask_sections()

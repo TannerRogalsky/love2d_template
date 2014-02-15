@@ -12,6 +12,7 @@ function Section:initialize(attributes)
   self.bounds = {}
 
   self.canvas = g.newCanvas(game.pixel_width, game.pixel_height)
+  self.masked = false
 end
 
 function Section:render()
@@ -42,4 +43,8 @@ function Section:destroy()
   for _,bound in pairs(self.bounds) do
     bound:destroy()
   end
+end
+
+function Section:__tostring()
+  return "Section: <x: " .. self.x .. ", y: " .. self.y .. ">"
 end
