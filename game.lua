@@ -1,7 +1,11 @@
 Game = class('Game', Base):include(Stateful)
 
-function Game:initialize()
+function Game:initialize(args)
   Base.initialize(self)
+
+  for k,v in pairs(args) do
+    self[k] = v
+  end
 
   local Camera = require 'lib/camera'
   self.camera = Camera:new()
