@@ -32,7 +32,16 @@ function Main:enteredState()
 
   self.generator = Generator:new()
   self:new_map(3, 3)
+  cron.after(0.1, function()
+    self.circle = nil
+    for _,body in ipairs(World:getBodyList()) do
+      body:destroy()
+    end
+    cron.reset()
+    self:new_map(3, 3)
+  end)
 
+  -- love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
   love.window.setMode(self.pixel_width, self.pixel_height)
 end
 
@@ -78,7 +87,7 @@ function Main:new_map(w, h)
     end
   end
   self.map:bitmask_sections()
-  self.camera:setPosition(self.pixel_width, self.pixel_height)
+  -- self.camera:setPosition(self.pixel_width, self.pixel_height)
 end
 
 function Main:mousepressed(x, y, button)

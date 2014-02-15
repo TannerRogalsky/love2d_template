@@ -66,6 +66,15 @@ function Map:bitmask_section(section)
     tile.section = section
     tile:set_mask_data(self.mask_data[mask_value], mask_value)
   end
+
+  section.canvas = g.newCanvas(game.pixel_width, game.pixel_height)
+  g.setCanvas(section.canvas)
+  g.setColor(COLORS.background_grey:rgb())
+  g.rectangle("fill", 0, 0, section.canvas:getWidth(), section.canvas:getHeight())
+  for x, y, tile in section.grid:each() do
+    tile:render()
+  end
+  g.setCanvas()
 end
 
 function Map:bitmask_sections()
