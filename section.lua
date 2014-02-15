@@ -22,12 +22,14 @@ function Section:render()
   g.setColor(COLORS.white:rgb())
   g.draw(self.canvas, px, py)
 
-  for _,bound in pairs(self.bounds) do
-    bound:render()
-  end
+  if game.args.debug then
+    for _,bound in pairs(self.bounds) do
+      bound:render()
+    end
 
-  g.setColor(COLORS.black:rgb())
-  g.print(self.x .. ", " .. self.y, px + (self.grid.width * w / 2), py + (self.grid.height * h / 2))
+    g.setColor(COLORS.black:rgb())
+    g.print(self.x .. ", " .. self.y, px + (self.grid.width * w / 2), py + (self.grid.height * h / 2))
+  end
 end
 
 function Section:destroy()

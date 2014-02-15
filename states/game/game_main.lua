@@ -1,9 +1,16 @@
 local Main = Game:addState('Main')
-Game.static.WIDTH = 32
-Game.static.HEIGHT = 32
 
 function Main:enteredState()
-  love.physics.setMeter(Game.HEIGHT)
+  if self.args.debug then
+    self.width, self.height = 16, 16
+  else
+    self.width, self.height = 32, 32
+  end
+
+  self.tile_width, self.tile_height = 16, 16
+  self.pixel_width, self.pixel_height = self.width * self.tile_width, self.height * self.tile_height
+
+  love.physics.setMeter(self.height)
   World = love.physics.newWorld(0, 10 * 16, true)
   local physics_callback_names = {"begin_contact", "end_contact", "presolve", "postsolve"}
   local physics_callbacks = {}
@@ -26,18 +33,17 @@ function Main:enteredState()
   self.default_font = g.newFont(18)
   g.setFont(self.default_font)
 
-  self.width, self.height = Game.WIDTH, Game.HEIGHT
-  self.tile_width, self.tile_height = 16, 16
-  self.pixel_width, self.pixel_height = self.width * self.tile_width, self.height * self.tile_height
-
   self.generator = Generator:new()
   self:new_map(3, 3)
   cron.after(0.001, function()
     self:new_map(3, 3)
   end)
 
-  -- love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
-  love.window.setMode(self.pixel_width, self.pixel_height)
+  if self.args.debug then
+    love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
+  else
+    love.window.setMode(self.pixel_width, self.pixel_height)
+  end
 end
 
 function Main:update(dt)
@@ -50,7 +56,7 @@ function Main:update(dt)
     local mag = vector.dist(bx, by, cx, cy)
     local dx, dy = vector.normalize(bx - cx, by - cy)
     dx, dy = dx * mag, dy * mag
-    dx, dy = math.clamp(-mag / 10, dx, mag / 10), math.clamp(-mag / 10, dy, mag / 10)
+    dx, dy = math.clamp(-mag / 20, dx, mag / 20), math.clamp(-mag / 20, dy, mag / 20)
     self.camera:move(dx, dy)
   end
 end
@@ -71,8 +77,10 @@ function Main:render()
     g.print("Click anywhere in the light grey.", 5, 5)
   end
 
-  g.setColor(COLORS.green:rgb())
-  g.print(love.timer.getFPS(), 0, 0)
+  if self.args.debug then
+    g.setColor(COLORS.green:rgb())
+    g.print(love.timer.getFPS(), 0, 0)
+  end
 end
 
 function Main:new_map(w, h)

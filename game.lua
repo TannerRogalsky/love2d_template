@@ -1,7 +1,9 @@
 Game = class('Game', Base):include(Stateful)
 
-function Game:initialize()
+function Game:initialize(args)
   Base.initialize(self)
+
+  self.args = args
 
   local Camera = require 'lib/camera'
   self.camera = Camera:new()

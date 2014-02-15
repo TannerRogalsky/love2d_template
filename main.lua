@@ -1,7 +1,12 @@
 love.filesystem.load('requirements.lua')()
 
-function love.load()
-  game = Game:new()
+function love.load(args)
+  local k_args = {}
+  for i,v in ipairs(args) do
+    k_args[v] = true
+  end
+
+  game = Game:new(k_args)
 end
 
 function love.update(dt)
