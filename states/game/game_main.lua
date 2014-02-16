@@ -35,9 +35,6 @@ function Main:enteredState()
 
   self.generator = Generator:new()
   self:new_map(3, 3)
-  cron.after(0.001, function()
-    self:new_map(3, 3)
-  end)
 
   if self.args.debug then
     love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
@@ -64,7 +61,7 @@ end
 function Main:render()
   self.camera:set()
 
-  self.map:render()
+  if self.map then self.map:render() end
 
   if self.circle then
     self.circle:render()
