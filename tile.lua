@@ -54,7 +54,9 @@ function Tile:set_mask_data(mask_data, masked_value)
       self.body = love.physics.newBody(World, px, py, "static")
       self.shape = love.physics.newPolygonShape(unpack(vertices))
       self.fixture = love.physics.newFixture(self.body, self.shape)
-      self.fixture:setUserData(self)
+      cron.after(0.001, function()
+        self.fixture:setUserData(self)
+      end)
     end
   end
   return different_mask
