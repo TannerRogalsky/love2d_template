@@ -103,9 +103,12 @@ function Map:bitmask_section(section)
 end
 
 function Map:bitmask_sections()
-  for _, _, section in self.sections:each() do
-    self:bitmask_section(section)
-  end
+  slowroutine.new(0, function()
+    for _, _, section in self.sections:each() do
+      self:bitmask_section(section)
+      coroutine.yield()
+    end
+  end)
 end
 
 function Map:create_section_bounds(section)
