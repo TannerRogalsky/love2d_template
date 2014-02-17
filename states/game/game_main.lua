@@ -34,7 +34,9 @@ function Main:enteredState()
   g.setFont(self.default_font)
 
   self.generator = Generator:new()
-  self:new_map(3, 3)
+  cron.after(0.001, function()
+    self:new_map(3, 3)
+  end)
 
   if self.args.debug then
     love.window.setMode(self.pixel_width * 3, self.pixel_height * 3)
