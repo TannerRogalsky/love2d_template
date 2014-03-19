@@ -34,6 +34,8 @@ Grid = require 'lib/grid'
 require 'base'
 require 'game'
 
+Line = require 'line'
+
 require 'direction'
 
 local function require_all(directory)
