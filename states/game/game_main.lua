@@ -10,12 +10,34 @@ function Main:enteredState()
     table.insert(lines, Line.new(x + w, y + h, x, y + h))
     table.insert(lines, Line.new(x, y + h, x, y))
   end
-
-  box(100, 100, 100, 100)
-  box(300, 100, 100, 100)
-  box(300, 300, 100, 100)
-  box(100, 300, 100, 100)
   box(0, 0, g.getWidth(), g.getHeight())
+
+  table.insert(lines, Line.new(100, 150, 120, 50))
+  table.insert(lines, Line.new(120, 50, 200, 80))
+  table.insert(lines, Line.new(200, 80, 140, 210))
+  table.insert(lines, Line.new(140, 210, 100, 150))
+
+  table.insert(lines, Line.new(100, 200, 120, 250))
+  table.insert(lines, Line.new(120, 250, 60, 300))
+  table.insert(lines, Line.new(60, 300, 100, 200))
+
+  table.insert(lines, Line.new(200, 260, 220, 150))
+  table.insert(lines, Line.new(220, 150, 300, 200))
+  table.insert(lines, Line.new(300, 200, 350, 320))
+  table.insert(lines, Line.new(350, 320, 200, 260))
+
+  table.insert(lines, Line.new(340, 60, 360, 40))
+  table.insert(lines, Line.new(360, 40, 370, 70))
+  table.insert(lines, Line.new(370, 70, 340, 60))
+
+  table.insert(lines, Line.new(450, 190, 560, 170))
+  table.insert(lines, Line.new(560, 170, 540, 270))
+  table.insert(lines, Line.new(540, 270, 430, 290))
+  table.insert(lines, Line.new(430, 290, 450, 190))
+
+  table.insert(lines, Line.new(400,95, 580,50))
+  table.insert(lines, Line.new(580,50, 480,150))
+  table.insert(lines, Line.new(480,150, 400,95))
 
   global_rays = {}
 end
@@ -27,25 +49,19 @@ function Main:update(dt)
 
   local unique_vertices = {}
   local rays = {}
+  local function gen_ray(point)
+    local key = tostring(point)
+    if unique_vertices[key] == nil then
+      unique_vertices[key] = point
+      local ray = Line.new(mx, my, point.x, point.y)
+      table.insert(rays, ray)
+      table.insert(rays, ray:rotate(0.001))
+      table.insert(rays, ray:rotate(-0.001))
+    end
+  end
   for _,line in ipairs(lines) do
-    local key = tostring(line.origin)
-    if unique_vertices[key] == nil then
-      local v = line.origin
-      unique_vertices[key] = v
-      local ray = Line.new(mx, my, v.x, v.y)
-      table.insert(rays, ray)
-      table.insert(rays, ray:rotate(0.001))
-      table.insert(rays, ray:rotate(-0.001))
-    end
-    key = tostring(line.destination)
-    if unique_vertices[key] == nil then
-      local v = line.destination
-      unique_vertices[key] = v
-      local ray = Line.new(mx, my, v.x, v.y)
-      table.insert(rays, ray)
-      table.insert(rays, ray:rotate(0.001))
-      table.insert(rays, ray:rotate(-0.001))
-    end
+    gen_ray(line.origin)
+    gen_ray(line.destination)
   end
 
   global_rays = {}
@@ -61,6 +77,10 @@ function Main:update(dt)
     end
     table.insert(global_rays, closest_intersection)
   end
+
+  table.sort(global_rays, function(a, b)
+    return a.delta:angleTo() < b.delta:angleTo()
+  end)
 end
 
 function Main:render()
@@ -71,11 +91,17 @@ function Main:render()
     g.line(line:unpack())
   end
 
-
-  g.setColor(COLORS.red:rgb())
-  for _,ray in ipairs(global_rays) do
-    g.line(ray:unpack())
-    g.circle("fill", ray.destination.x, ray.destination.y, 3)
+  if #global_rays > 0 then
+    g.setColor(COLORS.red:rgb())
+    local x1, y1 = self.camera:mousePosition()
+    for i = 1, #global_rays - 1 do
+      local x2, y2 = global_rays[i].destination:unpack()
+      local x3, y3 = global_rays[i + 1].destination:unpack()
+      g.polygon("fill", x1, y1, x2, y2, x3, y3)
+    end
+    g.polygon("fill", x1, y1,
+      global_rays[#global_rays].destination.x, global_rays[#global_rays].destination.y,
+      global_rays[1].destination.x, global_rays[1].destination.y)
   end
 
   g.setColor(COLORS.green:rgb())
