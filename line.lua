@@ -20,6 +20,12 @@ function Line.__lt(a,b)
   return a.delta:len() < b.delta:len()
 end
 
+function Line:rotate(phi)
+  local x1, y1 = self.origin:unpack()
+  local x2, y2 = (self.delta:rotated(phi) + self.origin):unpack()
+  return Line.new(x1, y1, x2, y2)
+end
+
 function Line:intersects(other)
   assert(Line.is_line(other), "Can only check against other Lines.")
 

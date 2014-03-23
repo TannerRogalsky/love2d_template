@@ -16,6 +16,8 @@ function Main:enteredState()
   box(300, 300, 100, 100)
   box(100, 300, 100, 100)
   box(0, 0, g.getWidth(), g.getHeight())
+
+  global_rays = {}
 end
 
 function Main:update(dt)
@@ -23,19 +25,42 @@ function Main:update(dt)
   local px = g.getWidth() / 2
   local py = g.getHeight() / 2
 
-  local ray = Line.new(px, py, mx, my)
-
-  local closest_intersection = nil
+  local unique_vertices = {}
+  local rays = {}
   for _,line in ipairs(lines) do
-    local intersection = ray:intersects(line)
-    if intersection then
-      if closest_intersection == nil or intersection < closest_intersection then
-        closest_intersection = intersection
-      end
+    local key = tostring(line.origin)
+    if unique_vertices[key] == nil then
+      local v = line.origin
+      unique_vertices[key] = v
+      local ray = Line.new(mx, my, v.x, v.y)
+      table.insert(rays, ray)
+      table.insert(rays, ray:rotate(0.001))
+      table.insert(rays, ray:rotate(-0.001))
+    end
+    key = tostring(line.destination)
+    if unique_vertices[key] == nil then
+      local v = line.destination
+      unique_vertices[key] = v
+      local ray = Line.new(mx, my, v.x, v.y)
+      table.insert(rays, ray)
+      table.insert(rays, ray:rotate(0.001))
+      table.insert(rays, ray:rotate(-0.001))
     end
   end
 
-  global_ray = closest_intersection
+  global_rays = {}
+  for _,ray in ipairs(rays) do
+    local closest_intersection = nil
+    for _,line in ipairs(lines) do
+      local intersection = ray:intersects(line)
+      if intersection then
+        if closest_intersection == nil or intersection < closest_intersection then
+          closest_intersection = intersection
+        end
+      end
+    end
+    table.insert(global_rays, closest_intersection)
+  end
 end
 
 function Main:render()
@@ -46,10 +71,15 @@ function Main:render()
     g.line(line:unpack())
   end
 
-  if global_ray then
-    g.setColor(COLORS.red:rgb())
-    g.line(global_ray:unpack())
+
+  g.setColor(COLORS.red:rgb())
+  for _,ray in ipairs(global_rays) do
+    g.line(ray:unpack())
+    g.circle("fill", ray.destination.x, ray.destination.y, 3)
   end
+
+  g.setColor(COLORS.green:rgb())
+  g.print(love.timer.getFPS(), 0, 0)
 
   self.camera:unset()
 end
