@@ -30,6 +30,7 @@ COLORS = require 'lib/colors'
 tween = require 'lib/tween'
 beholder = require 'lib/beholder'
 Grid = require 'lib/grid'
+Line = require 'lib/line'
 
 require 'base'
 require 'game'
