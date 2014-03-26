@@ -39,13 +39,12 @@ function Grid:each(x, y, width, height)
 
   local function iterator(state)
     while state.childIndex <= x + width do
-      local child           = self[state.childIndex]
       state.grandChildIndex = state.grandChildIndex + 1
       if state.grandChildIndex > y + height then
         state.childIndex = state.childIndex + 1
         state.grandChildIndex = y - 1
       else
-        return state.childIndex, state.grandChildIndex, child[state.grandChildIndex]
+        return state.childIndex, state.grandChildIndex, self:get(state.childIndex, state.grandChildIndex)
       end
     end
   end
