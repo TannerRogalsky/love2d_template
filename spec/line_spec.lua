@@ -15,6 +15,12 @@ describe("Line", function()
     assert.is_true(Line.is_line(line))
   end)
 
+  it("should be instantiated via __call on the class table", function()
+    local line = Line(0, 0, 100, 100)
+    assert.is.truthy(line)
+    assert.is_true(Line.is_line(line))
+  end)
+
   describe("operations not postfixed with '_inplace' should return a new Line instance", function()
     it("should return a new Line instance when rotated is called", function()
       local line = Line.new(0, 0, 100, 100)

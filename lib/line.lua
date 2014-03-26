@@ -75,4 +75,4 @@ function Line:unpack()
   return x1, y1, x2, y2
 end
 
-return Line
+return setmetatable(Line, {__call = function(_, ...) return Line.new(...) end})
