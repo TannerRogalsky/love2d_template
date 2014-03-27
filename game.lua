@@ -40,6 +40,9 @@ end
 function Game:joystickreleased(joystick, button)
 end
 
+function Game:textinput(text)
+end
+
 function Game:focus(has_focus)
 end
 

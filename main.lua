@@ -50,6 +50,7 @@ function love.joystickreleased(joystick, button)
 end
 
 function love.textinput(text)
+  game:textinput(text)
   loveframes.textinput(text)
 end
 
