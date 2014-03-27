@@ -1,4 +1,4 @@
-Direction = class('Direction', Base)
+local Direction = class('Direction', Base)
 
 function Direction:initialize(x, y)
   Base.initialize(self)
@@ -47,3 +47,5 @@ Direction[1][0] = Direction.EAST
 Direction[-1][0] = Direction.WEST
 
 Direction.list = { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST}
+
+return Direction

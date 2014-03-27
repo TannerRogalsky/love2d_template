@@ -1,4 +1,4 @@
-Game = class('Game', Base):include(Stateful)
+local Game = class('Game', Base):include(Stateful)
 
 function Game:initialize(args)
   Base.initialize(self)
@@ -45,3 +45,5 @@ end
 
 function Game:quit()
 end
+
+return Game

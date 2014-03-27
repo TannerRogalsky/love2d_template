@@ -32,10 +32,10 @@ beholder = require("lib/beholder")
 Grid = require("lib/grid")
 Line = require("lib/line")
 
-require("base")
-require("game")
+Base = require("base")
+Game = require("game")
 
-require("direction")
+Direction = require("direction")
 
 local function require_all(directory)
   local lfs = love.filesystem

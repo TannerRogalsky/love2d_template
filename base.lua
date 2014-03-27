@@ -1,4 +1,4 @@
-Base = class('Base')
+local Base = class('Base')
 
 --- Base class constructor.
 --
@@ -27,3 +27,5 @@ end
 function Base.__concat(value1, value2)
   return tostring(value1) .. tostring(value2)
 end
+
+return Base
