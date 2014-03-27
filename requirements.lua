@@ -18,7 +18,7 @@ function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
-require("lib/middleclass")
+class = require("lib/middleclass")
 Stateful = require("lib/stateful")
 skiplist = require("lib/skiplist")
 HC = require("lib/HardonCollider")
