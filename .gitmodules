@@ -1,6 +1,6 @@
 [submodule "lib/HardonCollider"]
 	path = lib/HardonCollider
-	url = git@github.com:vrld/HardonCollider.git
+	url = https://github.com/vrld/HardonCollider.git
 [submodule "lib/LoveFrames"]
 	path = lib/LoveFrames
-	url = git@github.com:NikolaiResokav/LoveFrames.git
+	url = https://github.com/kikito/middleclass.git
