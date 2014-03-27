@@ -2,7 +2,7 @@ describe("Grid", function()
   local Grid
 
   setup(function()
-    require("lib/middleclass")
+    class = require("lib/middleclass")
     Grid = require("lib/grid")
   end)
 
