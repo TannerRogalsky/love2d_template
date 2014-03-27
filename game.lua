@@ -19,7 +19,7 @@ end
 function Game:update(dt)
 end
 
-function Game:render()
+function Game:draw()
 end
 
 function Game:mousepressed(x, y, button)

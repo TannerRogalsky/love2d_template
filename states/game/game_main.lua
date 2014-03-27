@@ -7,7 +7,7 @@ end
 function Main:update(dt)
 end
 
-function Main:render()
+function Main:draw()
   self.camera:set()
 
   self.camera:unset()

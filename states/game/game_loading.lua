@@ -30,7 +30,7 @@ function Loading:enteredState()
   end)
 end
 
-function Loading:render()
+function Loading:draw()
   local percent = 0
   if self.loader.resourceCount ~= 0 then
     percent = self.loader.loadedCount / self.loader.resourceCount
