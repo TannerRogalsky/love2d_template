@@ -2,6 +2,12 @@ local Main = Game:addState('Main')
 
 function Main:enteredState()
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
+
+  local Camera = require("lib/camera")
+  self.camera = Camera:new()
+
+  self.default_font = g.newFont(16)
+  g.setFont(self.default_font)
 end
 
 function Main:update(dt)

@@ -7,12 +7,6 @@ function Game:initialize(args)
     self[k] = v
   end
 
-  local Camera = require 'lib/camera'
-  self.camera = Camera:new()
-
-  self.default_font = g.newFont(16)
-  g.setFont(self.default_font)
-
   self:gotoState("Loading")
 end
 
