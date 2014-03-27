@@ -24,7 +24,7 @@ skiplist = require "lib/skiplist"
 HC = require 'lib/HardonCollider'
 inspect = require 'lib/inspect'
 require 'lib/AnAL'
--- require 'lib/LoveFrames'
+require 'lib/LoveFrames'
 cron = require 'lib/cron'
 COLORS = require 'lib/colors'
 tween = require 'lib/tween'
