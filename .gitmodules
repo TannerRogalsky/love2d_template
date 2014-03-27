@@ -3,4 +3,4 @@
 	url = https://github.com/vrld/HardonCollider.git
 [submodule "lib/LoveFrames"]
 	path = lib/LoveFrames
-	url = https://github.com/kikito/middleclass.git
+	url = https://github.com/NikolaiResokav/LoveFrames.git
