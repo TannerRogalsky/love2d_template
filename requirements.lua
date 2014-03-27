@@ -18,24 +18,24 @@ function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
-require 'lib/middleclass'
-Stateful = require 'lib/stateful'
-skiplist = require "lib/skiplist"
-HC = require 'lib/HardonCollider'
-inspect = require 'lib/inspect'
-require 'lib/AnAL'
-require 'lib/LoveFrames'
-cron = require 'lib/cron'
-COLORS = require 'lib/colors'
-tween = require 'lib/tween'
-beholder = require 'lib/beholder'
-Grid = require 'lib/grid'
-Line = require 'lib/line'
+require("lib/middleclass")
+Stateful = require("lib/stateful")
+skiplist = require("lib/skiplist")
+HC = require("lib/HardonCollider")
+inspect = require("lib/inspect")
+require("lib/AnAL")
+require("lib/LoveFrames")
+cron = require("lib/cron")
+COLORS = require("lib/colors")
+tween = require("lib/tween")
+beholder = require("lib/beholder")
+Grid = require("lib/grid")
+Line = require("lib/line")
 
-require 'base'
-require 'game'
+require("base")
+require("game")
 
-require 'direction'
+require("direction")
 
 local function require_all(directory)
   local lfs = love.filesystem
