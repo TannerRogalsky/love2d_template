@@ -11,6 +11,7 @@ function love.load(args)
 end
 
 function love.update(dt)
+  lovebird.update()
   game:update(dt)
   cron.update(dt)
   tween.update(dt)

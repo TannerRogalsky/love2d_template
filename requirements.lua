@@ -49,3 +49,6 @@ local function require_all(directory)
   end
 end
 require_all("states")
+
+lovebird = require("lib/lovebird/lovebird")
+lovebird.port = 3100
