@@ -6,4 +6,4 @@
 	url = https://github.com/NikolaiResokav/LoveFrames.git
 [submodule "lib/lovebird"]
 	path = lib/lovebird
-	url = git@github.com:rxi/lovebird.git
+	url = https://github.com/rxi/lovebird.git
