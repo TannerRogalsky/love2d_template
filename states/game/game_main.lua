@@ -78,6 +78,7 @@ function Main:enteredState()
   }
 
   rope = love.physics.newRopeJoint( player1.body, player2.body, 100, 100, 200, 100, 100, true )
+  rope_x, rope_y = 0, 0
 
   level = MapLoader.load("level1")
   self.camera:setScale(1 / level.scale, 1 / level.scale)
@@ -85,7 +86,7 @@ end
 
 function Main:update(dt)
   World:update(dt)
-  -- print("force", rope:getReactionForce(1/dt))
+  rope_x, rope_y = rope:getReactionForce(1/dt)
 end
 
 function Main:draw()
@@ -102,7 +103,11 @@ function Main:draw()
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Foreground"])
 
-  g.setColor(COLORS.red:rgb())
+  if math.abs(rope_x) >= 1 or math.abs(rope_y) >= 1 then
+    g.setColor(COLORS.green:rgb())
+  else
+    g.setColor(COLORS.red:rgb())
+  end
   g.line(rope:getAnchors())
   self.camera:unset()
 end
