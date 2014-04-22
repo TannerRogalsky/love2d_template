@@ -30,18 +30,26 @@ function Main:enteredState()
   love.keyboard.setKeyRepeat(false)
 
   local function up(player)
-    player.body:applyLinearImpulse(0, -100)
+    player.body:applyLinearImpulse(0, -40)
   end
 
   local function left(player)
-    player.body:applyLinearImpulse(-50, 0)
+    player.body:applyAngularImpulse(-200, 0)
   end
 
   local function right(player)
-    player.body:applyLinearImpulse(50, 0)
+    player.body:applyAngularImpulse(200, 0)
   end
 
   player1 = PlayerCharacter:new(100, 100, 20, 20)
+  player1.body = love.physics.newBody(World, 100, 100, "dynamic")
+  player1.shape = love.physics.newRectangleShape(0, 0, 20, 20)
+  player1.fixture = love.physics.newFixture(player1.body, player1.shape)
+  player1.fixture:setUserData(player1)
+  player1.fixture:setFriction(100000)
+  function player1:draw()
+    g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
+  end
   player1.controls = {
     w = up,
     a = left,
@@ -49,6 +57,20 @@ function Main:enteredState()
   }
 
   player2 = PlayerCharacter:new(200, 100, 20, 20)
+  player2.body = love.physics.newBody(World, 200, 100, "dynamic")
+  player2.shape = love.physics.newCircleShape(20 / 2)
+  player2.fixture = love.physics.newFixture(player2.body, player2.shape)
+  player2.fixture:setUserData(player2)
+  player2.fixture:setFriction(100000)
+  player2.body:setAngularDamping(2)
+  function player2:draw()
+    local x, y = self.body:getWorldCenter()
+    local radius = 20 / 2
+    g.circle("fill", x, y, radius, 25)
+    g.setColor(COLORS.black:rgb())
+    local angle = self.body:getAngle()
+    g.line(x, y, x + math.cos(angle) * radius, y + math.sin(angle) * radius)
+  end
   player2.controls = {
     up = up,
     left = left,
@@ -74,7 +96,7 @@ function Main:draw()
 
   g.setColor(COLORS.blue:rgb())
   for _,player in pairs(PlayerCharacter.instances) do
-    g.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
+    player:draw()
   end
 
   g.setColor(COLORS.white:rgb())
