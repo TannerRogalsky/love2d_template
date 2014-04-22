@@ -34,6 +34,8 @@ Line = require("lib/line")
 
 Base = require("base")
 Game = require("game")
+MapLoader = require("map_loader")
+PlayerCharacter = require("player_character")
 
 Direction = require("direction")
 

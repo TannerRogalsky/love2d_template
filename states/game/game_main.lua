@@ -30,67 +30,58 @@ function Main:enteredState()
   love.keyboard.setKeyRepeat(false)
 
   local function up(player)
-    player.body:applyLinearImpulse(0, -400)
+    player.body:applyLinearImpulse(0, -100)
   end
 
   local function left(player)
-    player.body:applyLinearImpulse(-200, 0)
+    player.body:applyLinearImpulse(-50, 0)
   end
 
   local function right(player)
-    player.body:applyLinearImpulse(200, 0)
+    player.body:applyLinearImpulse(50, 0)
   end
 
-  player1 = {}
-  player1.body = love.physics.newBody(World, 100, 100, "dynamic")
-  player1.shape = love.physics.newRectangleShape(-25, -25, 50, 50)
-  player1.fixture = love.physics.newFixture(player1.body, player1.shape)
-  player1.fixture:setUserData(player1)
+  player1 = PlayerCharacter:new(100, 100, 20, 20)
   player1.controls = {
     w = up,
     a = left,
     d = right
   }
 
-  player2 = {}
-  player2.body = love.physics.newBody(World, 200, 100, "dynamic")
-  player2.shape = love.physics.newRectangleShape(-25, -25, 50, 50)
-  player2.fixture = love.physics.newFixture(player2.body, player2.shape)
-  player2.fixture:setUserData(player2)
+  player2 = PlayerCharacter:new(200, 100, 20, 20)
   player2.controls = {
     up = up,
     left = left,
     right = right
   }
 
-  rope = love.physics.newRopeJoint( player1.body, player2.body, 75, 75, 175, 75, 100, true )
+  rope = love.physics.newRopeJoint( player1.body, player2.body, 100, 100, 200, 100, 100, true )
 
-  floor = {}
-  floor.body = love.physics.newBody(World, 0, 400, "static")
-  floor.shape = love.physics.newRectangleShape(0, 0, 600, 20)
-  floor.fixture = love.physics.newFixture(floor.body, floor.shape)
-  floor.fixture:setUserData(floor)
+  level = MapLoader.load("level1")
+  self.camera:setScale(1 / level.scale, 1 / level.scale)
 end
 
 function Main:update(dt)
   World:update(dt)
-  print("force", rope:getReactionForce(1/dt))
+  -- print("force", rope:getReactionForce(1/dt))
 end
 
 function Main:draw()
   self.camera:set()
 
+  g.setColor(COLORS.white:rgb())
+  g.draw(level.tile_layers["Background"])
+
   g.setColor(COLORS.blue:rgb())
-  for _,body in ipairs(World:getBodyList()) do
-    for _,fixture in ipairs(body:getFixtureList()) do
-      local shape = fixture:getShape()
-      g.polygon("fill", body:getWorldPoints(shape:getPoints()))
-    end
+  for _,player in pairs(PlayerCharacter.instances) do
+    g.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
   end
+
+  g.setColor(COLORS.white:rgb())
+  g.draw(level.tile_layers["Foreground"])
 
   g.setColor(COLORS.red:rgb())
   g.line(rope:getAnchors())
-
   self.camera:unset()
 end
 

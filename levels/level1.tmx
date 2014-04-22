@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="21" tileheight="21">
+ <properties>
+  <property name="scale" value="4"/>
+ </properties>
  <tileset firstgid="1" source="../images/tiles.tsx"/>
- <layer name="Tile Layer 1" width="50" height="25">
+ <layer name="Background" width="50" height="25">
   <data encoding="base64" compression="zlib">
-   eJztzjsKACAMREG9tr+TeFhTWGotwgw8wnZJCQAA7vK+IypRjVrUD3u+eBAA4BML9tME+A==
+   eJztysEJwCAQRUFxm0olVpISUomVSlg8CLkFBGEGHsuHLQX2uyI7XYvsBL3mfeq6X3dk09cPAAAA8M8AvKkFDw==
   </data>
  </layer>
+ <layer name="Foreground" width="50" height="25">
+  <properties>
+   <property name="physics" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztw7EJAAAIA7D+7fMe0UGEBJIA/DBFAAAAuLZKqgc2
+  </data>
+ </layer>
+ <objectgroup name="Physics" width="50" height="25">
+  <object x="0" y="126" width="315" height="21"/>
+ </objectgroup>
 </map>
