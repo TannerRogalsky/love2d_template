@@ -79,9 +79,16 @@ function Main:update(dt)
   World:update(dt)
   rope_x, rope_y = rope:getReactionForce(1/dt)
 
+  local cx, cy, num_players = 0, 0, 0
   for _,player in pairs(PlayerCharacter.instances) do
     player:update(dt)
+    local px, py = player.body:getWorldCenter()
+    cx, cy = cx + px, cy + py
+    num_players = num_players + 1
   end
+  cx, cy = cx / num_players, cy / num_players
+  cx, cy = cx - g.getWidth() / 8, cy - g.getHeight() / 8
+  self.camera:setPosition(cx, cy)
 end
 
 function Main:draw()
