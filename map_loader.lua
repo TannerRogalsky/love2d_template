@@ -45,11 +45,6 @@ function MapLoader.load(map_name)
         if quad_index ~= 0 then
           local w, h = map_data.tilewidth, map_data.tileheight
           g.draw(tileset_data.image, quad, x * w, y * h)
-          -- if tiles_metadata.properties.physics then
-          --   local body = love.physics.newBody(World, x * w, y * h, "static")
-          --   local shape = love.physics.newRectangleShape(w / 2, h / 2, w, h)
-          --   love.physics.newFixture(body, shape)
-          -- end
         end
       end
     end
@@ -58,9 +53,12 @@ function MapLoader.load(map_name)
   end
 
   for index, object in ipairs(layers.objectgroup["Physics"].objects) do
-      local body = love.physics.newBody(World, object.x, object.y, "static")
-      local shape = love.physics.newRectangleShape(object.width / 2, object.height / 2, object.width, object.height)
-      love.physics.newFixture(body, shape)
+    local physics_object = {}
+    physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
+    physics_object.shape = love.physics.newRectangleShape(object.width / 2, object.height / 2, object.width, object.height)
+    physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
+    physics_object.fixture:setUserData(physics_object)
+    physics_object.terrain = true
   end
 
   map_area.tileset_data = tileset_data
