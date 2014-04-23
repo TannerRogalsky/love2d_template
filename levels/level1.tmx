@@ -14,10 +14,11 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztw7EJAAAIA7D+7fMe0UGEBJIA/DBFAAAAuLZKqgc2
+   eJztz8EJAAAIAzH37vIOoaCPBO7fVgGbcj1gyccfGQQAAADXGn1rCCw=
   </data>
  </layer>
  <objectgroup name="Physics" width="50" height="25">
   <object x="0" y="126" width="315" height="21"/>
+  <object x="273" y="84" width="21" height="42"/>
  </objectgroup>
 </map>
