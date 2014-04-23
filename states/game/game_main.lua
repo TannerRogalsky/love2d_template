@@ -37,7 +37,7 @@ function Main:enteredState()
   player1.shape = love.physics.newRectangleShape(0, 0, 20, 20)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
   player1.fixture:setUserData(player1)
-  player1.fixture:setFriction(100000)
+  player1.fixture:setFriction(1)
   function player1:draw()
     g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
   end
@@ -52,7 +52,7 @@ function Main:enteredState()
   player2.shape = love.physics.newCircleShape(20 / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
   player2.fixture:setUserData(player2)
-  player2.fixture:setFriction(100000)
+  player2.fixture:setFriction(1)
   player2.body:setAngularDamping(2)
   function player2:draw()
     local x, y = self.body:getWorldCenter()
@@ -93,6 +93,9 @@ end
 
 function Main:draw()
   self.camera:set()
+
+  g.setColor(COLORS.cornflowerblue:rgb())
+  g.rectangle("fill", self.camera:getViewport())
 
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Background"])
