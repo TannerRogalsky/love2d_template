@@ -189,6 +189,22 @@ return {
           height = 21,
           visible = true,
           properties = {}
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 378,
+          y = 126,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = 63, y = -63 },
+            { x = 63, y = 0 }
+          },
+          properties = {}
         }
       }
     }

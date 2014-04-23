@@ -55,7 +55,16 @@ function MapLoader.load(map_name)
   for index, object in ipairs(layers.objectgroup["Physics"].objects) do
     local physics_object = {}
     physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
-    physics_object.shape = love.physics.newRectangleShape(object.width / 2, object.height / 2, object.width, object.height)
+    if object.shape == "rectangle" then
+      physics_object.shape = love.physics.newRectangleShape(object.width / 2, object.height / 2, object.width, object.height)
+    elseif object.shape == "polygon" then
+      local points = {}
+      for i,point in ipairs(object.polygon) do
+        table.insert(points, point.x)
+        table.insert(points, point.y)
+      end
+      physics_object.shape = love.physics.newPolygonShape(unpack(points))
+    end
     physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
     physics_object.fixture:setUserData(physics_object)
     physics_object.terrain = true

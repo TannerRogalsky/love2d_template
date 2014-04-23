@@ -14,7 +14,7 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0rEKACAIRdH6bqeG/jtaGyxQUuoecHN4yisFgCeJDuCk1+gEOtmMtpdFiw5glOmXVmtHZv9PO/aan24FAAAAbhuHFBDu
+   eJxjYBgFo2Dwg/qBdgAJoBqHOMgPc+npEApBKyOmGMwPM+ntGCygmgDGp26wxEPjQDuAQoArrQ9FgJ5GQOmf2DQ23MBI8usoGAWjYBSMglEwCkbBKBgF9AYA3q8U2w==
   </data>
  </layer>
  <objectgroup name="Physics" width="50" height="25">
@@ -25,5 +25,8 @@
   <object x="21" y="189" width="273" height="21"/>
   <object x="42" y="147" width="21"/>
   <object x="378" y="210" width="105" height="21"/>
+  <object x="378" y="126">
+   <polygon points="0,0 63,-63 63,0"/>
+  </object>
  </objectgroup>
 </map>
