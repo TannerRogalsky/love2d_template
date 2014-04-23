@@ -26,16 +26,19 @@ end
 
 function PlayerCharacter:up(dt)
   if self.can_jump then
-    self.body:applyLinearImpulse(0, -15)
+    self.body:applyLinearImpulse(0, -30)
+    self.can_jump = false
   end
 end
 
 function PlayerCharacter:left(dt)
   self.body:applyAngularImpulse(-1200 * dt, 0)
+  self.body:applyLinearImpulse(-20 * dt, 0)
 end
 
 function PlayerCharacter:right(dt)
   self.body:applyAngularImpulse(1200 * dt, 0)
+  self.body:applyLinearImpulse(20 * dt, 0)
 end
 
 function PlayerCharacter:begin_contact(other, contact, nx, ny)
@@ -46,7 +49,6 @@ function PlayerCharacter:begin_contact(other, contact, nx, ny)
 end
 
 function PlayerCharacter:end_contact(other, contact)
-  self.can_jump = false
 end
 
 return PlayerCharacter
