@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="21" tileheight="21">
  <properties>
-  <property name="scale" value="4"/>
+  <property name="scale" value="3"/>
  </properties>
  <tileset firstgid="1" source="../images/tiles.tsx"/>
  <layer name="Background" width="50" height="25">

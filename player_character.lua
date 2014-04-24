@@ -42,7 +42,6 @@ function PlayerCharacter:right(dt)
 end
 
 function PlayerCharacter:begin_contact(other, contact, nx, ny)
-  print(self, nx, ny, self.can_jump)
   if ny > 0.5 then
     self.can_jump = true
   end
