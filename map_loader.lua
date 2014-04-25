@@ -12,6 +12,7 @@ function MapLoader.load(map_name)
 
   local tileset_data = map_data.tilesets[1]
   tileset_data.image = g.newImage(MapLoader.fix_relative_path(tileset_data.image))
+  tileset_data.image:setFilter("nearest", "nearest")
   for y = tileset_data.margin, tileset_data.imageheight - 1, tileset_data.tileheight + tileset_data.spacing do
     for x = tileset_data.margin, tileset_data.imagewidth - 1, tileset_data.tilewidth + tileset_data.spacing do
       local tile_width, tile_height = tileset_data.tilewidth, tileset_data.tileheight
@@ -32,9 +33,9 @@ function MapLoader.load(map_name)
   map_area.tile_layers = {}
   g.setColor(COLORS.white:rgb())
   for name, tiles_metadata in pairs(layers.tilelayer) do
-    local canvas = g.newCanvas(map_data.width * map_data.tilewidth, map_data.height * map_data.tileheight)
-    canvas:setFilter("nearest", "nearest")
-    g.setCanvas(canvas)
+    local sprite_batch = g.newSpriteBatch(tileset_data.image, map_data.width * map_data.height, "dynamic")
+    local sprite_lookup = DictGrid:new()
+    sprite_batch:bind()
     local data_index = 0
     for y=0,tiles_metadata.height - 1 do
       for x=0,tiles_metadata.width - 1 do
@@ -44,12 +45,15 @@ function MapLoader.load(map_name)
 
         if quad_index ~= 0 then
           local w, h = map_data.tilewidth, map_data.tileheight
-          g.draw(tileset_data.image, quad, x * w, y * h)
+          local sprite_id = sprite_batch:add(quad, x * w, y * h)
+          sprite_lookup:set(x, y, sprite_lookup)
         end
       end
     end
-    g.setCanvas()
-    map_area.tile_layers[name] = canvas
+    sprite_batch:unbind()
+    map_area.tile_layers[name] = {}
+    map_area.tile_layers[name].sprite_lookup = sprite_lookup
+    map_area.tile_layers[name].sprite_batch = sprite_batch
   end
 
   for index, object in ipairs(layers.objectgroup["Physics"].objects) do

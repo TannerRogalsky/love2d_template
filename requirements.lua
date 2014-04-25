@@ -30,6 +30,7 @@ COLORS = require("lib/colors")
 tween = require("lib/tween")
 beholder = require("lib/beholder")
 Grid = require("lib/grid")
+DictGrid = require("lib/dict_grid")
 Line = require("lib/line")
 
 Base = require("base")

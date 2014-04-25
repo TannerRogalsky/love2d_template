@@ -98,7 +98,7 @@ function Main:draw()
   g.rectangle("fill", self.camera:getViewport())
 
   g.setColor(COLORS.white:rgb())
-  g.draw(level.tile_layers["Background"])
+  g.draw(level.tile_layers["Background"].sprite_batch)
 
   g.setColor(COLORS.blue:rgb())
   for _,player in pairs(PlayerCharacter.instances) do
@@ -106,7 +106,7 @@ function Main:draw()
   end
 
   g.setColor(COLORS.white:rgb())
-  g.draw(level.tile_layers["Foreground"])
+  g.draw(level.tile_layers["Foreground"].sprite_batch)
 
   if math.abs(rope_x) >= 1 or math.abs(rope_y) >= 1 then
     g.setColor(COLORS.green:rgb())
