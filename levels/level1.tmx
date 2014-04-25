@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="21" tileheight="21">
  <properties>
+  <property name="player1_pos" value="100,100"/>
+  <property name="player2_pos" value="200,100"/>
   <property name="scale" value="3"/>
  </properties>
  <tileset firstgid="1" source="../images/tiles.tsx"/>

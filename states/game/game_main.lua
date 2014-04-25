@@ -30,10 +30,11 @@ function Main:enteredState()
 
   love.keyboard.setKeyRepeat(false)
 
+  level = MapLoader.load("level1")
+  self.camera:setScale(1 / level.scale, 1 / level.scale)
 
-
-  player1 = PlayerCharacter:new(100, 100, 21, 21)
-  player1.body = love.physics.newBody(World, 100, 100, "dynamic")
+  player1 = PlayerCharacter:new(level.player1.x, level.player1.y, 21, 21)
+  player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
   player1.shape = love.physics.newRectangleShape(0, 0, 21, 21)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
   player1.fixture:setUserData(player1)
@@ -47,8 +48,8 @@ function Main:enteredState()
     d = PlayerCharacter.right
   }
 
-  player2 = PlayerCharacter:new(200, 100, 21, 21)
-  player2.body = love.physics.newBody(World, 200, 100, "dynamic")
+  player2 = PlayerCharacter:new(level.player2.x, level.player2.y, 21, 21)
+  player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
   player2.shape = love.physics.newCircleShape(21 / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
   player2.fixture:setUserData(player2)
@@ -68,11 +69,8 @@ function Main:enteredState()
     right = PlayerCharacter.right
   }
 
-  rope = love.physics.newRopeJoint( player1.body, player2.body, 100, 100, 200, 100, 100, true )
+  rope = love.physics.newRopeJoint( player1.body, player2.body, level.player1.x, level.player1.y, level.player2.x, level.player2.y, 100, true )
   rope_x, rope_y = 0, 0
-
-  level = MapLoader.load("level1")
-  self.camera:setScale(1 / level.scale, 1 / level.scale)
 end
 
 function Main:update(dt)

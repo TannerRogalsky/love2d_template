@@ -7,6 +7,8 @@ return {
   tilewidth = 21,
   tileheight = 21,
   properties = {
+    ["player1_pos"] = "100,100",
+    ["player2_pos"] = "200,100",
     ["scale"] = "3"
   },
   tilesets = {
