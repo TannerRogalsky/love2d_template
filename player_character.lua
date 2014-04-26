@@ -1,6 +1,9 @@
 local PlayerCharacter = class('PlayerCharacter', Base):include(Stateful)
-local jump = love.audio.newSource( "/sounds/jump.wav", "static" )
-jump:setVolume(0.1)
+local cjump = love.audio.newSource( "/sounds/cjump.ogg", "static" )
+cjump:setVolume(0.2)
+local sjump = love.audio.newSource( "/sounds/sjump.ogg", "static" )
+sjump:setVolume(0.2)
+
 PlayerCharacter.static.instances = {}
 
 function PlayerCharacter:initialize(x, y, w, h)
@@ -28,8 +31,13 @@ end
 
 function PlayerCharacter:up(dt)
   if self.can_jump then
-    love.audio.stop(jump) 
-    love.audio.play(jump)
+    if self.player_name == "circle" then
+      love.audio.stop(cjump) 
+      love.audio.play(cjump)
+    else
+      love.audio.stop(sjump) 
+      love.audio.play(sjump)
+    end
     self.body:applyLinearImpulse(0, -30)
     self.can_jump = false
   end

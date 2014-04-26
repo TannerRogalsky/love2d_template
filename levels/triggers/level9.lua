@@ -2,19 +2,19 @@ local triggers = {}
 
 local bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
 love.audio.play(bgm)
-bgm:setVolume(0.6)
+bgm:setVolume(0.4)
 bgm:setLooping("true")
 
-local coin1 = love.audio.newSource( "/sounds/block1.wav", "static" )
+local coin1 = love.audio.newSource( "/sounds/block1.ogg", "static" )
 coin1:setVolume(0.2)
 
-local coin2 = love.audio.newSource( "/sounds/block2.wav", "static" )
+local coin2 = love.audio.newSource( "/sounds/block2.ogg", "static" )
 coin2:setVolume(0.2)
 
 local curcoin = 0
 
-local jumppad = love.audio.newSource( "/sounds/jumppad.wav", "static" )
-jumppad:setVolume(0.1)
+local jumppad = love.audio.newSource( "/sounds/jumppad.ogg", "static" )
+jumppad:setVolume(0.3)
 
 
 
