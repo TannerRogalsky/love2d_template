@@ -38,7 +38,10 @@
  <objectgroup name="Triggers" width="50" height="25">
   <object x="65" y="74">
    <properties>
+    <property name="amplitude" value="2"/>
     <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="tile_layer" value="Foreground"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
@@ -52,6 +55,16 @@
    <properties>
     <property name="player" value="square"/>
     <property name="type" value="Goal"/>
+   </properties>
+  </object>
+  <object x="168" y="84" width="21" height="21">
+   <properties>
+    <property name="on_update" value="bounce_animation"/>
+   </properties>
+  </object>
+  <object x="168" y="147" width="21" height="21">
+   <properties>
+    <property name="on_update" value="bounce_animation"/>
    </properties>
   </object>
  </objectgroup>

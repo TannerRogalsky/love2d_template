@@ -278,7 +278,10 @@ return {
             { x = 6, y = 7 }
           },
           properties = {
-            ["on_enter"] = "coin_enter"
+            ["amplitude"] = "2",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["tile_layer"] = "Foreground"
           }
         },
         {
@@ -307,6 +310,32 @@ return {
           properties = {
             ["player"] = "square",
             ["type"] = "Goal"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 168,
+          y = 84,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["on_update"] = "bounce_animation"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 168,
+          y = 147,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["on_update"] = "bounce_animation"
           }
         }
       }
