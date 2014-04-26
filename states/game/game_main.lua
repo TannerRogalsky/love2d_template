@@ -28,8 +28,6 @@ function Main:enteredState()
   self.default_font = g.newFont(16)
   g.setFont(self.default_font)
 
-  love.keyboard.setKeyRepeat(false)
-
   level = MapLoader.load("level1")
   self.camera:setScale(1 / level.scale, 1 / level.scale)
 
