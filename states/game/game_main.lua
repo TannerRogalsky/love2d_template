@@ -40,6 +40,7 @@ function Main:enteredState()
   player1.fixture:setUserData(player1)
   player1.fixture:setFriction(1)
   function player1:draw()
+    g.setColor(COLORS.blue:rgb())
     g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
   end
   player1.controls = {
@@ -56,6 +57,7 @@ function Main:enteredState()
   player2.fixture:setFriction(1)
   player2.body:setAngularDamping(2)
   function player2:draw()
+    g.setColor(COLORS.blue:rgb())
     local x, y = self.body:getWorldCenter()
     local radius = 21 / 2
     g.circle("fill", x, y, radius, 25)
@@ -122,6 +124,9 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
+  if key == "r" then
+    self:gotoState("Main")
+  end
 end
 
 function Main:keyreleased(key, unicode)
@@ -137,6 +142,10 @@ function Main:focus(has_focus)
 end
 
 function Main:exitedState()
+  World:destroy()
+  for id,player in pairs(PlayerCharacter.instances) do
+    PlayerCharacter.instances[id] = nil
+  end
 end
 
 return Main

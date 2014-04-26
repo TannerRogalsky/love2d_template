@@ -3,7 +3,7 @@ MapLoader.static.maps_folder = "levels/"
 
 function MapLoader.load(map_name)
   local path = MapLoader.maps_folder .. map_name
-  local map_data = require(path)
+  local map_data = game.preloaded_levels[map_name]
   local scale = map_data.properties.scale
   local map_area = {scale = scale}
   map_area.player1 = {}
@@ -17,8 +17,8 @@ function MapLoader.load(map_name)
   local tileset_quads = {}
 
   local tileset_data = map_data.tilesets[1]
-  tileset_data.image = g.newImage(MapLoader.fix_relative_path(tileset_data.image))
-  tileset_data.image:setFilter("nearest", "nearest")
+  tileset_data.created_image = g.newImage(MapLoader.fix_relative_path(tileset_data.image))
+  tileset_data.created_image:setFilter("nearest", "nearest")
   for y = tileset_data.margin, tileset_data.imageheight - 1, tileset_data.tileheight + tileset_data.spacing do
     for x = tileset_data.margin, tileset_data.imagewidth - 1, tileset_data.tilewidth + tileset_data.spacing do
       local tile_width, tile_height = tileset_data.tilewidth, tileset_data.tileheight
@@ -39,7 +39,7 @@ function MapLoader.load(map_name)
   map_area.tile_layers = {}
   g.setColor(COLORS.white:rgb())
   for name, tiles_metadata in pairs(layers.tilelayer) do
-    local sprite_batch = g.newSpriteBatch(tileset_data.image, map_data.width * map_data.height, "dynamic")
+    local sprite_batch = g.newSpriteBatch(tileset_data.created_image, map_data.width * map_data.height, "dynamic")
     local sprite_lookup = DictGrid:new()
     sprite_batch:bind()
     local data_index = 0
