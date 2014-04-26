@@ -105,6 +105,16 @@ function Main:draw()
     player:draw()
   end
 
+  -- g.setColor(COLORS.blue:rgb())
+  -- for _,body in ipairs(World:getBodyList()) do
+  --   for _,fixture in ipairs(body:getFixtureList()) do
+  --     local shape = fixture:getShape()
+  --     if shape.getPoints then
+  --       g.polygon("fill", body:getWorldPoints(shape:getPoints()))
+  --     end
+  --   end
+  -- end
+
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Foreground"].sprite_batch)
 
