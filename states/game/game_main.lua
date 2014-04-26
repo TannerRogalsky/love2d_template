@@ -31,9 +31,10 @@ function Main:enteredState()
   level = MapLoader.load("level1")
   self.camera:setScale(1 / level.scale, 1 / level.scale)
 
-  player1 = PlayerCharacter:new(level.player1.x, level.player1.y, 21, 21)
+  local radius = 19
+  player1 = PlayerCharacter:new(level.player1.x, level.player1.y, radius, radius)
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
-  player1.shape = love.physics.newRectangleShape(0, 0, 21, 21)
+  player1.shape = love.physics.newRectangleShape(0, 0, radius, radius)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
   player1.fixture:setUserData(player1)
   player1.fixture:setFriction(1)
@@ -47,9 +48,10 @@ function Main:enteredState()
     d = PlayerCharacter.right
   }
 
-  player2 = PlayerCharacter:new(level.player2.x, level.player2.y, 21, 21)
+  radius = 20
+  player2 = PlayerCharacter:new(level.player2.x, level.player2.y, radius, radius)
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
-  player2.shape = love.physics.newCircleShape(21 / 2)
+  player2.shape = love.physics.newCircleShape(radius / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
   player2.fixture:setUserData(player2)
   player2.fixture:setFriction(1)
