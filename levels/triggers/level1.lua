@@ -1,4 +1,8 @@
 local triggers = {}
+local common_triggers = require("levels/triggers/common")
+for k,v in pairs(common_triggers) do
+  triggers[k] = v
+end
 
 function triggers.test_enter(trigger_object, object, contact, nx, ny, ...)
   object.body:applyLinearImpulse(0, -60)

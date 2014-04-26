@@ -74,25 +74,40 @@ function MapLoader.load(map_name)
     end
 
     local trigger_objects = {}
+    map_area.typed_triggers = {}
     if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
       local triggers = require(MapLoader.triggers_folder .. map_name)
       for index, object in ipairs(layers.objectgroup["Triggers"].objects) do
-        local physics_object = {
-          tile_x = math.floor(object.x / map_data.tilewidth),
-          tile_y = math.floor(object.y / map_data.tileheight)
-        }
-        physics_object.begin_contact = triggers[object.properties.on_enter]
-        physics_object.end_contact = triggers[object.properties.on_exit]
-        physics_object.draw = triggers[object.properties.on_draw]
-        physics_object.update = triggers[object.properties.on_update]
+        local tile_x = math.floor(object.x / map_data.tilewidth)
+        local tile_y = math.floor(object.y / map_data.tileheight)
+        object.tile_x, object.tile_y = tile_x, tile_y
+        if object.properties.type then
+          local trigger_type = object.properties.type
+          local trigger = _G[trigger_type]:new(object)
+          trigger_objects[trigger] = trigger
+          if map_area.typed_triggers[trigger_type] == nil then map_area.typed_triggers[trigger_type] = {} end
+          map_area.typed_triggers[trigger_type][trigger] = trigger
+        else
+          local physics_object = {
+            tile_x = tile_x,
+            tile_y = tile_y
+          }
+          for k,v in pairs(object.properties) do
+            physics_object[k] = v
+          end
+          physics_object.begin_contact = triggers[object.properties.on_enter]
+          physics_object.end_contact = triggers[object.properties.on_exit]
+          physics_object.draw = triggers[object.properties.on_draw]
+          physics_object.update = triggers[object.properties.on_update]
 
-        physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
-        physics_object.shape = get_shape(object)
-        physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
-        physics_object.fixture:setUserData(physics_object)
-        physics_object.fixture:setSensor(true)
+          physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
+          physics_object.shape = get_shape(object)
+          physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
+          physics_object.fixture:setUserData(physics_object)
+          physics_object.fixture:setSensor(true)
 
-        trigger_objects[physics_object] = physics_object
+          trigger_objects[physics_object] = physics_object
+        end
       end
     end
   end

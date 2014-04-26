@@ -34,6 +34,7 @@ function Main:enteredState(level_name)
 
   local radius = 19
   player1 = PlayerCharacter:new(level.player1.x, level.player1.y, radius, radius)
+  player1.player_name = "square"
   player1.image = self.preloaded_images["player_square.png"]
   player1.image:setFilter("nearest", "nearest")
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
@@ -54,6 +55,7 @@ function Main:enteredState(level_name)
 
   radius = 20
   player2 = PlayerCharacter:new(level.player2.x, level.player2.y, radius, radius)
+  player2.player_name = "circle"
   player2.image = self.preloaded_images["player_circle.png"]
   player2.image:setFilter("nearest", "nearest")
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
@@ -131,6 +133,10 @@ function Main:draw()
   g.draw(level.tile_layers["Foreground"].sprite_batch)
 
   self.camera:unset()
+end
+
+function Main:victory()
+  print("you win!")
 end
 
 function Main:mousepressed(x, y, button)

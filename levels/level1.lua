@@ -111,7 +111,7 @@ return {
     {
       type = "objectgroup",
       name = "Physics",
-      visible = false,
+      visible = true,
       opacity = 1,
       properties = {},
       objects = {
@@ -294,6 +294,34 @@ return {
           },
           properties = {
             ["on_enter"] = "coin_enter"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 168,
+          y = 168,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["player"] = "circle",
+            ["type"] = "Goal"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 168,
+          y = 105,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["player"] = "square",
+            ["type"] = "Goal"
           }
         }
       }

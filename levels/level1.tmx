@@ -19,7 +19,7 @@
    eJxjYBgFo4C2YAsVzKinghn0AtU4xEF+mEtPh1AIWhkxxWB+mElvx2AB1QSwIh51gyUeGgfaARQCXGl9KAL0NAJK/4TS2HAFI8mvo4BywISEhwsY9dPgB8PFH6NgFIyCUTAKRiYAAHXsFcQ=
   </data>
  </layer>
- <objectgroup name="Physics" width="50" height="25" visible="0">
+ <objectgroup name="Physics" width="50" height="25">
   <object x="63" y="126" width="189" height="21"/>
   <object x="273" y="84" width="21" height="42"/>
   <object x="273" y="126" width="105" height="21"/>
@@ -48,6 +48,18 @@
     <property name="on_enter" value="coin_enter"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="168" y="168" width="21" height="21">
+   <properties>
+    <property name="player" value="circle"/>
+    <property name="type" value="Goal"/>
+   </properties>
+  </object>
+  <object x="168" y="105" width="21" height="21">
+   <properties>
+    <property name="player" value="square"/>
+    <property name="type" value="Goal"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
