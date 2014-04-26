@@ -25,7 +25,7 @@
   <object x="273" y="126" width="105" height="21"/>
   <object x="0" y="168" width="21" height="21"/>
   <object x="21" y="189" width="273" height="21"/>
-  <object x="42" y="147" width="21"/>
+  <object x="42" y="147" width="21" height="10"/>
   <object x="378" y="210" width="105" height="21"/>
   <object x="378" y="126">
    <polygon points="0,0 63,-63 63,0"/>

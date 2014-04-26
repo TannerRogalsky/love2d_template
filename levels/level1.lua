@@ -177,7 +177,7 @@ return {
           x = 42,
           y = 147,
           width = 21,
-          height = 0,
+          height = 10,
           visible = true,
           properties = {}
         },
