@@ -1,6 +1,7 @@
 local Main = Game:addState('Main')
 
-function Main:enteredState()
+function Main:enteredState(level_name)
+  self.level_name = level_name
   love.physics.setMeter(32)
   World = love.physics.newWorld(0, 10 * 16, true)
   local physics_callback_names = {"begin_contact", "end_contact", "presolve", "postsolve"}
@@ -28,7 +29,7 @@ function Main:enteredState()
   self.default_font = g.newFont(16)
   g.setFont(self.default_font)
 
-  level = MapLoader.load("level1")
+  level = MapLoader.load(level_name)
   self.camera:setScale(1 / level.scale, 1 / level.scale)
 
   local radius = 19
@@ -139,7 +140,7 @@ end
 
 function Main:keypressed(key, unicode)
   if key == "r" then
-    self:gotoState("Main")
+    self:gotoState("Main", self.level_name)
   end
 end
 

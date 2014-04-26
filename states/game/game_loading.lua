@@ -34,7 +34,8 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Main")
+    -- love.window.setFullscreen(true, "normal")
+    self:gotoState("Menu")
   end)
 end
 
