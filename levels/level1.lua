@@ -221,14 +221,29 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 252,
-          y = 126,
+          x = 231,
+          y = 84,
           width = 21,
           height = 21,
           visible = true,
           properties = {
+            ["on_draw"] = "test_draw",
             ["on_enter"] = "test_enter",
             ["on_exit"] = "test_exit"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 63,
+          y = 63,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["on_draw"] = "coin_draw",
+            ["on_enter"] = "coin_enter"
           }
         }
       }

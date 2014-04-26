@@ -72,22 +72,28 @@ function MapLoader.load(map_name)
     physics_object.terrain = true
   end
 
+  local trigger_objects = {}
   if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
     local triggers = require(MapLoader.triggers_folder .. map_name)
     for index, object in ipairs(layers.objectgroup["Triggers"].objects) do
       local physics_object = {}
       physics_object.begin_contact = triggers[object.properties.on_enter]
       physics_object.end_contact = triggers[object.properties.on_exit]
+      physics_object.draw = triggers[object.properties.on_draw]
+
       physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
       physics_object.shape = get_shape(object)
       physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
       physics_object.fixture:setUserData(physics_object)
       physics_object.fixture:setSensor(true)
+
+      trigger_objects[physics_object] = physics_object
     end
   end
 
   map_area.tileset_data = tileset_data
   map_area.tileset_quads = tileset_quads
+  map_area.triggers = trigger_objects
 
   return map_area
 end

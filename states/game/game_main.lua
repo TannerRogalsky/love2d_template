@@ -100,6 +100,10 @@ function Main:draw()
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Background"].sprite_batch)
 
+  for _,trigger in pairs(level.triggers) do
+    if trigger.draw then trigger:draw() end
+  end
+
   g.setColor(COLORS.blue:rgb())
   for _,player in pairs(PlayerCharacter.instances) do
     player:draw()
