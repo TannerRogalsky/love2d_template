@@ -8,7 +8,7 @@
  <tileset firstgid="1" source="../images/tiles.tsx"/>
  <layer name="Background" width="50" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo4D+wIIZgoc6CGOG4KEEWpgg9CImhFgJMwSjA2Q1o4D24C8jA4PlMAhzaaAfwoeBP8gFnIwD7YJRMApGwSgYBaNgFIyCUTAKRsFgBQBIVwWe
+   eJzt0LEJgDAUhOGXWDmDi+giuogbmEXMngEPUmhhJ/oM/B8cgZDiLmbA98aupnVJmRvbkWI9czzvsrLe7Li+wftKMJv055t3kYcGbViU3buIkz54NwAAAADwVwcIKAcY
   </data>
  </layer>
  <layer name="Foreground" width="50" height="25">
@@ -36,13 +36,6 @@
   <object x="336" y="336" width="21" height="21"/>
  </objectgroup>
  <objectgroup name="Triggers" width="50" height="25">
-  <object x="231" y="84" width="21" height="21">
-   <properties>
-    <property name="on_draw" value="test_draw"/>
-    <property name="on_enter" value="test_enter"/>
-    <property name="on_exit" value="test_exit"/>
-   </properties>
-  </object>
   <object x="65" y="74">
    <properties>
     <property name="on_enter" value="coin_enter"/>
