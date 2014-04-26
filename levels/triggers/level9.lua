@@ -1,6 +1,12 @@
 local triggers = {}
+
+bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
+love.audio.play(bgm)
+bgm:setVolume(0.6)
+
 local coin = love.audio.newSource( "/sounds/coin.wav", "static" )
-coin:setVolume(0.2)
+coin:setVolume(0.1)
+
 local jumppad = love.audio.newSource( "/sounds/jumppad.wav", "static" )
 jumppad:setVolume(0.1)
 
