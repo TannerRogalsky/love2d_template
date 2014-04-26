@@ -1,5 +1,6 @@
 local MapLoader = class('MapLoader', Base)
 MapLoader.static.maps_folder = "levels/"
+MapLoader.static.triggers_folder = "levels/triggers/"
 
 function MapLoader.load(map_name)
   local path = MapLoader.maps_folder .. map_name
@@ -65,25 +66,43 @@ function MapLoader.load(map_name)
   for index, object in ipairs(layers.objectgroup["Physics"].objects) do
     local physics_object = {}
     physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
-    if object.shape == "rectangle" then
-      physics_object.shape = love.physics.newRectangleShape(object.width / 2, object.height / 2, object.width, object.height)
-    elseif object.shape == "polygon" then
-      local points = {}
-      for i,point in ipairs(object.polygon) do
-        table.insert(points, point.x)
-        table.insert(points, point.y)
-      end
-      physics_object.shape = love.physics.newPolygonShape(unpack(points))
-    end
+    physics_object.shape = get_shape(object)
     physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
     physics_object.fixture:setUserData(physics_object)
     physics_object.terrain = true
+  end
+
+  if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
+    local triggers = require(MapLoader.triggers_folder .. map_name)
+    for index, object in ipairs(layers.objectgroup["Triggers"].objects) do
+      local physics_object = {}
+      physics_object.begin_contact = triggers[object.properties.on_enter]
+      physics_object.end_contact = triggers[object.properties.on_exit]
+      physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
+      physics_object.shape = get_shape(object)
+      physics_object.fixture = love.physics.newFixture(physics_object.body, physics_object.shape)
+      physics_object.fixture:setUserData(physics_object)
+      physics_object.fixture:setSensor(true)
+    end
   end
 
   map_area.tileset_data = tileset_data
   map_area.tileset_quads = tileset_quads
 
   return map_area
+end
+
+function get_shape(data)
+  if data.shape == "rectangle" then
+    return love.physics.newRectangleShape(data.width / 2, data.height / 2, data.width, data.height)
+  elseif data.shape == "polygon" then
+    local points = {}
+    for i,point in ipairs(data.polygon) do
+      table.insert(points, point.x)
+      table.insert(points, point.y)
+    end
+    return love.physics.newPolygonShape(unpack(points))
+  end
 end
 
 function MapLoader.parse_grid_coords(sibling_name)
