@@ -139,6 +139,10 @@ function Main:victory()
   print("you win!")
 end
 
+function Main:failure()
+  print("you lose!")
+end
+
 function Main:mousepressed(x, y, button)
 end
 
