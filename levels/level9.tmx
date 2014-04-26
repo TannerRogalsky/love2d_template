@@ -8,7 +8,7 @@
  <tileset firstgid="1" source="../images/tiles.tsx"/>
  <layer name="Background" width="80" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt1z0KwjAYBuBQD9cT9BwOOrip4AUcHFVw8ZpGUEgxQutftD4PfCSQQNK3Wb4QeLXxqPQNoM2b5Jt4j+8j2zLkfuvZTIaW6dC+p5QSOfp3/ckshE1V+ga/ax6zW8RayvAh25jbLtZefp2tkqwOcT6r8mvX9XT8N8dMAQAA3TRJHzHt0VNMeuxtBtyrrKv8/J76Uue9dWhXlzMAAAAAAAAAAAAA+KwTIwkVKA==
+   eJzt1zEKwjAUBuBYD9cT9BwOOrip4AUcOqrg4jWNoNBChdaq0fh98GggoUn/Znkh8GqzaeoTQJs7yTdxH99Htmlkl/tk/CvGZpJbprl9TyopcvTvhpNZCHWR+gS/axWzW8fayPAp+5jbIdZRfr1tG1md4nhZdM/d55vPf3PuKAAAoJ+q0UcsBvQU8wFrq4x7lV3RPX6kvNV1bRna1WcPAAAAAAAAAAAAAD7rAmPsFSk=
   </data>
  </layer>
  <layer name="Foreground" width="80" height="60">
@@ -16,7 +16,7 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2V1qwkAYheEPf3Ah6nrchb30XlBchrbSVQSk0tsuoSiuxgwmOBlmMtFkGjN9Hzgo+THJMZmIEQEAKEsteMzSElSjujq1vRMd9iF/11+SJSacf/VtpTj2vWvzNp51F/1AO9UxJy26T/F3mPN1ucpi08texxW31RU7eaxDl8TxPjd2TO+6nTTXocsozTDNJNDnt2kt9w73NT5nZSSnupvK7XdAbEJfT3l36rvpZVFD6EBu5+Mw8PZf0axfjGueaZ7mzcg8+N6258cS8xptKkAovjE2xt80IZg90dtz6A0AUBf3knr+w//ixzSHknw71itb51BxmXPjR9OORMuvkYvYOzSXM+NbJqZzUz8Hbcdq67BsbGPcu3N1+KWlbBqKbM+AY3wuHIp+fwAAAAAAAAAAAAAAAACedQVvIHOk
+   eJzt2FFKw0AUheFraym4DXU97qI++l5QXIZVcRUBUXx1CaXF1ZghDt7cziSNyZg0/T84UJIZkpwm01ARAICzVEEzy0CwH9fVpu+TOGBPQn9tcP+19yDlte9R7bvPk1XMvZmmO69DslHRXqS+Q48ud62kWYdeFvnc9ZyhW0m5wxTmeWZ5LtS280TH+m938tvhc4N5tyYxrrtLKd4Dxib1M+S7c9/N5CduCT2V4n6cJT7+EF1Ny4ntsxZ5rk0Wyc+2P5+B2Ge2qwCp1K2xY3mPSc32RG9/Q28AhubVBMPHb0k7x/C/+LvsPts6H5F5VXNcsj3GbFNcUM/WJl8S7tCOs6kbM6Z7U9+DoWsNdVi1th37upepxDp8U/Fj9TaE+a60s5MiqMf7IwAAAAAAAAAAAAAAALrwDZM+d5M=
   </data>
  </layer>
  <objectgroup name="Physics" width="80" height="60">
@@ -31,10 +31,9 @@
   <object x="441" y="336" width="462" height="21"/>
   <object x="756" y="294" width="126" height="21"/>
   <object x="777" y="252" width="21" height="21"/>
-  <object x="798" y="210" width="21" height="21"/>
-  <object x="609" y="210" width="42" height="21"/>
-  <object x="588" y="273" width="84" height="21"/>
-  <object x="756" y="210" width="21" height="84"/>
+  <object x="840" y="252" width="21" height="21"/>
+  <object x="504" y="272" width="84" height="21"/>
+  <object x="756" y="252" width="21" height="42"/>
   <object x="210" y="273" width="84" height="21"/>
   <object x="672" y="567">
    <polygon points="0,0 168,0 168,42 0,42"/>
@@ -56,6 +55,8 @@
   <object x="756" y="252">
    <polygon points="0,0 -63,63 0,63"/>
   </object>
+  <object x="735" y="651" width="42" height="21"/>
+  <object x="252" y="504" width="84" height="21"/>
  </objectgroup>
  <objectgroup name="Triggers" width="80" height="60">
   <object x="337" y="335" width="103" height="4">
@@ -70,25 +71,13 @@
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="591" y="241">
+  <object x="507" y="240">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="612" y="157">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="633" y="157">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="654" y="241">
+  <object x="570" y="240">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
@@ -130,19 +119,19 @@
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="402" y="598">
+  <object x="487" y="640">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="423" y="599">
+  <object x="509" y="641">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="444" y="598">
+  <object x="529" y="640">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
@@ -166,13 +155,13 @@
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="759" y="662">
+  <object x="759" y="640">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="738" y="661">
+  <object x="738" y="639">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
@@ -185,6 +174,42 @@
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
   <object x="864" y="534">
+   <properties>
+    <property name="on_enter" value="coin_enter"/>
+   </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="844" y="241">
+   <properties>
+    <property name="on_enter" value="coin_enter"/>
+   </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="843" y="577">
+   <properties>
+    <property name="on_enter" value="coin_enter"/>
+   </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="735" y="651" width="41" height="3">
+   <properties>
+    <property name="on_enter" value="test_enter"/>
+    <property name="on_exit" value="test_exit"/>
+   </properties>
+  </object>
+  <object x="233" y="199">
+   <properties>
+    <property name="on_enter" value="coin_enter"/>
+   </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="255" y="221">
+   <properties>
+    <property name="on_enter" value="coin_enter"/>
+   </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+  </object>
+  <object x="276" y="241">
    <properties>
     <property name="on_enter" value="coin_enter"/>
    </properties>
