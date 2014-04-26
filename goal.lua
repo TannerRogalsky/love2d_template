@@ -3,6 +3,8 @@ local Goal = class('Goal', Base):include(Stateful)
 function Goal:initialize(attributes)
   Base.initialize(self)
 
+  self.tile_x = attributes.tile_x
+  self.tile_y = attributes.tile_y
   self.player = attributes.properties.player
 
   self.body = love.physics.newBody(World, attributes.x, attributes.y, "static")

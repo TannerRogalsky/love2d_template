@@ -42,6 +42,7 @@ function MapLoader.load(map_name)
   for name, tiles_metadata in pairs(layers.tilelayer) do
     local sprite_batch = g.newSpriteBatch(tileset_data.created_image, map_data.width * map_data.height, "dynamic")
     local sprite_lookup = DictGrid:new()
+    local quad_lookup = DictGrid:new()
     sprite_batch:bind()
     local data_index = 0
     for y=0,tiles_metadata.height - 1 do
@@ -53,16 +54,19 @@ function MapLoader.load(map_name)
         if quad_index ~= 0 then
           local w, h = map_data.tilewidth, map_data.tileheight
           local sprite_id = sprite_batch:add(quad, x * w, y * h)
+          quad_lookup:set(x, y, quad)
           sprite_lookup:set(x, y, sprite_id)
         end
       end
     end
     sprite_batch:unbind()
     map_area.tile_layers[name] = {}
+    map_area.tile_layers[name].quad_lookup = quad_lookup
     map_area.tile_layers[name].sprite_lookup = sprite_lookup
     map_area.tile_layers[name].sprite_batch = sprite_batch
   end
 
+  local trigger_objects = {}
   if World then
     for index, object in ipairs(layers.objectgroup["Physics"].objects) do
       local physics_object = {}
@@ -73,7 +77,6 @@ function MapLoader.load(map_name)
       physics_object.terrain = true
     end
 
-    local trigger_objects = {}
     map_area.typed_triggers = {}
     if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
       local triggers = require(MapLoader.triggers_folder .. map_name)
@@ -114,7 +117,7 @@ function MapLoader.load(map_name)
 
   map_area.tileset_data = tileset_data
   map_area.tileset_quads = tileset_quads
-  map_area.triggers = trigger_objects or {}
+  map_area.triggers = trigger_objects
 
   return map_area
 end
