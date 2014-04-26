@@ -85,6 +85,10 @@ function Main:update(dt)
   World:update(dt)
   rope_x, rope_y = rope:getReactionForce(1/dt)
 
+  for _,trigger in pairs(level.triggers) do
+    if trigger.update then trigger:update(dt) end
+  end
+
   local cx, cy, num_players = 0, 0, 0
   for _,player in pairs(PlayerCharacter.instances) do
     player:update(dt)

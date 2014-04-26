@@ -84,6 +84,7 @@ function MapLoader.load(map_name)
         physics_object.begin_contact = triggers[object.properties.on_enter]
         physics_object.end_contact = triggers[object.properties.on_exit]
         physics_object.draw = triggers[object.properties.on_draw]
+        physics_object.update = triggers[object.properties.on_update]
 
         physics_object.body = love.physics.newBody(World, object.x, object.y, "static")
         physics_object.shape = get_shape(object)
