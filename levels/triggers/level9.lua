@@ -23,6 +23,7 @@ function triggers.coin_enter(trigger_object, object)
 	love.audio.stop(coin)	
   love.audio.play(coin)
   level.triggers[trigger_object] = nil
+  trigger_object.body:destroy()
   local sprite_id = level.tile_layers["Foreground"].sprite_lookup:get(trigger_object.tile_x,trigger_object.tile_y)
   level.tile_layers["Foreground"].sprite_batch:set(sprite_id, 0, 0, 0, 0, 0)
 end
