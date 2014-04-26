@@ -33,6 +33,7 @@ beholder = require("lib/beholder")
 Grid = require("lib/grid")
 DictGrid = require("lib/dict_grid")
 Line = require("lib/line")
+Vector = require("lib/vector")
 
 Base = require("base")
 Game = require("game")
