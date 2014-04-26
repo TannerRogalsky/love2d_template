@@ -34,14 +34,17 @@ function Main:enteredState(level_name)
 
   local radius = 19
   player1 = PlayerCharacter:new(level.player1.x, level.player1.y, radius, radius)
+  player1.image = self.preloaded_images["player_square.png"]
+  player1.image:setFilter("nearest", "nearest")
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
   player1.shape = love.physics.newRectangleShape(0, 0, radius, radius)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
   player1.fixture:setUserData(player1)
   player1.fixture:setFriction(1)
   function player1:draw()
-    g.setColor(COLORS.blue:rgb())
-    g.polygon("fill", self.body:getWorldPoints(self.shape:getPoints()))
+    local x, y = self.body:getWorldCenter()
+    g.setColor(COLORS.white:rgb())
+    g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
   end
   player1.controls = {
     w = PlayerCharacter.up,
@@ -51,6 +54,8 @@ function Main:enteredState(level_name)
 
   radius = 20
   player2 = PlayerCharacter:new(level.player2.x, level.player2.y, radius, radius)
+  player2.image = self.preloaded_images["player_circle.png"]
+  player2.image:setFilter("nearest", "nearest")
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
   player2.shape = love.physics.newCircleShape(radius / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
@@ -58,13 +63,9 @@ function Main:enteredState(level_name)
   player2.fixture:setFriction(1)
   player2.body:setAngularDamping(2)
   function player2:draw()
-    g.setColor(COLORS.blue:rgb())
     local x, y = self.body:getWorldCenter()
-    local radius = 21 / 2
-    g.circle("fill", x, y, radius, 25)
-    g.setColor(COLORS.black:rgb())
-    local angle = self.body:getAngle()
-    g.line(x, y, x + math.cos(angle) * radius, y + math.sin(angle) * radius)
+    g.setColor(COLORS.white:rgb())
+    g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
   end
   player2.controls = {
     up = PlayerCharacter.up,
@@ -74,6 +75,10 @@ function Main:enteredState(level_name)
 
   rope = love.physics.newRopeJoint( player1.body, player2.body, level.player1.x, level.player1.y, level.player2.x, level.player2.y, 100, true )
   rope_x, rope_y = 0, 0
+
+  self.rope_segments = {}
+  self.rope_segments[0] = player1.image
+  self.rope_segments[1] = player2.image
 end
 
 function Main:update(dt)
@@ -105,30 +110,22 @@ function Main:draw()
     if trigger.draw then trigger:draw() end
   end
 
+  local rx1, ry1, rx2, ry2 = rope:getAnchors()
+  local rv = Vector.new(rx2 - rx1, ry2 - ry1)
+  local dx, dy = rv:normalized():unpack()
+  g.setColor(COLORS.white:rgb())
+  for index = 0, rv:len(), 5 do
+    g.draw(self.rope_segments[index % 2], rx1 + dx * index, ry1 + dy * index, 0, 0.25, 0.25)
+  end
+
   g.setColor(COLORS.blue:rgb())
   for _,player in pairs(PlayerCharacter.instances) do
     player:draw()
   end
 
-  -- g.setColor(COLORS.blue:rgb())
-  -- for _,body in ipairs(World:getBodyList()) do
-  --   for _,fixture in ipairs(body:getFixtureList()) do
-  --     local shape = fixture:getShape()
-  --     if shape.getPoints then
-  --       g.polygon("fill", body:getWorldPoints(shape:getPoints()))
-  --     end
-  --   end
-  -- end
-
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Foreground"].sprite_batch)
 
-  if math.abs(rope_x) >= 1 or math.abs(rope_y) >= 1 then
-    g.setColor(COLORS.green:rgb())
-  else
-    g.setColor(COLORS.red:rgb())
-  end
-  g.line(rope:getAnchors())
   self.camera:unset()
 end
 
