@@ -3,6 +3,7 @@ local triggers = {}
 bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
 love.audio.play(bgm)
 bgm:setVolume(0.6)
+bgm:setLooping("true")
 
 local coin = love.audio.newSource( "/sounds/coin.wav", "static" )
 coin:setVolume(0.1)
