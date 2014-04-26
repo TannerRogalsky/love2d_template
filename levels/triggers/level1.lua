@@ -15,12 +15,8 @@ end
 
 function triggers.coin_enter(trigger_object, object)
   level.triggers[trigger_object] = nil
-end
-
-function triggers.coin_draw(trigger_object, object)
-  g.setColor(COLORS.yellow:rgb())
-  local x, y = trigger_object.body:getWorldCenter()
-  g.print("COIN", x, y)
+  local sprite_id = level.tile_layers["Foreground"].sprite_lookup:get(trigger_object.tile_x,trigger_object.tile_y)
+  level.tile_layers["Foreground"].sprite_batch:set(sprite_id, 0, 0, 0, 0, 0)
 end
 
 return triggers

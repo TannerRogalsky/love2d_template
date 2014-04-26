@@ -16,10 +16,10 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2Dwg/qBdgAJoBqHOMgPc+npEApBKyOmGMwPM+ntGCygmgBWxKNusMRD40A7gEKAK60PRYCeRkDpn1AaG65gJPl1FIyCUTAKRsEoGAWjYBSMAnoDAML5FPw=
+   eJxjYBgFo4C2YAsVzKinghn0AtU4xEF+mEtPh1AIWhkxxWB+mElvx2AB1QSwIh51gyUeGgfaARQCXGl9KAL0NAJK/4TS2HAFI8mvo4BywISEhwsY9dPgB8PFH6NgFIyCUTAKRiYAAHXsFcQ=
   </data>
  </layer>
- <objectgroup name="Physics" width="50" height="25">
+ <objectgroup name="Physics" width="50" height="25" visible="0">
   <object x="63" y="126" width="189" height="21"/>
   <object x="273" y="84" width="21" height="42"/>
   <object x="273" y="126" width="105" height="21"/>
@@ -30,6 +30,10 @@
   <object x="378" y="126">
    <polygon points="0,0 63,-63 63,0"/>
   </object>
+  <object x="168" y="273" width="63" height="21"/>
+  <object x="231" y="294" width="63" height="21"/>
+  <object x="294" y="315" width="63" height="21"/>
+  <object x="336" y="336" width="21" height="21"/>
  </objectgroup>
  <objectgroup name="Triggers" width="50" height="25">
   <object x="231" y="84" width="21" height="21">
@@ -39,11 +43,11 @@
     <property name="on_exit" value="test_exit"/>
    </properties>
   </object>
-  <object x="63" y="63" width="21" height="21">
+  <object x="65" y="74">
    <properties>
-    <property name="on_draw" value="coin_draw"/>
     <property name="on_enter" value="coin_enter"/>
    </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
  </objectgroup>
 </map>

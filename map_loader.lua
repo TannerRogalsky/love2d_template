@@ -53,7 +53,7 @@ function MapLoader.load(map_name)
         if quad_index ~= 0 then
           local w, h = map_data.tilewidth, map_data.tileheight
           local sprite_id = sprite_batch:add(quad, x * w, y * h)
-          sprite_lookup:set(x, y, sprite_lookup)
+          sprite_lookup:set(x, y, sprite_id)
         end
       end
     end
@@ -76,7 +76,10 @@ function MapLoader.load(map_name)
   if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
     local triggers = require(MapLoader.triggers_folder .. map_name)
     for index, object in ipairs(layers.objectgroup["Triggers"].objects) do
-      local physics_object = {}
+      local physics_object = {
+        tile_x = math.floor(object.x / map_data.tilewidth),
+        tile_y = math.floor(object.y / map_data.tileheight)
+      }
       physics_object.begin_contact = triggers[object.properties.on_enter]
       physics_object.end_contact = triggers[object.properties.on_exit]
       physics_object.draw = triggers[object.properties.on_draw]
