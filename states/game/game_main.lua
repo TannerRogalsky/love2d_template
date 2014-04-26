@@ -100,6 +100,7 @@ function Main:update(dt)
   end
   cx, cy = cx / num_players, cy / num_players
   cx, cy = cx - g.getWidth() / 8, cy - g.getHeight() / 8
+  cx, cy = math.floor(cx * level.scale) / level.scale, math.floor(cy * level.scale) / level.scale
   self.camera:setPosition(cx, cy)
 end
 
