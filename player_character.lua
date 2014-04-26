@@ -1,4 +1,6 @@
 local PlayerCharacter = class('PlayerCharacter', Base):include(Stateful)
+local jump = love.audio.newSource( "/sounds/jump.wav", "static" )
+jump:setVolume(0.1)
 PlayerCharacter.static.instances = {}
 
 function PlayerCharacter:initialize(x, y, w, h)
@@ -26,6 +28,8 @@ end
 
 function PlayerCharacter:up(dt)
   if self.can_jump then
+    love.audio.stop(jump) 
+    love.audio.play(jump)
     self.body:applyLinearImpulse(0, -30)
     self.can_jump = false
   end
