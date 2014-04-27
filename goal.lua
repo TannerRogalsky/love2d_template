@@ -13,21 +13,44 @@ function Goal:initialize(attributes)
   self.fixture:setUserData(self)
   self.fixture:setSensor(true)
 
+  self.gradient = game.preloaded_images["gradient.png"]
+  self.gradient:setFilter("nearest", "nearest")
+  self.alpha = 0
+
   self.triggered = false
 end
 
+local trigger_time = 1
 function Goal:begin_contact(other)
   if self.player and self.player == other.player_name then
-    self.triggered = true
-    if Goal.check_all_triggered() then
-      game:victory()
-    end
+    self.trigger_cron = cron.after(trigger_time, function()
+      self.triggered = true
+      if Goal.check_all_triggered() then
+        game:victory()
+      end
+    end)
+  end
+end
+
+function Goal:draw()
+  local x, y = self.body:getWorldCenter()
+  local red, green, blue = COLORS.white:rgb()
+  g.setColor(red, green, blue, self.alpha)
+  g.draw(game.preloaded_images["gradient.png"], x, y, 0, 0.75, 0.75, 21 / 2, 21 / 2)
+end
+
+function Goal:update(dt)
+  if self.trigger_cron then
+    self.alpha = math.min(self.alpha + 255 / trigger_time * dt, 255)
   end
 end
 
 function Goal:end_contact(other)
   if self.player and self.player == other.player_name then
     self.triggered = false
+    self.alpha = 0
+    if self.trigger_cron then cron.cancel(self.trigger_cron) end
+    self.trigger_cron = nil
   end
 end
 

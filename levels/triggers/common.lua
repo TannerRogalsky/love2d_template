@@ -23,6 +23,10 @@ end
 
 -- removes the coin from the level
 function triggers.coin_enter(coin, object)
+  if coin.player and coin.player ~= object.player_name then
+    return
+  end
+
   if curcoin == 0 then
     love.audio.stop(coin1)
     love.audio.stop(coin2)  

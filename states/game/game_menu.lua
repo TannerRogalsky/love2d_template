@@ -15,45 +15,53 @@ function Menu:enteredState()
 
   self.all_levels = {}
   for _, name in pairs(self.sorted_names) do
-    local level = g.newCanvas(200, 200)
+    local level = g.newCanvas(400, 400)
     g.setCanvas(level)
-    g.setColor(COLORS.aliceblue:rgb())
-    g.rectangle("fill", 0, 0, 200, 200)
+    g.setColor(COLORS.cornflowerblue:rgb())
+    g.rectangle("fill", 0, 0, 400, 400)
     g.setColor(COLORS.white:rgb())
     local tile_layers = MapLoader.load(name).tile_layers
-    g.draw(tile_layers["Background"].sprite_batch, 0, 0, 0, 0.25, 0.25)
-    g.draw(tile_layers["Foreground"].sprite_batch, 0, 0, 0, 0.25, 0.25)
+    g.draw(tile_layers["Background"].sprite_batch, 0, 0, 0, 0.5, 0.5)
+    g.draw(tile_layers["Foreground"].sprite_batch, 0, 0, 0, 0.5, 0.5)
     g.setCanvas()
     self.all_levels[name] = level
   end
 
   self.selected_level_index = 1
+
 end
 
 function Menu:draw()
-  for index, name in pairs(self.sorted_names) do
-    local level = self.all_levels[name]
+  local dy = love.graphics.getFont():getHeight() + 3
+  for index,name in ipairs(self.sorted_names) do
+    local x, y = 5, index * dy
     g.setColor(COLORS.white:rgb())
-    g.draw(self.all_levels[name], (index - 1) * 250, 0)
+    g.print(name, x, y)
+
     if index == self.selected_level_index then
       g.setColor(COLORS.yellow:rgb())
       local old_width = g.getLineWidth()
-      g.setLineWidth(4)
-      g.rectangle("line", (index - 1) * 250, 0, 200, 200)
+      g.setLineWidth(2)
+      g.rectangle("line", x - 2, y - 2, g.getFont():getWidth(name) + 4, dy)
       g.setLineWidth(old_width)
     end
   end
+
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.all_levels[self.sorted_names[self.selected_level_index]], 200, 100)
 end
 
 function Menu:keypressed(key, unicode)
   if key == "return" then
     intromusic:stop()
     self:gotoState("Main", self.sorted_names[self.selected_level_index])
-  elseif key == "right" then
+    return
+  elseif key == "down" then
     self.selected_level_index = self.selected_level_index + 1
-  elseif key == "left" then
+  elseif key == "up" then
     self.selected_level_index = self.selected_level_index - 1
   end
+  self.selected_level_index = math.clamp(1, self.selected_level_index, #self.sorted_names)
 end
 
 function Menu:exitedState()
