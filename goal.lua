@@ -1,5 +1,9 @@
 local Goal = class('Goal', Base):include(Stateful)
 
+--Declare Goal / Victory Sounds
+local goalsound1 = love.audio.newSource( "/sounds/goalsound3a.ogg", "static" )
+goalsound1:setVolume(0.1)
+
 function Goal:initialize(attributes)
   Base.initialize(self)
 
@@ -27,6 +31,8 @@ end
 local trigger_time = 1
 function Goal:begin_contact(other)
   if self.player and self.player == other.player_name then
+    goalsound1:stop()
+    goalsound1:play()
     self.trigger_cron = cron.after(trigger_time, function()
       self.triggered = true
       if Goal.check_all_triggered() then

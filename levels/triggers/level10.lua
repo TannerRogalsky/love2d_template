@@ -5,6 +5,7 @@ for k,v in pairs(common_triggers) do
   triggers[k] = v
 end
 
+
 local jumppad = love.audio.newSource( "/sounds/jumppad.ogg", "static" )
 jumppad:setVolume(0.3)
 
