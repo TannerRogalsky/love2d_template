@@ -21,6 +21,18 @@ function PlayerCharacter:update(dt)
     end
   end
 
+  if self.joystick then
+    local x = self.joystick:getAxis(1)
+    self.body:applyAngularImpulse(-x * -1200 * dt, 0)
+    self.body:applyLinearImpulse(-x * -20 * dt, 0)
+
+    for key,action in pairs(self.controls.joystick) do
+      if self.joystick:isDown(key) then
+        action(self, dt)
+      end
+    end
+  end
+
   local maxAngularVelocity = 6
   if self.body:getAngularVelocity() > maxAngularVelocity then
     self.body:setAngularVelocity(maxAngularVelocity)
@@ -32,10 +44,10 @@ end
 function PlayerCharacter:up(dt)
   if self.can_jump then
     if self.player_name == "circle" then
-      love.audio.stop(cjump) 
+      love.audio.stop(cjump)
       love.audio.play(cjump)
     else
-      love.audio.stop(sjump) 
+      love.audio.stop(sjump)
       love.audio.play(sjump)
     end
     self.body:applyLinearImpulse(0, -30)
