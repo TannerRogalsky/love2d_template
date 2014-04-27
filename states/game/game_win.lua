@@ -1,6 +1,10 @@
 local Win = Game:addState('Win')
 
 function Win:enteredState()
+  self.waiting = true
+  cron.after(0.5, function()
+    self.waiting = false
+  end)
 end
 
 function Win:draw()
@@ -13,10 +17,12 @@ function Win:draw()
 end
 
 function Win:keypressed(key, unicode)
+  if self.waiting then return end
   self:gotoState("Menu")
 end
 
 function Win:joystickpressed(joystick, button)
+  if self.waiting then return end
   self:gotoState("Menu")
 end
 

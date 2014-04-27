@@ -1,6 +1,10 @@
 local Lose = Game:addState('Lose')
 
 function Lose:enteredState()
+  self.waiting = true
+  cron.after(0.5, function()
+    self.waiting = false
+  end)
 end
 
 function Lose:draw()
@@ -13,11 +17,13 @@ function Lose:draw()
 end
 
 function Lose:keypressed(key, unicode)
-  self:gotoState("Menu")
+  if self.waiting then return end
+  self:gotoState("Main", self.level_name)
 end
 
 function Lose:joystickpressed(joystick, button)
-  self:gotoState("Menu")
+  if self.waiting then return end
+  self:gotoState("Main", self.level_name)
 end
 
 function Lose:exitedState()
