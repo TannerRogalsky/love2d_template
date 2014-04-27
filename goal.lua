@@ -50,7 +50,7 @@ end
 function Goal:draw()
   local x, y = self.body:getWorldCenter()
   g.setColor(255, 255, 255, self.alpha)
-  g.draw(self.background_image, x, y, 0, 1, 1, 0, 21 * 2)
+  g.draw(self.background_image, x, y, 0, 1, 1, 0, 21 * 3)
 end
 
 function Goal:update(dt)

@@ -185,6 +185,8 @@ end
 function Main:keypressed(key, unicode)
   if key == "r" then
     self:gotoState("Main", self.level_name)
+  elseif key == "escape" then
+    self:gotoState("Menu")
   end
 end
 
