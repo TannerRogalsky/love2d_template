@@ -1,5 +1,8 @@
 local Hazard = class('Hazard', Base):include(Stateful)
 
+local failuresound = love.audio.newSource( "/sounds/failuresound.ogg", "static" )
+failuresound:setVolume(0.2)
+
 function Hazard:initialize(attributes)
   Base.initialize(self)
 
@@ -15,6 +18,8 @@ end
 
 function Hazard:begin_contact(other)
   game:failure()
+  love.audio.stop()
+  failuresound:play()
 end
 
 return Hazard
