@@ -9,10 +9,10 @@ function MapLoader.load(map_name)
   local map_area = {scale = scale}
   map_area.player1 = {}
   local px, py = map_data.properties.player1_pos:match("(%d*),(%d*)")
-  map_area.player1.x, map_area.player1.y = tonumber(px) * map_data.tilewidth - map_data.tilewidth / 2, tonumber(py) * map_data.tileheight - map_data.tileheight / 2
+  map_area.player1.x, map_area.player1.y = (tonumber(px) + 1) * map_data.tilewidth - map_data.tilewidth / 2, (tonumber(py) + 1) * map_data.tileheight - map_data.tileheight / 2
   map_area.player2 = {}
   px, py = map_data.properties.player2_pos:match("(%d*),(%d*)")
-  map_area.player2.x, map_area.player2.y = tonumber(px) * map_data.tilewidth - map_data.tilewidth / 2, tonumber(py) * map_data.tileheight - map_data.tileheight / 2
+  map_area.player2.x, map_area.player2.y = (tonumber(px) + 1) * map_data.tilewidth - map_data.tilewidth / 2, (tonumber(py) + 1) * map_data.tileheight - map_data.tileheight / 2
 
   -- grab the tileset info from the data and build it
   local tileset_quads = {}
