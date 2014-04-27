@@ -42,6 +42,7 @@ function Main:enteredState(level_name)
   player1.player_name = "square"
   player1.image = self.preloaded_images["player_square.png"]
   player1.image:setFilter("nearest", "nearest")
+  player1.joystick = love.joystick.getJoysticks()[1]
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
   player1.shape = love.physics.newRectangleShape(0, 0, radius, radius)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
@@ -55,7 +56,12 @@ function Main:enteredState(level_name)
   player1.controls = {
     w = PlayerCharacter.up,
     a = PlayerCharacter.left,
-    d = PlayerCharacter.right
+    d = PlayerCharacter.right,
+    joystick = {
+      [1] = PlayerCharacter.up,
+      [14] = PlayerCharacter.left,
+      [15] = PlayerCharacter.right
+    }
   }
 
   radius = 20
@@ -63,6 +69,7 @@ function Main:enteredState(level_name)
   player2.player_name = "circle"
   player2.image = self.preloaded_images["player_circle.png"]
   player2.image:setFilter("nearest", "nearest")
+  player2.joystick = love.joystick.getJoysticks()[2]
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
   player2.shape = love.physics.newCircleShape(radius / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
@@ -77,7 +84,12 @@ function Main:enteredState(level_name)
   player2.controls = {
     up = PlayerCharacter.up,
     left = PlayerCharacter.left,
-    right = PlayerCharacter.right
+    right = PlayerCharacter.right,
+    joystick = {
+      [1] = PlayerCharacter.up,
+      [14] = PlayerCharacter.left,
+      [15] = PlayerCharacter.right
+    }
   }
 
   rope = love.physics.newRopeJoint( player1.body, player2.body, level.player1.x, level.player1.y, level.player2.x, level.player2.y, 100, true )
