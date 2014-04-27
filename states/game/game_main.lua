@@ -1,5 +1,10 @@
 local Main = Game:addState('Main')
 
+local intromusic = love.audio.newSource("/sounds/intromusic.ogg", "stream")
+love.audio.play(intromusic)
+intromusic:setVolume(0.4)
+intromusic:setLooping("true")
+
 function Main:enteredState(level_name)
   self.level_name = level_name
   love.physics.setMeter(32)
