@@ -78,8 +78,14 @@ function MapLoader.load(map_name)
     end
 
     map_area.typed_triggers = {}
-    if layers.objectgroup["Triggers"] and love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
-      local triggers = require(MapLoader.triggers_folder .. map_name)
+    if layers.objectgroup["Triggers"] then
+      local triggers = nil
+      if love.filesystem.exists(MapLoader.triggers_folder .. map_name .. ".lua") then
+        triggers = require(MapLoader.triggers_folder .. map_name)
+      else
+        triggers = require(MapLoader.triggers_folder .. "common")
+      end
+
       for index, object in ipairs(layers.objectgroup["Triggers"].objects) do
         local tile_x = math.floor(object.x / map_data.tilewidth)
         local tile_y = math.floor(object.y / map_data.tileheight)
