@@ -105,10 +105,10 @@ function Main:update(dt)
 end
 
 function Main:draw()
-  self.camera:set()
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.preloaded_images["bg.png"], 0, 0)
 
-  g.setColor(COLORS.cornflowerblue:rgb())
-  g.rectangle("fill", self.camera:getViewport())
+  self.camera:set()
 
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Background"].sprite_batch)
