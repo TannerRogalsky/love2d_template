@@ -32,6 +32,8 @@ function Main:enteredState(level_name)
   level = MapLoader.load(level_name)
   self.camera:setScale(1 / level.scale, 1 / level.scale)
 
+  local joysticks = love.joystick.getJoysticks()
+
   local radius = 19
   player1 = PlayerCharacter:new(level.player1.x, level.player1.y, radius, radius)
   player1.player_name = "square"
@@ -42,7 +44,7 @@ function Main:enteredState(level_name)
   game.preloaded_images["rec_idle.png"]:setFilter("nearest", "nearest")
   player1.idle_anim = newAnimation(game.preloaded_images["rec_idle.png"], 21, 21, 0.1, 0)
   player1.current_anim = player1.active_anim
-  player1.joystick = love.joystick.getJoysticks()[1]
+  player1.joystick = joysticks[1]
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
   player1.shape = love.physics.newRectangleShape(0, 0, radius, radius)
   player1.fixture = love.physics.newFixture(player1.body, player1.shape)
@@ -78,7 +80,7 @@ function Main:enteredState(level_name)
   game.preloaded_images["pi_idle.png"]:setFilter("nearest", "nearest")
   player2.idle_anim = newAnimation(game.preloaded_images["pi_idle.png"], 21, 21, 0.1, 0)
   player2.current_anim = player2.active_anim
-  player2.joystick = love.joystick.getJoysticks()[2]
+  player2.joystick = joysticks[2]
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
   player2.shape = love.physics.newCircleShape(radius / 2)
   player2.fixture = love.physics.newFixture(player2.body, player2.shape)
@@ -194,6 +196,11 @@ function Main:keyreleased(key, unicode)
 end
 
 function Main:joystickpressed(joystick, button)
+  if button == 9 then
+    self:gotoState("Main", self.level_name)
+  elseif button == 10 then
+    self:gotoState("Menu")
+  end
 end
 
 function Main:joystickreleased(joystick, button)

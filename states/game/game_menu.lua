@@ -74,9 +74,22 @@ function Menu:keypressed(key, unicode)
   elseif key == "up" then
     self.selected_level_index = self.selected_level_index - 1
   elseif key == "escape" then
-    love.event.push("quit")
+    self:gotoState("Title")
+    return
   end
   self.selected_level_index = math.clamp(1, self.selected_level_index, #self.sorted_names)
+end
+
+function Menu:joystickpressed(joystick, button)
+  if button == 12 then
+    love.event.push("keypressed", "up")
+  elseif button == 13 then
+    love.event.push("keypressed", "down")
+  elseif button == 1 then
+    love.event.push("keypressed", "return")
+  elseif button == 10 then
+    love.event.push("keypressed", "escape")
+  end
 end
 
 function Menu:exitedState()
