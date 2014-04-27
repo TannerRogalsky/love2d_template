@@ -39,6 +39,14 @@ function PlayerCharacter:update(dt)
   elseif self.body:getAngularVelocity() < -maxAngularVelocity then
     self.body:setAngularVelocity(-maxAngularVelocity)
   end
+
+  if math.abs(self.body:getAngularVelocity()) < 0.3 then
+    self.current_anim = self.idle_anim
+  else
+    self.current_anim = self.active_anim
+  end
+
+  if self.current_anim then self.current_anim:update(dt) end
 end
 
 function PlayerCharacter:up(dt)

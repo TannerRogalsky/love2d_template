@@ -42,6 +42,11 @@ function Main:enteredState(level_name)
   player1.player_name = "square"
   player1.image = self.preloaded_images["player_square.png"]
   player1.image:setFilter("nearest", "nearest")
+  game.preloaded_images["rec_blink.png"]:setFilter("nearest", "nearest")
+  player1.active_anim = newAnimation(game.preloaded_images["rec_blink.png"], 21, 21, 0.1, 0)
+  game.preloaded_images["rec_idle.png"]:setFilter("nearest", "nearest")
+  player1.idle_anim = newAnimation(game.preloaded_images["rec_idle.png"], 21, 21, 0.1, 0)
+  player1.current_anim = player1.active_anim
   player1.joystick = love.joystick.getJoysticks()[1]
   player1.body = love.physics.newBody(World, level.player1.x, level.player1.y, "dynamic")
   player1.shape = love.physics.newRectangleShape(0, 0, radius, radius)
@@ -51,7 +56,11 @@ function Main:enteredState(level_name)
   function player1:draw()
     local x, y = self.body:getWorldCenter()
     g.setColor(COLORS.white:rgb())
-    g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    if self.current_anim then
+      self.current_anim:draw(x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    else
+      g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    end
   end
   player1.controls = {
     w = PlayerCharacter.up,
@@ -69,6 +78,11 @@ function Main:enteredState(level_name)
   player2.player_name = "circle"
   player2.image = self.preloaded_images["player_circle.png"]
   player2.image:setFilter("nearest", "nearest")
+  game.preloaded_images["pi_blink.png"]:setFilter("nearest", "nearest")
+  player2.active_anim = newAnimation(game.preloaded_images["pi_blink.png"], 21, 21, 0.1, 0)
+  game.preloaded_images["pi_idle.png"]:setFilter("nearest", "nearest")
+  player2.idle_anim = newAnimation(game.preloaded_images["pi_idle.png"], 21, 21, 0.1, 0)
+  player2.current_anim = player2.active_anim
   player2.joystick = love.joystick.getJoysticks()[2]
   player2.body = love.physics.newBody(World, level.player2.x, level.player2.y, "dynamic")
   player2.shape = love.physics.newCircleShape(radius / 2)
@@ -79,7 +93,11 @@ function Main:enteredState(level_name)
   function player2:draw()
     local x, y = self.body:getWorldCenter()
     g.setColor(COLORS.white:rgb())
-    g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    if self.current_anim then
+      self.current_anim:draw(x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    else
+      g.draw(self.image, x, y, self.body:getAngle(), 1, 1, radius / 2, radius / 2)
+    end
   end
   player2.controls = {
     up = PlayerCharacter.up,
