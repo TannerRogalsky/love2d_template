@@ -15,6 +15,9 @@ end
 
 -- removes the coin from the level
 function triggers.coin_enter(coin, object)
+  if coin.player and coin.player ~= object.player_name then
+    return
+  end
   level.triggers[coin] = nil
   coin.body:destroy()
   local sprite_id = level.tile_layers["Foreground"].sprite_lookup:get(coin.tile_x,coin.tile_y)
