@@ -21,8 +21,8 @@ function triggers.coin_enter(coin, object)
   end
   level.triggers[coin] = nil
   coin.body:destroy()
-  local sprite_id = level.tile_layers[tile_layer].sprite_lookup:get(coin.tile_x,coin.tile_y)
-  level.tile_layers[tile_layer].sprite_batch:set(sprite_id, 0, 0, 0, 0, 0)
+  local sprite_id = level.tile_layers[layer].sprite_lookup:get(coin.tile_x,coin.tile_y)
+  level.tile_layers[layer].sprite_batch:set(sprite_id, 0, 0, 0, 0, 0)
 end
 
 return triggers
