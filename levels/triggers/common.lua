@@ -1,5 +1,13 @@
 local triggers = {}
 
+local coin1 = love.audio.newSource( "/sounds/block1.ogg", "static" )
+coin1:setVolume(0.2)
+
+local coin2 = love.audio.newSource( "/sounds/block2.ogg", "static" )
+coin2:setVolume(0.2)
+
+local curcoin = 0
+
 function triggers.bounce_animation(trigger, dt)
   local offset = trigger.offset or math.random() * (math.pi / 2)
   trigger.offset = offset
@@ -15,6 +23,18 @@ end
 
 -- removes the coin from the level
 function triggers.coin_enter(coin, object)
+  if curcoin == 0 then
+    love.audio.stop(coin1)
+    love.audio.stop(coin2)  
+    love.audio.play(coin1)
+    curcoin = curcoin + 1
+  else
+    love.audio.stop(coin1)
+    love.audio.stop(coin2)  
+    love.audio.play(coin2)
+    curcoin = 0
+  end
+
   level.triggers[coin] = nil
   coin.body:destroy()
   local sprite_id = level.tile_layers["Foreground"].sprite_lookup:get(coin.tile_x,coin.tile_y)
