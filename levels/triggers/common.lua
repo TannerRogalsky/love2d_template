@@ -30,11 +30,9 @@ function triggers.coin_enter(coin, object)
 
   if curcoin == 0 then
     love.audio.stop(coin1)
-    love.audio.stop(coin2)  
     love.audio.play(coin1)
     curcoin = curcoin + 1
   else
-    love.audio.stop(coin1)
     love.audio.stop(coin2)  
     love.audio.play(coin2)
     curcoin = 0

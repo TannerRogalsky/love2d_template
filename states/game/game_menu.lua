@@ -5,6 +5,9 @@ intromusic:play()
 intromusic:setVolume(0.5)
 intromusic:setLooping("true")
 
+local friendsound = love.audio.newSource("/sounds/friend.ogg", "static")
+friendsound:setVolume(0.1)
+
 bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
 
 
@@ -64,6 +67,7 @@ function Menu:keypressed(key, unicode)
     -- Stop intro music, play in-game music
     intromusic:stop()
     bgm:rewind()
+    friendsound:play()
     bgm:play()
     bgm:setVolume(0.4)
     bgm:setLooping("true")

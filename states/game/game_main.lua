@@ -1,5 +1,8 @@
 local Main = Game:addState('Main')
 
+local friendsound = love.audio.newSource("/sounds/friend.ogg", "static")
+friendsound:setVolume(0.1)
+
 function Main:enteredState(level_name)
   self.level_name = level_name
   love.physics.setMeter(32)
@@ -185,6 +188,8 @@ end
 function Main:keypressed(key, unicode)
   if key == "r" then
     self:gotoState("Main", self.level_name)
+    friendsound:rewind()
+    friendsound:play()
   elseif key == "escape" then
     self:gotoState("Menu")
   end
