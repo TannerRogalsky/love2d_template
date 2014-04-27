@@ -1,5 +1,11 @@
 local Menu = Game:addState('Menu')
 
+intromusic = love.audio.newSource("/sounds/intromusic.ogg", "stream")
+intromusic:play()
+intromusic:setVolume(0.5)
+intromusic:setLooping("true")
+
+
 function Menu:enteredState()
   self.sorted_names = {}
   for name,_ in pairs(self.preloaded_levels) do
@@ -41,6 +47,7 @@ end
 
 function Menu:keypressed(key, unicode)
   if key == "return" then
+    intromusic:stop()
     self:gotoState("Main", self.sorted_names[self.selected_level_index])
   elseif key == "right" then
     self.selected_level_index = self.selected_level_index + 1
