@@ -16,7 +16,7 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo4C2YAsVzKinghn0AtU4xEF+mEtPh1AIWhkxxWB+mElvx2AB1QSwIh51gyUeGgfaARQCXGl9KAL0NAJK/4TS2HAFI8mvo4BywISEhwsY9dPgB8PFH6NgFIyCUTAKRiYAAHXsFcQ=
+   eJxjYBgFo4C2YAsVzKinghn0AtU4xEF+mEtPh5AAFmERa2XEFIP5YSaN3UMMqCaAFfGoGyzx0DjQDqAQ4ErrMLAQiN2x4MEI0NMIKP0TSmPDFYwkv44CygETEh4uYNRPgx8MF3+MglEwCkbBKBiZAAC7BBhq
   </data>
  </layer>
  <objectgroup name="Physics" width="50" height="25">
@@ -41,6 +41,7 @@
     <property name="amplitude" value="2"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
    <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
@@ -65,6 +66,11 @@
   <object x="168" y="147" width="21" height="21">
    <properties>
     <property name="on_update" value="bounce_animation"/>
+   </properties>
+  </object>
+  <object x="191" y="177" width="101" height="12">
+   <properties>
+    <property name="type" value="Hazard"/>
    </properties>
   </object>
  </objectgroup>
