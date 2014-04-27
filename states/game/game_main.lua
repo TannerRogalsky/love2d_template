@@ -119,7 +119,8 @@ end
 
 function Main:draw()
   g.setColor(COLORS.white:rgb())
-  g.draw(self.preloaded_images["bg.png"], 0, 0)
+  local bg = self.preloaded_images["bg.png"]
+  g.draw(bg, 0, 0, 0, g.getWidth() / bg:getWidth(), g.getHeight() / bg:getHeight())
 
   self.camera:set()
 
