@@ -71,8 +71,8 @@ function Camera:mousePosition(x, y)
 end
 
 function Camera:getViewport()
-  local x, y = self.scaleX + self.x, self.scaleY + self.y
-  local w, h = g.getWidth() / self.scaleX, g.getHeight() / self.scaleY
+  local x, y = self.scaleX * self.x, self.scaleY * self.y
+  local w, h = g.getWidth() * self.scaleX, g.getHeight() * self.scaleY
   return x, y, w, h
 end
 
