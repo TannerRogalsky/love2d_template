@@ -102,6 +102,7 @@ end
 
 function Main:update(dt)
   World:update(dt)
+  if World == nil then return end
   rope_x, rope_y = rope:getReactionForce(1/dt)
 
   for _,trigger in pairs(level.triggers) do
@@ -154,11 +155,11 @@ function Main:draw()
 end
 
 function Main:victory()
-  print("you win!")
+  self:gotoState("Win")
 end
 
 function Main:failure()
-  print("you lose!")
+  self:gotoState("Lose")
 end
 
 function Main:mousepressed(x, y, button)
@@ -186,7 +187,9 @@ function Main:focus(has_focus)
 end
 
 function Main:exitedState()
+  self.final_screen = g.newImage(g.newScreenshot())
   World:destroy()
+  World = nil
   for id,player in pairs(PlayerCharacter.instances) do
     PlayerCharacter.instances[id] = nil
   end
