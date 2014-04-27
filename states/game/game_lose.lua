@@ -13,7 +13,8 @@ function Lose:draw()
   g.setColor(0, 0, 0, 255 / 2)
   g.rectangle("fill", 0, 0, g.getWidth(), g.getHeight())
   g.setColor(COLORS.white:rgb())
-  g.draw(self.preloaded_images["lose.png"], 0, 0)
+  local fg = self.preloaded_images["lose.png"]
+  g.draw(fg, 0, 0, 0, g.getWidth() / fg:getWidth(), g.getHeight() / fg:getHeight())
 end
 
 function Lose:keypressed(key, unicode)

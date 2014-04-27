@@ -1,10 +1,12 @@
 local Title = Game:addState('Title')
 
 function Title:enteredState()
+  self.preloaded_images["friendshape.png"]:setFilter("nearest", "nearest")
 end
 
 function Title:draw()
-  g.draw(self.preloaded_images["friendshape.png"], 0, 0)
+  local bg = self.preloaded_images["friendshape.png"]
+  g.draw(bg, 0, 0, 0, g.getWidth() / bg:getWidth(), g.getHeight() / bg:getHeight())
 end
 
 function Title:keypressed(key, unicode)
