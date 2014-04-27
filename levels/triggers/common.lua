@@ -23,7 +23,7 @@ end
 
 -- removes the coin from the level
 function triggers.coin_enter(coin, object)
-  local layer = trigger.tile_layer or "Foreground"
+  local layer = coin.tile_layer or "Foreground"
   if coin.player and coin.player ~= object.player_name then
     return
   end
