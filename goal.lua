@@ -13,9 +13,13 @@ function Goal:initialize(attributes)
   self.fixture:setUserData(self)
   self.fixture:setSensor(true)
 
-  self.gradient = game.preloaded_images["gradient.png"]
-  self.gradient:setFilter("nearest", "nearest")
   self.alpha = 0
+  local images = {
+    circle = game.preloaded_images["beam_pi.png"],
+    square = game.preloaded_images["beam_rec.png"]
+  }
+  self.background_image = images[self.player]
+  self.background_image:setFilter("nearest", "nearest")
 
   self.triggered = false
 end
@@ -34,9 +38,8 @@ end
 
 function Goal:draw()
   local x, y = self.body:getWorldCenter()
-  local red, green, blue = COLORS.white:rgb()
-  g.setColor(red, green, blue, self.alpha)
-  g.draw(game.preloaded_images["gradient.png"], x, y, 0, 0.75, 0.75, 21 / 2, 21 / 2)
+  g.setColor(255, 255, 255, self.alpha)
+  g.draw(self.background_image, x, y, 0, 1, 1, 0, 21 * 2)
 end
 
 function Goal:update(dt)
