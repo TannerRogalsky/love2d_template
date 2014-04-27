@@ -28,6 +28,8 @@ function Win:joystickpressed(joystick, button)
 end
 
 function Win:exitedState()
+  love.audio.stop()
+  love.audio.play(intromusic)
 end
 
 return Win

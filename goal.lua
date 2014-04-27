@@ -1,4 +1,12 @@
 local Goal = class('Goal', Base):include(Stateful)
+local goalsound1 = love.audio.newSource( "/sounds/goalsound3a.wav", "static" )
+goalsound1:setVolume(0.2)
+
+local goalsound2 = love.audio.newSource( "/sounds/goalsound3b.wav", "static" )
+goalsound2:setVolume(0.2)
+
+local goalsound3 = love.audio.newSource( "/sounds/goalsound3c.wav", "static" )
+goalsound3:setVolume(0.2)
 
 function Goal:initialize(attributes)
   Base.initialize(self)
@@ -23,6 +31,8 @@ end
 local trigger_time = 1
 function Goal:begin_contact(other)
   if self.player and self.player == other.player_name then
+    goalsound1:stop()
+    goalsound1:play()
     self.trigger_cron = cron.after(trigger_time, function()
       self.triggered = true
       if Goal.check_all_triggered() then
