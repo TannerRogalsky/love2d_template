@@ -1,20 +1,32 @@
 local Title = Game:addState('Title')
 
 function Title:enteredState()
-  self.preloaded_images["friendshape.png"]:setFilter("nearest", "nearest")
+  if self.title_image == nil then
+    self.title_image = self.preloaded_images["friendshape.png"]
+    self.title_image:setFilter("nearest", "nearest")
+  end
 end
 
 function Title:draw()
-  local bg = self.preloaded_images["friendshape.png"]
+  g.setColor(COLORS.white:rgb())
+  local bg = self.title_image
   g.draw(bg, 0, 0, 0, g.getWidth() / bg:getWidth(), g.getHeight() / bg:getHeight())
 end
 
 function Title:keypressed(key, unicode)
-  self:gotoState("Menu")
+  if key == "escape" then
+    love.event.quit()
+  else
+    self:gotoState("Menu")
+  end
 end
 
 function Title:joystickpressed(joystick, button)
-  self:gotoState("Menu")
+  if button == 10 then
+      love.event.quit()
+  else
+    self:gotoState("Menu")
+  end
 end
 
 function Title:exitedState()

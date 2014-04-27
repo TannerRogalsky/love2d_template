@@ -14,7 +14,7 @@ function triggers.bounce_animation(trigger, dt)
   local layer = trigger.tile_layer or "Background"
   local frequency = trigger.frequency or 3
   local amplitude = trigger.amplitude or 21 / 4
-  local x, y = trigger.body:getWorldCenter()
+  local x, y = trigger.tile_x * 21, trigger.tile_y * 21
   y = y + math.sin((love.timer.getTime() + offset)  * frequency) * amplitude
   local sprite_id = level.tile_layers[layer].sprite_lookup:get(trigger.tile_x, trigger.tile_y)
   local quad = level.tile_layers[layer].quad_lookup:get(trigger.tile_x, trigger.tile_y)
@@ -33,7 +33,7 @@ function triggers.coin_enter(coin, object)
     love.audio.play(coin1)
     curcoin = curcoin + 1
   else
-    love.audio.stop(coin2)  
+    love.audio.stop(coin2)
     love.audio.play(coin2)
     curcoin = 0
   end
