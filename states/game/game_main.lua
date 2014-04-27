@@ -139,10 +139,7 @@ function Main:enteredState(level_name)
     }
     self.clouds[cloud] = cloud
   end
-  cron.every(1, spawn_cloud)
-  for i=1,10 do
-    spawn_cloud()
-  end
+  cron.every(3, spawn_cloud)
 end
 
 function Main:update(dt)
