@@ -2,13 +2,13 @@
 <map version="1.0" orientation="orthogonal" width="80" height="60" tilewidth="21" tileheight="21">
  <properties>
   <property name="player1_pos" value="4,8"/>
-  <property name="player2_pos" value="8,8"/>
+  <property name="player2_pos" value="7,8"/>
   <property name="scale" value="3"/>
  </properties>
  <tileset firstgid="1" source="../images/tiles.tsx"/>
  <layer name="Background" width="80" height="60">
   <data encoding="base64" compression="zlib">
-   eJzt1FEKhCAQANBwz9g5+ukie8D66R4R+7WwJBRZttN7IIwijo5i01Ba96q9A4D78kcSTbQ3PRdY42hNotU02nlqqVFHd7efmgH/ZMjEH2Om/zv+FNNKAwAAtmnTN+5Tfl6pHNG803p8Vg4AAAAAAAAAAAAArrUAerYQoQ==
+   eJzt1rEJgEAMBdBzBTfRXnD/HbRxD1HB6vBKL0Xegw9Jql+mFAAg2nhnejMHdyG3M7oAAEAnW2N+7I29vmdxfAQAgNzWIboBAAA9Lf4/AAAAAAAAAAB+cgFpxgrn
   </data>
  </layer>
  <layer name="Foreground" width="80" height="60">
@@ -16,7 +16,7 @@
    <property name="physics" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2TFOwzAUxnFHbEwgcQ7gCIiZa7QrezLQY0AlOEUFJ4GyIO6ABKz4qXnqw40T0lClTv4/6akhOJLzybXj1DkAgLjxlfu66LkfKZLs7kzl/XYnKR++vny9mFr22qO0nGXOnWd99yJdRz67E/Lr5NGt5ryi/JyX52Vszvznouba64Pd9i0Vz25z7pP8HlxzhqprlovIcaokP1mP22SohpbFNjQ/m2Eb777e/tBOnp+KslQRaZsSWVuuTB23WGdu3TqTeU07ye7e12WXju6prt87mVPrniU1OxnfRaTGZmJqGvxvWtak4jo9bz/D64dC9iyn2WbZcZMHx7G/7fmwtB2wK01z7FiffdoKcyK37ZAbgH0j+zF9VnvtuS+patqP/TfWkm5krH/23Ykds+9ZqvZes8h14f4tD66TsafvzmJ7wKHMI3KPT259v/Y49t5Q33dX1bJFmyGI3ee3i2dYN7eNfd5bmNJsJcuZaWPXc21rv5t171zHTLMSup4fZquq+g0Lv8m4Y2wBAAAAAAAAAAAAAACgqx+54IC3
+   eJzt2cFNwzAUgOFXsQBIzAHMwJk12iESJDoGVAIJFmhPsAi0XBAnFkACrvipsWLcOCVJIXHyf9JT0tRWnSfHjl0RAIC6MJGYmLbcjhhp7q6cSNptTlTeTXyaWDqxarVFcTkeiZyM2m5FvPZN7g7JXyP3sh7z0uw4y67vyXo+mbfTrKg8yebYp8/2jZDDujR/Oh/XyeE8cF5mETiPlc2fm8MqXk28/KKcvj+lWVjnFX+ri3RuOXPioMI8cyl5TmYl5TR31yZOmzS0o5o+Qzqmlr1L2txp/04DMTRjJybed5MsxgX17HX36NfvC12zHI02w+03iXce+uxe98OWA/7KtjG2D+8x/8HPE3mrh7wB6Bpdj9l3teeW2xKrbeuxXRv6ntldw/ra1z920ZAOc/dZitZe00A9f/2WePW079m9s9AasC/jiN7jg+T3656H9g3tfndRrCqU6YPQfX5JOIdlY9vQx715FreS51ZzOXXKuPO5Le8+m2V7rkPwKMXj00LyNZqdz9+yKPoPCz9pv/P7VijXAAAAAAAAAAAAAAAAQMg34XKFGQ==
   </data>
  </layer>
  <objectgroup name="Physics" width="80" height="60" visible="0">
@@ -31,16 +31,16 @@
   <object x="441" y="336" width="462" height="21"/>
   <object x="756" y="294" width="126" height="21"/>
   <object x="777" y="252" width="21" height="21"/>
-  <object x="840" y="252" width="21" height="21"/>
+  <object x="840" y="252" width="20" height="12"/>
   <object x="756" y="252" width="21" height="21"/>
-  <object x="210" y="273" width="84" height="21"/>
+  <object x="210" y="273" width="79" height="8"/>
   <object x="672" y="567">
    <polygon points="0,0 168,0 168,42 0,42"/>
   </object>
-  <object x="777" y="630" width="63" height="21"/>
+  <object x="777" y="630" width="82" height="18"/>
   <object x="861" y="567" width="189" height="21"/>
   <object x="861" y="588" width="168" height="21"/>
-  <object x="861" y="546" width="21" height="21"/>
+  <object x="861" y="546" width="31" height="20"/>
   <object x="399" y="567" width="147" height="21"/>
   <object x="399" y="609" width="147" height="21"/>
   <object x="546" y="567">
@@ -62,61 +62,14 @@
   <object x="504" y="273">
    <polygon points="0,0 84,0 71,13 55,29 35,31 25,26"/>
   </object>
+  <object x="504" y="651" width="42" height="21"/>
  </objectgroup>
- <objectgroup name="Triggers" width="80" height="60" visible="0">
+ <objectgroup name="Triggers" width="80" height="60">
   <object x="337" y="335" width="103" height="4">
    <properties>
     <property name="on_enter" value="test_enter"/>
     <property name="on_exit" value="test_exit"/>
    </properties>
-  </object>
-  <object x="633" y="661">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="654" y="661">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="676" y="620">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="759" y="640">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="738" y="639">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="823" y="619">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="864" y="534">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
-  </object>
-  <object x="843" y="577">
-   <properties>
-    <property name="on_enter" value="coin_enter"/>
-   </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
   <object x="735" y="651" width="41" height="3">
    <properties>
@@ -124,149 +77,247 @@
     <property name="on_exit" value="test_exit"/>
    </properties>
   </object>
-  <object x="231" y="189">
+  <object x="234" y="200">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="252" y="213">
+  <object x="255" y="221">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="274" y="233">
+  <object x="277" y="242">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="192" y="303">
+  <object x="507" y="242">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="507" y="238">
+  <object x="571" y="243">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="570" y="238">
+  <object x="194" y="305">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="780" y="220">
+  <object x="719" y="389">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="843" y="220">
+  <object x="760" y="409">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="886" y="386">
+  <object x="803" y="431">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="843" y="409">
+  <object x="844" y="409">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="800" y="431">
+  <object x="886" y="389">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="758" y="409">
+  <object x="844" y="242">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="717" y="388">
+  <object x="781" y="242">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="486" y="641">
+  <object x="487" y="641">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="507" y="640">
+  <object x="508" y="640">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
   </object>
-  <object x="528" y="642">
+  <object x="676" y="620">
    <properties>
     <property name="amplitude" value="1"/>
     <property name="on_enter" value="coin_enter"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
     <property name="tile_layer" value="Foreground"/>
    </properties>
-   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="739" y="641">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="760" y="640">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="823" y="620">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="844" y="580">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="865" y="536">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="634" y="660">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="654" y="661">
+   <properties>
+    <property name="amplitude" value="1"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+   <polygon points="2,-1 4,-5 10,-4 10,0 5,4"/>
+  </object>
+  <object x="525" y="630" width="21" height="21">
+   <properties>
+    <property name="player" value="circle"/>
+    <property name="type" value="Goal"/>
+   </properties>
+  </object>
+  <object x="525" y="546" width="21" height="21">
+   <properties>
+    <property name="player" value="square"/>
+    <property name="type" value="Goal"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
