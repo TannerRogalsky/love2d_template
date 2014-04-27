@@ -25,8 +25,9 @@ function Menu:enteredState()
   for _, name in pairs(self.sorted_names) do
     local level = g.newCanvas()
     g.setCanvas(level)
-    g.setColor(COLORS.cornflowerblue:rgb())
-    g.rectangle("fill", 0, 0, level:getWidth(), level:getHeight())
+    g.setColor(COLORS.white:rgb())
+    local bg = self.preloaded_images["bg.png"]
+    g.draw(bg, 0, 0, 0, g.getWidth() / bg:getWidth(), g.getHeight() / bg:getHeight())
     g.setColor(COLORS.white:rgb())
     local level_data = MapLoader.load(name)
     local tile_layers = level_data.tile_layers
