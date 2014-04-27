@@ -5,12 +5,6 @@ for k,v in pairs(common_triggers) do
   triggers[k] = v
 end
 
-love.audio.stop()
-
-local bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
-bgm:play()
-bgm:setVolume(0.4)
-
 
 local jumppad = love.audio.newSource( "/sounds/jumppad.ogg", "static" )
 jumppad:setVolume(0.3)

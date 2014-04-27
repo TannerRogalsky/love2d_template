@@ -2,10 +2,7 @@ local Goal = class('Goal', Base):include(Stateful)
 
 --Declare Goal / Victory Sounds
 local goalsound1 = love.audio.newSource( "/sounds/goalsound3a.ogg", "static" )
-goalsound1:setVolume(0.2)
-
-local victorysound = love.audio.newSource( "/sounds/victorysound.ogg", "static" )
-victorysound:setVolume(0.2)
+goalsound1:setVolume(0.1)
 
 function Goal:initialize(attributes)
   Base.initialize(self)
@@ -40,8 +37,6 @@ function Goal:begin_contact(other)
       self.triggered = true
       if Goal.check_all_triggered() then
         game:victory()
-        victorysound:stop()
-        victorysound:play()
       end
     end)
   end

@@ -5,6 +5,8 @@ intromusic:play()
 intromusic:setVolume(0.5)
 intromusic:setLooping("true")
 
+bgm = love.audio.newSource("/sounds/music1.ogg", "stream")
+
 
 function Menu:enteredState()
   self.menu_font = g.newFont("fonts/04b03.TTF", 48)
@@ -57,8 +59,15 @@ end
 
 function Menu:keypressed(key, unicode)
   if key == "return" then
-    intromusic:stop()
     self:gotoState("Main", self.sorted_names[self.selected_level_index])
+
+    -- Stop intro music, play in-game music
+    intromusic:stop()
+    bgm:rewind()
+    bgm:play()
+    bgm:setVolume(0.4)
+    bgm:setLooping("true")
+
     return
   elseif key == "down" then
     self.selected_level_index = self.selected_level_index + 1

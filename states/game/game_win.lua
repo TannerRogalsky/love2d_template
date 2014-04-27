@@ -1,10 +1,15 @@
 local Win = Game:addState('Win')
 
+local victorysound = love.audio.newSource( "/sounds/victorysound.ogg", "static" )
+victorysound:setVolume(0.2)
+
 function Win:enteredState()
   self.waiting = true
   cron.after(0.5, function()
     self.waiting = false
   end)
+  bgm:stop()
+  victorysound:play()
 end
 
 function Win:draw()
