@@ -2,7 +2,7 @@ local Title = Game:addState('Title')
 
 function Title:enteredState()
   if self.title_image == nil then
-    self.title_image = self.preloaded_images["friendshape.png"]
+    self.title_image = self.preloaded_images["friendshape_controls.png"]
     self.title_image:setFilter("nearest", "nearest")
   end
 end
