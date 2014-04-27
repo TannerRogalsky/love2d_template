@@ -116,6 +116,33 @@ function Main:enteredState(level_name)
   self.rope_segments = {}
   self.rope_segments[0] = player1.image
   self.rope_segments[1] = player2.image
+
+  self.clouds = {}
+  local cloud_images = {
+    self.preloaded_images["cloud1.png"],
+    self.preloaded_images["cloud2.png"],
+    self.preloaded_images["cloud3.png"],
+  }
+  for _,image in ipairs(cloud_images) do
+    image:setFilter("nearest", "nearest")
+  end
+  local function spawn_cloud()
+    local x, y, w, h = self.camera:getViewport()
+    local cloud = {
+      image = cloud_images[math.random(#cloud_images)],
+      position = {
+        x = x + w,
+        y = y + math.random(h)
+      },
+      vx = -math.random() * 50 - 50,
+      scale = math.random(4)
+    }
+    self.clouds[cloud] = cloud
+  end
+  cron.every(1, spawn_cloud)
+  for i=1,10 do
+    spawn_cloud()
+  end
 end
 
 function Main:update(dt)
@@ -125,6 +152,10 @@ function Main:update(dt)
 
   for _,trigger in pairs(level.triggers) do
     if trigger.update then trigger:update(dt) end
+  end
+
+  for _,cloud in pairs(self.clouds) do
+    cloud.position.x = cloud.position.x + cloud.vx * dt
   end
 
   local cx, cy, num_players = 0, 0, 0
@@ -146,6 +177,10 @@ function Main:draw()
   g.draw(bg, 0, 0, 0, g.getWidth() / bg:getWidth(), g.getHeight() / bg:getHeight())
 
   self.camera:set()
+
+  for _,cloud in pairs(self.clouds) do
+    g.draw(cloud.image, cloud.position.x, cloud.position.y, 0, cloud.scale)
+  end
 
   g.setColor(COLORS.white:rgb())
   g.draw(level.tile_layers["Background"].sprite_batch)
