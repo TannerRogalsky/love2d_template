@@ -556,7 +556,7 @@ return {
     {
       type = "objectgroup",
       name = "Triggers",
-      visible = false,
+      visible = true,
       opacity = 1,
       properties = {},
       objects = {
@@ -752,8 +752,31 @@ return {
           name = "",
           type = "",
           shape = "polygon",
-          x = 231,
-          y = 189,
+          x = 233,
+          y = 197,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = 3, y = -6 },
+            { x = 13, y = -6 },
+            { x = 14, y = 2 },
+            { x = 6, y = 7 }
+          },
+          properties = {
+            ["amplitude"] = "3",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 254,
+          y = 221,
           width = 0,
           height = 0,
           visible = true,
@@ -775,31 +798,8 @@ return {
           name = "",
           type = "",
           shape = "polygon",
-          x = 252,
-          y = 213,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["amplitude"] = "1",
-            ["on_enter"] = "coin_enter",
-            ["on_update"] = "bounce_animation",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 274,
-          y = 233,
+          x = 276,
+          y = 241,
           width = 0,
           height = 0,
           visible = true,
@@ -1114,6 +1114,19 @@ return {
             ["on_enter"] = "coin_enter",
             ["on_update"] = "bounce_animation",
             ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 294,
+          y = 210,
+          width = 21,
+          height = 21,
+          visible = true,
+          properties = {
+            ["on_update"] = "bounce_animation"
           }
         }
       }
