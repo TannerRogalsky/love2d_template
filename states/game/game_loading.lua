@@ -34,7 +34,7 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-    -- love.window.setFullscreen(true, "desktop")
+    love.window.setFullscreen(true, "desktop")
     self:gotoState("Title")
   end)
 end
