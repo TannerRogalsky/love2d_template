@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="80" height="60" tilewidth="21" tileheight="21">
+ <properties>
+  <property name="player1_pos" value="5,3"/>
+  <property name="player2_pos" value="3,3"/>
+  <property name="scale" value="3"/>
+ </properties>
+ <tileset firstgid="1" source="../../../Desktop/love2d_template-tojam9/images/tiles.tsx"/>
+ <layer name="Background" width="80" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEBAAAIw7D5F4kWXLCDREGvJgBMOwCgzAeB73wQ+M4HAQAAAAAAAAAAAAAAALi20GgDeQ==
+  </data>
+ </layer>
+ <layer name="Foreground" width="80" height="60">
+  <properties>
+   <property name="physics" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1zEKwjAUxvHX3UG9iB7EO3gQ3fQSjnoBXUWPIUU9hoKuPrGBDpU2SWkS/f/gI6RDec3wkYoA8blp7qGHSNgoExlnoadI11Q4P1snzbxIrhlwft7oQXdboQd90YP26MH20YPudkIP+qIH7dGD7aMH3XEf9EcP2qMHEZtFsS6DTpGudbFugk4Rt3LvlTOs2Zucux+5c02+ueeQfzGLICnLa/LU7DWrL+tBc6x4/mjwbpNf9v7fKJ+NidlfNNeK59yxP/p6DhOHcMcGAAAAAAAAAAAAAAAAAAD4TS+CzFyy
+  </data>
+ </layer>
+ <objectgroup name="Physics" width="80" height="60">
+  <object x="147" y="442" width="126" height="9"/>
+  <object x="379" y="441" width="125" height="12"/>
+  <object x="177" y="483" width="295" height="73"/>
+  <object x="63" y="105" width="94" height="9"/>
+  <object x="134" y="53" width="23" height="61"/>
+  <object x="177" y="138" width="23" height="61"/>
+  <object x="106" y="190" width="94" height="9"/>
+  <object x="219" y="222" width="23" height="61"/>
+  <object x="148" y="274" width="94" height="9"/>
+  <object x="262" y="306" width="23" height="61"/>
+  <object x="191" y="358" width="94" height="9"/>
+  <object x="1" y="484" width="188" height="42"/>
+  <object x="463" y="483" width="229" height="37"/>
+  <object x="293" y="443" width="63" height="9"/>
+  <object x="0" y="462">
+   <polygon points="0,0 105,0 84,12 1,13"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Triggers" width="80" height="60">
+  <object x="189" y="470" width="273" height="13">
+   <properties>
+    <property name="type" value="Hazard"/>
+   </properties>
+  </object>
+  <object x="236" y="320" width="9" height="10">
+   <properties>
+    <property name="amplitude" value="2"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+  </object>
+  <object x="153" y="153" width="9" height="10">
+   <properties>
+    <property name="amplitude" value="2"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="circle"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+  </object>
+  <object x="195" y="236" width="9" height="10">
+   <properties>
+    <property name="amplitude" value="2"/>
+    <property name="on_enter" value="coin_enter"/>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="player" value="square"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+  </object>
+  <object x="294" y="420" width="21" height="21">
+   <properties>
+    <property name="player" value="circle"/>
+    <property name="type" value="Goal"/>
+   </properties>
+  </object>
+  <object x="294" y="399" width="21" height="21">
+   <properties>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+  </object>
+  <object x="336" y="399" width="21" height="21">
+   <properties>
+    <property name="on_update" value="bounce_animation"/>
+    <property name="tile_layer" value="Foreground"/>
+   </properties>
+  </object>
+  <object x="336" y="420" width="21" height="21">
+   <properties>
+    <property name="player" value="square"/>
+    <property name="type" value="Goal"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
