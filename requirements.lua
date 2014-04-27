@@ -40,6 +40,7 @@ Game = require("game")
 MapLoader = require("map_loader")
 PlayerCharacter = require("player_character")
 Goal = require("goal")
+Hazard = require("hazard")
 
 Direction = require("direction")
 
