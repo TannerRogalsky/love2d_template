@@ -127,15 +127,21 @@
     <property name="type" value="Hazard"/>
    </properties>
   </object>
-  <object x="525" y="189" width="21" height="21">
+  <object x="525" y="196">
    <properties>
+    <property name="amplitude" value="2"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="tile_layer" value="Foreground"/>
    </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
-  <object x="588" y="189" width="21" height="21">
+  <object x="588" y="197">
    <properties>
+    <property name="amplitude" value="2"/>
     <property name="on_update" value="bounce_animation"/>
+    <property name="tile_layer" value="Foreground"/>
    </properties>
+   <polygon points="0,0 3,-6 13,-6 14,2 6,7"/>
   </object>
  </objectgroup>
 </map>
