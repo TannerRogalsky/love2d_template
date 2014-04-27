@@ -11,7 +11,7 @@ function Menu:enteredState()
   for _, name in pairs(self.sorted_names) do
     local level = g.newCanvas(400, 400)
     g.setCanvas(level)
-    g.setColor(COLORS.aliceblue:rgb())
+    g.setColor(COLORS.cornflowerblue:rgb())
     g.rectangle("fill", 0, 0, 400, 400)
     g.setColor(COLORS.white:rgb())
     local tile_layers = MapLoader.load(name).tile_layers
@@ -48,6 +48,7 @@ end
 function Menu:keypressed(key, unicode)
   if key == "return" then
     self:gotoState("Main", self.sorted_names[self.selected_level_index])
+    return
   elseif key == "down" then
     self.selected_level_index = self.selected_level_index + 1
   elseif key == "up" then

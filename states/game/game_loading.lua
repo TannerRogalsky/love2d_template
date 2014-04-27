@@ -35,7 +35,7 @@ function Loading:enteredState()
     -- initialize game stuff here
 
     -- love.window.setFullscreen(true, "desktop")
-    self:gotoState("Menu")
+    self:gotoState("Title")
   end)
 end
 
