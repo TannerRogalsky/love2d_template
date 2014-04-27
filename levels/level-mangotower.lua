@@ -46,11 +46,11 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -99,11 +99,11 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 242, 302, 302, 243, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 242, 277, 153, 153, 276, 243, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 272, 197, 197, 197, 197, 273, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 179, 0, 0, 179, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 0, 0, 175, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 152, 123, 123, 122, 123, 122, 123, 123, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 254, 0, 0, 254, 0, 180, 0, 0, 0, 180, 0, 0, 272, 128, 179, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 254, 0, 0, 254, 0, 176, 0, 0, 0, 176, 0, 0, 272, 128, 175, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 152, 122, 122, 123, 123, 122, 123, 123, 122, 122, 122, 123, 123, 123, 128, 213, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 182, 153, 183, 153, 153, 184, 153, 185, 153, 153, 153, 153, 153, 158, 128, 213, 128, 179, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 182, 153, 183, 153, 153, 184, 153, 185, 153, 153, 153, 153, 153, 158, 128, 213, 128, 175, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 213, 214, 214, 214, 214, 214, 214, 214, 214, 214, 214, 247, 153, 158, 128, 213, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 272, 247, 153, 158, 128, 213, 128, 0, 131, 0, 0, 132, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 272, 247, 153, 158, 128, 213, 128, 161, 0, 0, 162, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -256,116 +256,6 @@ return {
         {
           name = "",
           type = "",
-          shape = "polygon",
-          x = 276,
-          y = 72,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "circle",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 234,
-          y = 116,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "square",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 403,
-          y = 135,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "square",
-            ["tile_layer"] = "Background"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 445,
-          y = 177,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "square",
-            ["tile_layer"] = "Background"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 487,
-          y = 219,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "square",
-            ["tile_layer"] = "Background"
-          }
-        },
-        {
-          name = "",
-          type = "",
           shape = "rectangle",
           x = 525,
           y = 210,
@@ -389,94 +279,6 @@ return {
           properties = {
             ["player"] = "square",
             ["type"] = "Goal"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 340,
-          y = 73,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "circle",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 423,
-          y = 116,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "circle",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 466,
-          y = 157,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "circle",
-            ["tile_layer"] = "Foreground"
-          }
-        },
-        {
-          name = "",
-          type = "",
-          shape = "polygon",
-          x = 318,
-          y = 116,
-          width = 0,
-          height = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 3, y = -6 },
-            { x = 13, y = -6 },
-            { x = 14, y = 2 },
-            { x = 6, y = 7 }
-          },
-          properties = {
-            ["on_enter"] = "coin_enter",
-            ["player"] = "square",
-            ["tile_layer"] = "Foreground"
           }
         },
         {
@@ -534,6 +336,222 @@ return {
             ["amplitude"] = "2",
             ["on_update"] = "bounce_animation",
             ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 277,
+          y = 74,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "circle",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 339,
+          y = 73,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "circle",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 424,
+          y = 115,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "circle",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 465,
+          y = 158,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "circle",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 235,
+          y = 116,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "square",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 319,
+          y = 116,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "square",
+            ["tile_layer"] = "Foreground"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 487,
+          y = 221,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "square",
+            ["tile_layer"] = "Background"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 445,
+          y = 178,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "square",
+            ["tile_layer"] = "Background"
+          }
+        },
+        {
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 404,
+          y = 137,
+          width = 0,
+          height = 0,
+          visible = true,
+          polygon = {
+            { x = 2, y = -1 },
+            { x = 4, y = -5 },
+            { x = 10, y = -4 },
+            { x = 10, y = 0 },
+            { x = 5, y = 4 }
+          },
+          properties = {
+            ["amplitude"] = "1",
+            ["on_enter"] = "coin_enter",
+            ["on_update"] = "bounce_animation",
+            ["player"] = "square",
+            ["tile_layer"] = "Background"
           }
         }
       }
