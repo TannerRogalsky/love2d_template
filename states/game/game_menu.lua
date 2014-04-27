@@ -57,6 +57,8 @@ function Menu:keypressed(key, unicode)
     self.selected_level_index = self.selected_level_index + 1
   elseif key == "up" then
     self.selected_level_index = self.selected_level_index - 1
+  elseif key == "escape" then
+    love.event.push("quit")
   end
   self.selected_level_index = math.clamp(1, self.selected_level_index, #self.sorted_names)
 end
