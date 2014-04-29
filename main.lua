@@ -46,6 +46,35 @@ function love.joystickreleased(joystick, button)
   game:joystickreleased(joystick, button)
 end
 
+function love.gamepadaxis(joystick, axis, value)
+  game:gamepadaxis(joystick, axis, value)
+end
+
+function love.gamepadpressed(joystick, button)
+  game:gamepadpressed(joystick, button)
+end
+
+function love.gamepadreleased(joystick, button)
+  game:gamepadreleased(joystick, button)
+end
+
+function love.joystickadded(joystick)
+  game:joystickadded(joystick)
+end
+
+function love.joystickremoved(joystick)
+  game:joystickremoved(joystick)
+end
+
+function love.joystickaxis(joystick, axis, value)
+  game:joystickaxis(joystick, axis, value)
+end
+
+function love.joystickhat(joystick, hat, direction)
+  game:joystickhat(joystick, hat, direction)
+end
+
+
 function love.textinput(text)
   game:textinput(text)
   loveframes.textinput(text)

@@ -34,6 +34,27 @@ end
 function Game:joystickreleased(joystick, button)
 end
 
+function Game:gamepadaxis(joystick, axis, value)
+end
+
+function Game:gamepadpressed(joystick, button)
+end
+
+function Game:gamepadreleased(joystick, button)
+end
+
+function Game:joystickadded(joystick)
+end
+
+function Game:joystickremoved(joystick)
+end
+
+function Game:joystickaxis(joystick, axis, value)
+end
+
+function Game:joystickhat(joystick, hat, direction)
+end
+
 function Game:textinput(text)
 end
 
