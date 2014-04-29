@@ -2,11 +2,8 @@ local Camera = class("Camera", Base)
 
 function Camera:initialize()
   Base.initialize(self)
-  self.x = 0
-  self.y = 0
-  self.scaleX = 1
-  self.scaleY = 1
-  self.rotation = 0
+
+  self:origin()
 
   self.bounds = {
     negative_x = -math.huge,
@@ -29,6 +26,14 @@ end
 
 function Camera:unset()
   g.pop()
+end
+
+function Camera:origin()
+  self.x = 0
+  self.y = 0
+  self.scaleX = 1
+  self.scaleY = 1
+  self.rotation = 0
 end
 
 function Camera:move(dx, dy)
