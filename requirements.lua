@@ -31,6 +31,7 @@ tween = require("lib/tween")
 beholder = require("lib/beholder")
 Grid = require("lib/grid")
 Line = require("lib/line")
+require("lib/love_pixlr").init()
 
 Base = require("base")
 Game = require("game")

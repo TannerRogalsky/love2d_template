@@ -7,6 +7,11 @@ function Game:initialize(args)
     self[k] = v
   end
 
+  LovePixlr.bind(32, 32, "nearest")
+  love.graphics.point = function(x, y)
+    love.graphics.rectangle("fill", x, y, 1, 1)
+  end
+
   self:gotoState("Loading")
 end
 
