@@ -7,3 +7,6 @@
 [submodule "lib/lovebird"]
 	path = lib/lovebird
 	url = https://github.com/rxi/lovebird.git
+[submodule "lib/anim8"]
+	path = lib/anim8
+	url = https://github.com/kikito/anim8.git
