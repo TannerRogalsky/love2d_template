@@ -6,8 +6,7 @@ function Main:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  self.default_font = g.newFont(16)
-  g.setFont(self.default_font)
+  g.setFont(self.preloaded_fonts["04b03_16"])
 end
 
 function Main:update(dt)

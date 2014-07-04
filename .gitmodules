@@ -10,3 +10,6 @@
 [submodule "lib/anim8"]
 	path = lib/anim8
 	url = https://github.com/kikito/anim8.git
+[submodule "lib/love-loader"]
+	path = lib/love-loader
+	url = https://github.com/kikito/love-loader.git
