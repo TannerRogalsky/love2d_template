@@ -1,19 +1,35 @@
 local Main = Game:addState('Main')
 
 function Main:enteredState()
+  love.keyboard.setKeyRepeat(false)
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
 
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
+
+  Player:new()
+  Platform:new(0, g.getHeight()-50, g.getWidth(), 50)
 end
 
 function Main:update(dt)
+  Collider:update(dt)
+  for k,player in pairs(Player.instances) do
+    player:update(dt)
+  end
 end
 
 function Main:draw()
   self.camera:set()
+
+  for k,player in pairs(Player.instances) do
+    player:draw()
+  end
+
+  for k,platform in pairs(Platform.instances) do
+    platform:draw()
+  end
 
   self.camera:unset()
 end
@@ -25,9 +41,15 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
+  for k,player in pairs(Player.instances) do
+    player:keypressed(key, unicode)
+  end
 end
 
 function Main:keyreleased(key, unicode)
+  for k,player in pairs(Player.instances) do
+    player:keyreleased(key, unicode)
+  end
 end
 
 function Main:joystickpressed(joystick, button)
