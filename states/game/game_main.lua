@@ -16,6 +16,7 @@ function Main:enteredState()
 
   self.player = Player:new()
   LoseField:new(0, self.map.height * 21, self.map.width * 21, 50)
+  WinField:new((self.map.width - 1) * 21, 0, 50, self.map.height * 21)
 end
 
 function Main:update(dt)
@@ -30,6 +31,7 @@ function Main:update(dt)
   local dx, dy = (pv - cv):normalized():unpack()
   dx, dy = dx * mag, dy * mag
   local dx, dy = math.clamp(-mag / 20, dx, mag / 20), math.clamp(-mag / 20, dy, mag / 20)
+  dx, dy = math.floor(dx * 2) / 2, math.floor(dy * 2) / 2
   self.camera:move(dx, dy)
 
   Collider:update(dt)
@@ -52,6 +54,10 @@ function Main:draw()
   -- end
 
   -- for k,platform in pairs(LoseField.instances) do
+  --   platform:draw()
+  -- end
+
+  -- for k,platform in pairs(WinField.instances) do
   --   platform:draw()
   -- end
 

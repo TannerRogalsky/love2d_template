@@ -8,7 +8,7 @@
  </tileset>
  <layer name="Background" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBic4BrTQLtg6IByIsPqKAXywyk+9jESVnOACDXYQD0wnBqAuJGI8HpMgTyh+NhNpvsHOzAH+ssCiC2B2ArNjy1YwmQuUGweEM9nIqwWX3hXY8HIgGr5Y4jFG7ZwIRcTY+4DJkyMDZASH8hpIRrKtseCKQXvqWAGrcEbEtRiiwtqxAe2sPciwV3EAl4q57V/DPjLJ1oDWsQHKOxjoWzkOCAmPhiB/ndnwMTYAHIeb2XEXi48RgtPEB8ZY0s31M7DtACgMCEmPmBxgTM+cKQ3fGGLXu4y4BAbzmAqWth/AvK/4IkPUH2BnC9gAD0+QOHYxog7nF2ZEexjOOyqRlM33EETtP3cjBb+MVC+BpDWBGItJHn0fAEDhMorlDhByjucQPYTQupHCFgAjY+FOPKDG1DcHYg9kNpN6PGADeCqP8htL44k4MRAXF1HbFyAAC3aV6Ng+IH9Q6x/Sg7YNQL8OAoGBgAA/DlmQA==
+   eJxjYBic4BrTQLtg6IByIsPqKAXywyk+9jESVnOACDXYQD0wnBqAuJGI8HpMgTyh+NhNpvsHOzAH+ssCiC2B2ArNjy1YwmQuUGweEM9nIqwWX3hXY8HIgGr5Y4jFG7ZwIRcTY+4eYDiLMTMwbEGisQFS4gM5LURD2fZYMKXgPRXMoDV4Q4JaWFyA6C1IbGyAlPjAFvZeJLiLWMBL5bz2jwF/+URrAAp7bBgbIDY+QGEfC2UjxwEx8cEI9L87AybGBpDzeCsj9nLhMVp4gvjIGFu6oXYepgUAhQkx8QGLC5zxgSO94Qtb9HKXAYfYcAZT0cL+E5D/BU98gOoL5HwBA+jxAQrHNkbc4ezKjGAfw2FXNZq64Q6aoO3nZrTwj4HyNYC0JhBrIcmj5wsYwFdezUS3GCnvcALZT7C4baTlCxBYAI2PhTjygxtQ3B2IPZDaTejxgA2gx4cqM2XtxZEEnBiIq+uIjQsQoEX7ahQMP7B/iPVPyQG7RoAfR8HAAAC3H2Hx
   </data>
  </layer>
  <objectgroup name="Physics" width="100" height="15">
@@ -17,8 +17,8 @@
   <object x="630" y="63" width="105" height="21"/>
   <object x="1281" y="147" width="168" height="21"/>
   <object x="1155" y="168" width="84" height="21"/>
-  <object x="1239" y="189" width="21" height="21"/>
-  <object x="1260" y="210" width="231" height="21"/>
+  <object x="1218" y="189" width="21" height="42"/>
+  <object x="1239" y="210" width="252" height="21"/>
   <object x="1491" y="189" width="21" height="21"/>
   <object x="1512" y="168" width="21" height="21"/>
   <object x="1533" y="147" width="21" height="21"/>
