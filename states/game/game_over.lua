@@ -7,6 +7,10 @@ end
 
 function Over:draw()
   g.setColor(COLORS.white:rgb())
+  g.draw(self.bg, 0, 0)
+  g.setColor(0, 0, 0, 150)
+  g.rectangle("fill", 0, 0, g.getWidth(), g.getHeight())
+  g.setColor(COLORS.white:rgb())
   g.printf(self.text, 0, g.getHeight() / 3, g.getWidth(), "center")
   g.printf("High five to restart!", 0, g.getHeight() / 2, g.getWidth(), "center")
 end
