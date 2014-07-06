@@ -19,12 +19,12 @@ local walk_sprites = {
 function Player:initialize()
   Base.initialize(self)
 
-  self.run_speed = 50
+  self.run_speed = 5 * 21
   self.gravity = 5
   self.jump_speed = -2
-  self.teleport_distance = -200
+  self.teleport_distance = -3 * 21
 
-  self.body = Collider:addRectangle(100, 100, 72 / 3, math.floor(97 / 3))
+  self.body = Collider:addRectangle(0 * 21, 0, 72 / 3, math.floor(97 / 3))
   self.body.parent = self
   self.velocity = Vector(0, 0)
 
@@ -58,14 +58,12 @@ end
 function Player:draw()
   local x1,y1, x2,y2 = self.body:bbox()
   local x, y, w, h = x1, y1, x2-x1, y2-y1
-  g.setColor(COLORS.red:rgb())
-  g.rectangle('fill', x, y, w, h)
   g.setColor(COLORS.white:rgb())
   self.animation:draw(self.image, x, y, 0, 1 / 3)
 end
 
 function Player:on_collide(dt, other, mtv_x, mtv_y)
-  self.body:move(0, mtv_y)
+  self.body:move(mtv_x, mtv_y)
   self.velocity = Vector(self.velocity.x, math.min(0, self.velocity.y))
 end
 

@@ -5,6 +5,7 @@ function Platform:initialize(x, y, w, h)
   Base.initialize(self)
 
   self.body = Collider:addRectangle(x, y, w, h)
+  Collider:setPassive(self.body)
   self.body.parent = self
 
   Platform.instances[self.id] = self

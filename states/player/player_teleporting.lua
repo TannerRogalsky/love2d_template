@@ -1,5 +1,5 @@
 local Teleporting = Player:addState('Teleporting')
-local teleport_time = 1
+local teleport_time = 1.2
 
 function Teleporting:enteredState()
   cron.after(teleport_time, function()
@@ -34,7 +34,7 @@ function Teleporting:draw()
   x = x + self.teleport_distance
   g.setScissor(
     scissor_x,
-    scissor_y + (h / sy) * (self.teleport_progress / teleport_time),
+    scissor_y + (h / sy) - (h / sy) * (self.teleport_progress / teleport_time),
     w / sx + 1,
     (h / sy) / (self.teleport_progress / teleport_time))
   g.setColor(COLORS.white:rgb())

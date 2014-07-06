@@ -39,6 +39,7 @@ Game = require("game")
 MapLoader = require("map_loader")
 Player = require("player")
 Platform = require("platform")
+LoseField = require("lose_field")
 
 Direction = require("direction")
 

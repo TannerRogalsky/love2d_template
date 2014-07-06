@@ -8,10 +8,42 @@
  </tileset>
  <layer name="Background" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJztz8ENABAQAMHrG4WIZnkogMd5yEyyBWwEAAAAAMCZklBdtZcTH+m7kRD3JhyYGPo=
+   eJxjYBic4BrTQLtg6IByIsPqKAXywyk+9jESVnOACDXYQD0wnBqAuJGI8HpMgTyh+NhNpvsHOzAH+ssCiC2B2ArNjy1YwmQuUGweEM9nIqwWX3hXY8HIgGr5Y4jFG7ZwIRcTY+4DJkyMDZASH8hpIRrKtseCKQXvqWAGrcEbEtRiiwtqxAe2sPciwV3EAl4q57V/DPjLJ1oDWsQHKOxjoWzkOCAmPhiB/ndnwMTYAHIeb2XEXi48RgtPEB8ZY0s31M7DtACgMCEmPmBxgTM+cKQ3fGGLXu4y4BAbzmAqWth/AvK/4IkPUH2BnC9gAD0+QOHYxog7nF2ZEexjOOyqRlM33EETtP3cjBb+MVC+BpDWBGItJHn0fAEDhMorlDhByjucQPYTQupHCFgAjY+FOPKDG1DcHYg9kNpN6PGADeCqP8htL44k4MRAXF1HbFyAAC3aV6Ng+IH9Q6x/Sg7YNQL8OAoGBgAA/DlmQA==
   </data>
  </layer>
  <objectgroup name="Physics" width="100" height="15">
-  <object x="0" y="273" width="483" height="42"/>
+  <object x="0" y="84" width="399" height="21"/>
+  <object x="462" y="84" width="126" height="21"/>
+  <object x="630" y="63" width="105" height="21"/>
+  <object x="1281" y="147" width="168" height="21"/>
+  <object x="1155" y="168" width="84" height="21"/>
+  <object x="1239" y="189" width="21" height="21"/>
+  <object x="1260" y="210" width="231" height="21"/>
+  <object x="1491" y="189" width="21" height="21"/>
+  <object x="1512" y="168" width="21" height="21"/>
+  <object x="1533" y="147" width="21" height="21"/>
+  <object x="1554" y="126" width="147" height="21"/>
+  <object x="798" y="0" width="21" height="189"/>
+  <object x="777" y="168" width="21" height="21"/>
+  <object x="693" y="231" width="231" height="21"/>
+  <object x="1029" y="105" width="105" height="21"/>
+  <object x="1134" y="84" width="105" height="21"/>
+  <object x="924" y="210" width="21" height="21"/>
+  <object x="945" y="189" width="21" height="21"/>
+  <object x="966" y="168" width="21" height="21"/>
+  <object x="987" y="147" width="21" height="21"/>
+  <object x="1008" y="126" width="21" height="21"/>
+  <object x="1743" y="126" width="21" height="21"/>
+  <object x="1827" y="126" width="273" height="21"/>
  </objectgroup>
+ <objectgroup name="Lose Fields" width="100" height="15">
+  <object x="591" y="115" width="79" height="11"/>
+  <object x="1346" y="138" width="102" height="9"/>
+  <object x="779" y="158" width="16" height="7"/>
+ </objectgroup>
+ <layer name="Foreground" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1bENwCAMBEAYILuwQObJ2F4FakhEUiCK3ElfuPviJacEc2fe3QDeu+wVloqWo0tsbfRv8ZA7/jkAX5TJDQCMKmI+CHE=
+  </data>
+ </layer>
 </map>

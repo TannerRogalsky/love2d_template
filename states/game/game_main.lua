@@ -12,12 +12,13 @@ function Main:enteredState()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
+  self.bg = self.preloaded_images["bg.png"]
+
   self.player = Player:new()
-  Platform:new(0, g.getHeight()-50, g.getWidth() * 50, 50)
+  LoseField:new(0, self.map.height * 21, self.map.width * 21, 50)
 end
 
 function Main:update(dt)
-  Collider:update(dt)
   for k,player in pairs(Player.instances) do
     player:update(dt)
   end
@@ -30,9 +31,13 @@ function Main:update(dt)
   dx, dy = dx * mag, dy * mag
   local dx, dy = math.clamp(-mag / 20, dx, mag / 20), math.clamp(-mag / 20, dy, mag / 20)
   self.camera:move(dx, dy)
+
+  Collider:update(dt)
 end
 
 function Main:draw()
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.bg, 0, 0)
   self.camera:set()
 
   g.setColor(COLORS.white:rgb())
@@ -42,17 +47,18 @@ function Main:draw()
     player:draw()
   end
 
-  for k,platform in pairs(Platform.instances) do
-    platform:draw()
-  end
-  self.camera:unset()
+  -- for k,platform in pairs(Platform.instances) do
+  --   platform:draw()
+  -- end
 
-  -- g.scale(2)
-  -- g.translate(-100, -100)
-  -- g.setScissor((100 + -100) * 2, (100 + -100) * 2, 100 * 2, 100 * 2)
-  -- g.setScissor(0, 0, 200, 200)
-  -- g.rectangle("fill", 100, 100, 100, 100)
-  -- g.setScissor()
+  -- for k,platform in pairs(LoseField.instances) do
+  --   platform:draw()
+  -- end
+
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.map.tile_layers["Foreground"].sprite_batch)
+
+  self.camera:unset()
 end
 
 function Main:mousepressed(x, y, button)

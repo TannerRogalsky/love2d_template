@@ -6,7 +6,12 @@ function MapLoader.load(map_name)
   local path = MapLoader.maps_folder .. map_name
   local map_data = game.preloaded_levels[map_name]
   local scale = map_data.properties.scale
-  local map_area = {scale = scale}
+  local width, height = map_data.width, map_data.height
+  local map_area = {
+    width = width,
+    height = height,
+    scale = scale
+  }
 
   -- grab the tileset info from the data and build it
   local tileset_quads = {}
@@ -62,6 +67,10 @@ function MapLoader.load(map_name)
 
   for index, object in ipairs(layers.objectgroup["Physics"].objects) do
     Platform:new(object.x, object.y, object.width, object.height)
+  end
+
+  for index, object in ipairs(layers.objectgroup["Lose Fields"].objects) do
+    LoseField:new(object.x, object.y, object.width, object.height)
   end
 
   map_area.tileset_data = tileset_data
