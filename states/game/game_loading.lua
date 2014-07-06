@@ -13,7 +13,7 @@ function Loading:enteredState()
     end
   end
 
-  local sizes = {12, 14, 16, 20, 24}
+  local sizes = {16, 24, 46}
   for index, filename in ipairs(love.filesystem.getDirectoryItems('fonts')) do
     font = filename:match('(.*).ttf$') or filename:match('(.*).TTF$')
     if font then

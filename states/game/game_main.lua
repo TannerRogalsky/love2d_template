@@ -113,6 +113,10 @@ function Main.on_stop_collide(dt, shape_one, shape_two)
 end
 
 function Main:exitedState()
+  for k,player in pairs(Player.instances) do
+    player:destroy()
+  end
+
   Collider:clear()
   Collider = nil
 end

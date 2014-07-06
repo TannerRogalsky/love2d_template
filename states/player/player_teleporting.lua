@@ -1,5 +1,5 @@
 local Teleporting = Player:addState('Teleporting')
-local teleport_time = 1.2
+local teleport_time = 1
 
 function Teleporting:enteredState()
   cron.after(teleport_time, function()
@@ -14,6 +14,9 @@ function Teleporting:update(dt)
 end
 
 function Teleporting:keypressed(key, unicode)
+end
+
+function Teleporting:on_collide()
 end
 
 function Teleporting:draw()

@@ -63,8 +63,12 @@ function Player:draw()
 end
 
 function Player:on_collide(dt, other, mtv_x, mtv_y)
-  self.body:move(mtv_x, mtv_y)
-  self.velocity = Vector(self.velocity.x, math.min(0, self.velocity.y))
+  if math.abs(mtv_x) < 1 then
+    self.velocity = Vector(self.velocity.x, 0)
+    self.body:move(mtv_x, mtv_y)
+  else
+    self.body:move(mtv_x, 0)
+  end
 end
 
 function Player:keypressed(key, unicode)
