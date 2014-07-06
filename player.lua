@@ -1,17 +1,41 @@
 local Player = class('Player', Base):include(Stateful)
 Player.static.instances = {}
+local sprite_name = "p1_spritesheet"
+local spritesheet_coords = require('images/' .. sprite_name)
+local walk_sprites = {
+  "walk01",
+  "walk02",
+  "walk03",
+  "walk04",
+  "walk05",
+  "walk06",
+  "walk07",
+  "walk08",
+  "walk09",
+  "walk10",
+  "walk11",
+}
 
 function Player:initialize()
   Base.initialize(self)
 
-  self.run_speed = 250
-  self.gravity = 20
-  self.jump_speed = -10
-  self.teleport_distance = -300
+  self.run_speed = 50
+  self.gravity = 5
+  self.jump_speed = -2
+  self.teleport_distance = -200
 
-  self.body = Collider:addRectangle(100, 100, 50, 100)
+  self.body = Collider:addRectangle(100, 100, 72 / 3, math.floor(97 / 3))
   self.body.parent = self
   self.velocity = Vector(0, 0)
+
+  self.image = game.preloaded_images[sprite_name .. ".png"]
+  local quads = {}
+  local iw, ih = self.image:getWidth(), self.image:getHeight()
+  for i,sprite_name in ipairs(walk_sprites) do
+    local x, y, w, h = unpack(spritesheet_coords[sprite_name])
+    table.insert(quads, love.graphics.newQuad(x, y, w, h, iw, ih))
+  end
+  self.animation = anim8.newAnimation(quads, 0.1)
 
   Player.instances[self.id] = self
 end
@@ -27,12 +51,17 @@ function Player:update(dt)
 
   self.velocity = Vector(dx * dt, self.velocity.y + dy * dt)
   self.body:move(self.velocity:unpack())
+
+  self.animation:update(dt)
 end
 
 function Player:draw()
   local x1,y1, x2,y2 = self.body:bbox()
+  local x, y, w, h = x1, y1, x2-x1, y2-y1
   g.setColor(COLORS.red:rgb())
-  g.rectangle('fill', x1, y1, x2-x1, y2-y1)
+  g.rectangle('fill', x, y, w, h)
+  g.setColor(COLORS.white:rgb())
+  self.animation:draw(self.image, x, y, 0, 1 / 3)
 end
 
 function Player:on_collide(dt, other, mtv_x, mtv_y)

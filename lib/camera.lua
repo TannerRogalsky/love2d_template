@@ -72,6 +72,10 @@ end
 function Camera:mousePosition(x, y)
   x = x or love.mouse.getX()
   y = y or love.mouse.getY()
+  return self:transformPoint(x, y)
+end
+
+function Camera:transformPoint(x, y)
   return x * self.scaleX + self.x, y * self.scaleY + self.y
 end
 

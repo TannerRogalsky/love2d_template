@@ -6,11 +6,14 @@ function Main:enteredState()
 
   local Camera = require("lib/camera")
   self.camera = Camera:new()
+  self.camera:scale(1 / 2)
+
+  self.map = MapLoader.load("level1")
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
-  Player:new()
-  Platform:new(0, g.getHeight()-50, g.getWidth(), 50)
+  self.player = Player:new()
+  Platform:new(0, g.getHeight()-50, g.getWidth() * 50, 50)
 end
 
 function Main:update(dt)
@@ -18,10 +21,22 @@ function Main:update(dt)
   for k,player in pairs(Player.instances) do
     player:update(dt)
   end
+
+  local pv = Vector(self.player.body:center())
+  local cv = Vector(self.camera.x, self.camera.y)
+  pv = Vector(pv.x - g.getWidth() / (2 / self.camera.scaleX), pv.y - g.getHeight() / (2 / self.camera.scaleY))
+  local mag = pv:dist(cv)
+  local dx, dy = (pv - cv):normalized():unpack()
+  dx, dy = dx * mag, dy * mag
+  local dx, dy = math.clamp(-mag / 20, dx, mag / 20), math.clamp(-mag / 20, dy, mag / 20)
+  self.camera:move(dx, dy)
 end
 
 function Main:draw()
   self.camera:set()
+
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.map.tile_layers["Background"].sprite_batch)
 
   for k,player in pairs(Player.instances) do
     player:draw()
@@ -30,8 +45,14 @@ function Main:draw()
   for k,platform in pairs(Platform.instances) do
     platform:draw()
   end
-
   self.camera:unset()
+
+  -- g.scale(2)
+  -- g.translate(-100, -100)
+  -- g.setScissor((100 + -100) * 2, (100 + -100) * 2, 100 * 2, 100 * 2)
+  -- g.setScissor(0, 0, 200, 200)
+  -- g.rectangle("fill", 100, 100, 100, 100)
+  -- g.setScissor()
 end
 
 function Main:mousepressed(x, y, button)

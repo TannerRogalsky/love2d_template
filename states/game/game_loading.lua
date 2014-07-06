@@ -4,6 +4,7 @@ function Loading:enteredState()
   self.loader = require 'lib/love-loader/love-loader'
   self.preloaded_images = {}
   self.preloaded_fonts = {}
+  self.preloaded_levels = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -20,6 +21,13 @@ function Loading:enteredState()
         local key = font .. "_" .. tostring(size)
         self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. filename, size)
       end
+    end
+  end
+
+  for index, level_name in ipairs(love.filesystem.getDirectoryItems('levels')) do
+    level_name = level_name:match("(.*).lua")
+    if level_name then
+      self.preloaded_levels[level_name] = require("levels/" .. level_name)
     end
   end
 

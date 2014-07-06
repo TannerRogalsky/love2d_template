@@ -30,11 +30,13 @@ COLORS = require("lib/colors")
 tween = require("lib/tween")
 beholder = require("lib/beholder")
 Grid = require("lib/grid")
+DictGrid = require("lib/dict_grid")
 Line = require("lib/line")
 Vector = require("lib/vector")
 
 Base = require("base")
 Game = require("game")
+MapLoader = require("map_loader")
 Player = require("player")
 Platform = require("platform")
 
