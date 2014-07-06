@@ -39,7 +39,7 @@ end
 
 function Main:draw()
   g.setColor(COLORS.white:rgb())
-  g.draw(self.bg, 0, 0)
+  g.draw(self.bg, 0, 0, 0, g.getWidth() / self.bg:getWidth(), g.getHeight() / self.bg:getHeight())
   self.camera:set()
 
   g.setColor(COLORS.white:rgb())
