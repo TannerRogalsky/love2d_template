@@ -31,10 +31,10 @@ tween = require("lib.tween")
 beholder = require("lib.beholder")
 Grid = require("lib.grid")
 Line = require("lib.line")
-Boid = require("lib.boid")
 
 Base = require("base")
 Game = require("game")
+Boid = require("boid")
 
 Direction = require("direction")
 
