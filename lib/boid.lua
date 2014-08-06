@@ -1,4 +1,4 @@
-Boid = class('Boid', Base)
+local Boid = class('Boid', Base)
 local vector  = require('lib.HardonCollider.vector-light')
 
 local BOID_SIZE = 4
@@ -120,3 +120,5 @@ function Boid:wander()
   local dx, dy = self:steer(circle_location, false)
   a.x, a.y = vector.add(a.x, a.y, dx, dy)
 end
+
+return Boid
