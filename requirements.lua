@@ -31,6 +31,7 @@ tween = require("lib.tween")
 beholder = require("lib.beholder")
 Grid = require("lib.grid")
 Line = require("lib.line")
+Vector  = require('lib.vector')
 
 Base = require("base")
 Game = require("game")

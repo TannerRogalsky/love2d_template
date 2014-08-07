@@ -1,4 +1,5 @@
 local Main = Game:addState('Main')
+local Vector  = require('lib.vector')
 
 function Main:enteredState()
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
@@ -7,13 +8,26 @@ function Main:enteredState()
   self.camera = Camera:new()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
+
+  self.boids = {}
+  for i=1,10 do
+    -- table.insert(self.boids, Boid:new(Vector(10 * i + 100, 10 * i + 100)))
+    table.insert(self.boids, Boid:new(Vector(math.random(g.getWidth()), math.random(g.getHeight()))))
+  end
 end
 
 function Main:update(dt)
+  for i,boid in ipairs(self.boids) do
+    boid:update(dt)
+  end
 end
 
 function Main:draw()
   self.camera:set()
+
+  for i,boid in ipairs(self.boids) do
+    g.circle("fill", boid.position.x, boid.position.y, 5, 10)
+  end
 
   self.camera:unset()
 end

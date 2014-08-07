@@ -1,7 +1,17 @@
 local Boid = class('Boid', Base)
 Boid.static.instances = {}
 
-local Vector  = require('lib.vector')
+local rules = {}
+local lfs = love.filesystem
+local directory = "boid_rules"
+for index,filename in ipairs(lfs.getDirectoryItems(directory)) do
+  local file = directory .. "/" .. filename
+  if lfs.isFile(file) and file:match("%.lua$") then
+    local rule = require(file:gsub("%.lua", ""))
+    assert(is_func(rule), file .. " doesn't return a rule function")
+    table.insert(rules, rule)
+  end
+end
 
 function Boid:initialize(position)
   assert(Vector.isvector(position))
@@ -15,65 +25,21 @@ function Boid:initialize(position)
 end
 
 function Boid:update(dt)
-  self.velocity = self.velocity + move_toward_center_of_mass(self, Boid.instances)
-  self.velocity = self.velocity + avoid_the_boid(self, Boid.instances)
-  self.velocity = self.velocity + match_velocity(self, Boid.instances)
+  for _,rule in ipairs(rules) do
+    self.velocity = self.velocity + rule(self, Boid.instances)
+  end
+
+  local max_speed = 50
+  self.velocity = Vector(
+    math.clamp(-max_speed, self.velocity.x, max_speed),
+    math.clamp(-max_speed, self.velocity.y, max_speed)
+  )
 
   self.position = self.position + (self.velocity * dt)
 end
 
 function Boid:destroy()
   Boid.instances[self.id] = null
-end
-
---  Rule #1: Boids try to fly towards the centre of mass of neighbouring boids.
-function move_toward_center_of_mass(boid, neighbors)
-  local MOVE_FACTOR = 10
-  local center_of_mass = center_of_mass(boid, neighbors)
-  return (center_of_mass - boid.position) / MOVE_FACTOR
-end
-
-function center_of_mass(boid, neighbors)
-  local center_of_mass = Vector(0, 0)
-  local count = 0
-  for _,neighbor in pairs(neighbors) do
-    if neighbor ~= boid then
-      count = count + 1
-      center_of_mass = center_of_mass + neighbor.position
-    end
-  end
-  return center_of_mass / count
-end
-
--- Rule #2: Boids try to keep a small distance away from other objects (including other boids).
-function avoid_the_boid(boid, neighbors)
-  local DISTANCE_FACTOR = 10
-  local c = Vector(0, 0)
-  for _,neighbor in pairs(neighbors) do
-    if math.abs(boid.position:dist(neighbor.position)) < DISTANCE_FACTOR then
-      c = c - (neighbor.position - boid.position)
-    end
-  end
-  return c
-end
-
--- Rule #3: Boids try to match velocity with near boids.
-function match_velocity(boid, neighbors)
-  local VELOCITY_FACTOR = 8
-  local average_velocity = average_velocity(boid, neighbors)
-  return (average_velocity - boid.velocity) / VELOCITY_FACTOR
-end
-
-function average_velocity(boid, neighbors)
-  local average_velocity = Vector(0, 0)
-  local count = 0
-  for _,neighbor in pairs(neighbors) do
-    if neighbor ~= boid then
-      count = count + 1
-      average_velocity = average_velocity + neighbor.velocity
-    end
-  end
-  return average_velocity / count
 end
 
 return Boid
