@@ -1,0 +1,41 @@
+describe("Colors", function()
+  local Colors
+
+  setup(function()
+    Colors = require("lib/colors")
+  end)
+
+  teardown(function()
+    Colors = nil
+  end)
+
+  describe("Colors.(color):rgb", function()
+    it("returns the red, green and blue components of the named color", function()
+      local r, g, b = Colors.red:rgb()
+      assert.are.equal(r, 255)
+      assert.are.equal(g, 0)
+      assert.are.equal(b, 0)
+    end)
+  end)
+
+  describe("Colors.(color):rgba", function()
+    it("returns the red, green, blue and alpha components of the named color", function()
+      local r, g, b, a = Colors.red:rgba()
+      assert.are.equal(r, 255)
+      assert.are.equal(g, 0)
+      assert.are.equal(b, 0)
+      assert.are.equal(a, 255)
+    end)
+  end)
+
+  describe("Conversion functions", function()
+    it("results in the same value when rgb is converted to hsl and then back again", function()
+      local r, g, b = Colors.red:rgb()
+      local h, s, l = Colors.red:hsl()
+      local nr, ng, nb = Colors.red.hsl_to_rgb(h, s, l)
+      assert.are.equal(r, nr)
+      assert.are.equal(g, ng)
+      assert.are.equal(b, nb)
+    end)
+  end)
+end)
