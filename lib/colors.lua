@@ -16,7 +16,10 @@ function color_map_mt.rgba(color)
 end
 
 function color_map_mt.hsl(color)
-  local r,g,b = color:rgb()
+  return rgb_to_hsl(color:rgb())
+end
+
+function rgb_to_hsl(r, g, b)
   r = r / 255
   g = g / 255
   b = b / 255
@@ -45,7 +48,7 @@ function color_map_mt.hsl(color)
   return h, s, l
 end
 
-function color_map_mt.hsl_to_rgb(h, s, l)
+function hsl_to_rgb(h, s, l)
   local r,g,b
 
   if s == 0 then
@@ -81,7 +84,10 @@ function colors_mt.__index(t, k)
   return rawget(t, k:upper())
 end
 
-colors = setmetatable({}, colors_mt)
+colors = setmetatable({
+  hsl_to_rgb = hsl_to_rgb,
+  rgb_to_hsl = rgb_to_hsl
+}, colors_mt)
 
 colors.aliceblue =            { r = 240, g = 248, b = 255 }
 colors.antiquewhite =         { r = 250, g = 235, b = 215 }
