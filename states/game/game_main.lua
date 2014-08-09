@@ -9,15 +9,23 @@ function Main:enteredState()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
-  self.boids = {}
-  for i=1,10 do
-    -- table.insert(self.boids, Boid:new(Vector(10 * i + 100, 10 * i + 100)))
-    table.insert(self.boids, BoidedEntity:new(Vector(math.random(g.getWidth()), math.random(g.getHeight()))))
-  end
+  self.player1 = Player:new()
+  self.player1.controls = {
+    keyboard = {
+      up = Player.up,
+      right = Player.right,
+      down = Player.down,
+      left = Player.left,
+    }
+  }
 end
 
 function Main:update(dt)
-  for i,boid in ipairs(self.boids) do
+  for i,player in pairs(Player.instances) do
+    player:update(dt)
+  end
+
+  for i,boid in pairs(BoidedEntity.instances) do
     boid:update(dt)
   end
 end
@@ -25,7 +33,11 @@ end
 function Main:draw()
   self.camera:set()
 
-  for i,boid in ipairs(self.boids) do
+  for i,player in pairs(Player.instances) do
+    player:draw()
+  end
+
+  for i,boid in pairs(BoidedEntity.instances) do
     boid:draw()
   end
 

@@ -1,14 +1,14 @@
 local BoidedEntity = class('BoidedEntity', Base)
 BoidedEntity.static.instances = {}
 
-function BoidedEntity:initialize(position)
+function BoidedEntity:initialize(position, radius)
   assert(Vector.isvector(position))
   Base.initialize(self)
 
   self.position = position:clone()
   self.boid = Boid:new(position)
 
-  self._physics_body = Collider:addCircle(position.x, position.y, 5)
+  self._physics_body = Collider:addCircle(position.x, position.y, radius)
   self._physics_body.parent = self
   self._physics_body.boid = self.boid
 
