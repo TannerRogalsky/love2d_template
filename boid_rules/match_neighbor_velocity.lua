@@ -1,7 +1,7 @@
 -- Rule #3: Boids try to match velocity with near boids.
 function match_velocity(boid)
   local VELOCITY_FACTOR = 8
-  local average_velocity = average_velocity(boid, Boid.instances)
+  local average_velocity = average_velocity(boid, boid.section.boids)
   return (average_velocity - boid.velocity) / VELOCITY_FACTOR
 end
 

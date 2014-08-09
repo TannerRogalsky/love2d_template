@@ -39,6 +39,7 @@ Boid = require("boid")
 Player = require("player")
 Alpha = require("alpha")
 Beta = require("beta")
+Section = require("section")
 
 Direction = require("direction")
 

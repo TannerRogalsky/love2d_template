@@ -2,7 +2,7 @@
 local MOVE_FACTOR = 10
 
 function move_toward_center_of_mass(boid)
-  local center_of_mass = center_of_mass(boid, Boid.instances)
+  local center_of_mass = center_of_mass(boid, boid.section.boids)
   return (center_of_mass - boid.position) / MOVE_FACTOR
 end
 

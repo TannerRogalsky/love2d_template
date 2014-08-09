@@ -2,7 +2,7 @@
 function avoid_the_boid(boid)
   local DISTANCE_FACTOR = 10
   local c = Vector(0, 0)
-  for _,neighbor in pairs(Boid.instances) do
+  for _,neighbor in pairs(boid.section.boids) do
     if math.abs(boid.position:dist(neighbor.position)) < DISTANCE_FACTOR then
       c = c - (neighbor.position - boid.position)
     end

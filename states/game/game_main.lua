@@ -28,12 +28,22 @@ function Main:enteredState()
       a = Player.left,
     }
   }
+
+  local w_fourth = g.getWidth() / 4
+  Section:new(self.player1, w_fourth * 0, 0, w_fourth, g.getHeight())
+  Section:new(nil, w_fourth * 1, 0, w_fourth * 2, g.getHeight())
+  Section:new(self.player2, w_fourth * 3, 0, w_fourth, g.getHeight())
 end
 
 function Main:update(dt)
+  for _,section in pairs(Section.instances) do
+    section:update(dt)
+  end
+
   for i,player in pairs(Player.instances) do
     player:update(dt)
   end
+
   Collider:update(dt)
 
   -- for i,boid in pairs(BoidedEntity.instances) do
@@ -44,6 +54,10 @@ end
 function Main:draw()
   self.camera:set()
 
+  for _,section in pairs(Section.instances) do
+    section:draw()
+  end
+
   for i,player in pairs(Player.instances) do
     player:draw()
   end
@@ -52,12 +66,16 @@ function Main:draw()
   --   boid:draw()
   -- end
 
-  g.setColor(COLORS.green:rgb())
+  g.setColor(COLORS.white:rgb())
   for k,shape in Collider:activeShapes() do
     shape:draw()
   end
+  Collider._hash:draw("line", false, true)
 
   self.camera:unset()
+
+  g.setColor(COLORS.green:rgb())
+  g.print(love.timer:getFPS())
 end
 
 function Main:mousepressed(x, y, button)
