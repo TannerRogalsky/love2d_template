@@ -35,7 +35,6 @@ Vector  = require('lib.vector')
 
 Base = require("base")
 Game = require("game")
-BoidedEntity = require("boided_entity")
 Boid = require("boid")
 Player = require("player")
 Alpha = require("alpha")

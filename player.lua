@@ -6,7 +6,7 @@ function Player:initialize(color)
 
   self.color = color
 
-  self.alpha = Alpha:new(Vector(g.getWidth() / 2, g.getHeight() / 2))
+  self.alpha = Alpha:new(self, Vector(g.getWidth() / 2, g.getHeight() / 2))
   self.betas = {}
 
   self.spawning_cron_id = cron.every(1, function()

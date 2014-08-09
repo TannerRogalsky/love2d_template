@@ -18,16 +18,27 @@ function Main:enteredState()
       left = Player.left,
     }
   }
+
+  self.player2 = Player:new(COLORS.blue)
+  self.player2.controls = {
+    keyboard = {
+      w = Player.up,
+      d = Player.right,
+      s = Player.down,
+      a = Player.left,
+    }
+  }
 end
 
 function Main:update(dt)
   for i,player in pairs(Player.instances) do
     player:update(dt)
   end
+  Collider:update(dt)
 
-  for i,boid in pairs(BoidedEntity.instances) do
-    boid:update(dt)
-  end
+  -- for i,boid in pairs(BoidedEntity.instances) do
+  --   boid:update(dt)
+  -- end
 end
 
 function Main:draw()
@@ -37,8 +48,13 @@ function Main:draw()
     player:draw()
   end
 
-  for i,boid in pairs(BoidedEntity.instances) do
-    boid:draw()
+  -- for i,boid in pairs(BoidedEntity.instances) do
+  --   boid:draw()
+  -- end
+
+  g.setColor(COLORS.green:rgb())
+  for k,shape in Collider:activeShapes() do
+    shape:draw()
   end
 
   self.camera:unset()

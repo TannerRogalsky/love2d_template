@@ -4,8 +4,10 @@ Alpha.static.RADIUS = 10
 Alpha.static.SPEED = 100
 
 
-function Alpha:initialize(position)
+function Alpha:initialize(player, position)
   Base.initialize(self)
+
+  self.player = player
   self.position = position:clone()
   self.radius = Alpha.RADIUS
 
