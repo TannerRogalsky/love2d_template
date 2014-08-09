@@ -28,6 +28,9 @@ function Loading:enteredState()
     -- initialize game stuff here
 
     self:gotoState("Main")
+    local bg_music = love.audio.newSource("sounds/Jimmy James in the Cretacious Period.ogg")
+    bg_music:play()
+    bg_music:setLooping(true)
   end)
 end
 
