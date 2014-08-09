@@ -7,7 +7,7 @@ function move_toward_center_of_mass(boid)
 end
 
 function center_of_mass(boid, neighbors)
-  local center_of_mass = Vector(0, 0)
+  local center_of_mass = boid.parent.alpha.position
   local count = 1
   for _,neighbor in pairs(neighbors) do
     if neighbor ~= boid then
