@@ -30,10 +30,10 @@ function Boid:update(dt)
   end
 
   local max_speed = 50
-  self.velocity = Vector(
-    math.clamp(-max_speed, self.velocity.x, max_speed),
-    math.clamp(-max_speed, self.velocity.y, max_speed)
-  )
+  local absolute_speed = math.abs(self.velocity:len())
+  if absolute_speed > max_speed then
+    self.velocity = (self.velocity / absolute_speed) * max_speed
+  end
 
   self.position = self.position + (self.velocity * dt)
 end
