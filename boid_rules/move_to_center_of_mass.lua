@@ -1,7 +1,7 @@
 --  Rule #1: Boids try to fly towards the centre of mass of neighbouring boids.
 local MOVE_FACTOR = 10
 
-function move_toward_center_of_mass(boid)
+function move_to_center_of_mass(boid)
   local center_of_mass = center_of_mass(boid, boid.section.boids)
   return (center_of_mass - boid.position) / MOVE_FACTOR
 end
@@ -18,4 +18,4 @@ function center_of_mass(boid, neighbors)
   return center_of_mass / count
 end
 
-return move_toward_center_of_mass
+return move_to_center_of_mass
