@@ -12,7 +12,7 @@ function Main:enteredState()
   self.boids = {}
   for i=1,10 do
     -- table.insert(self.boids, Boid:new(Vector(10 * i + 100, 10 * i + 100)))
-    table.insert(self.boids, Boid:new(Vector(math.random(g.getWidth()), math.random(g.getHeight()))))
+    table.insert(self.boids, BoidedEntity:new(Vector(math.random(g.getWidth()), math.random(g.getHeight()))))
   end
 end
 
@@ -26,7 +26,7 @@ function Main:draw()
   self.camera:set()
 
   for i,boid in ipairs(self.boids) do
-    g.circle("fill", boid.position.x, boid.position.y, 5, 10)
+    boid:draw()
   end
 
   self.camera:unset()
