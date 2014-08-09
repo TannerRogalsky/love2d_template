@@ -40,6 +40,7 @@ Player = require("player")
 Alpha = require("alpha")
 Beta = require("beta")
 Section = require("section")
+Predator = require("predator")
 
 Direction = require("direction")
 

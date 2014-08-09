@@ -30,9 +30,11 @@ function Main:enteredState()
   }
 
   local w_fourth = g.getWidth() / 4
-  Section:new(self.player1, w_fourth * 0, 0, w_fourth, g.getHeight())
-  Section:new(nil, w_fourth * 1, 0, w_fourth * 2, g.getHeight())
-  Section:new(self.player2, w_fourth * 3, 0, w_fourth, g.getHeight())
+  Section:new(self.player2, w_fourth * 0, 0, w_fourth, g.getHeight())
+  local neutral_zone = Section:new(nil, w_fourth * 1, 0, w_fourth * 2, g.getHeight())
+  Section:new(self.player1, w_fourth * 3, 0, w_fourth, g.getHeight())
+
+  Predator:new(neutral_zone, Vector(g.getWidth() / 2, g.getHeight() / 2))
 end
 
 function Main:update(dt)
@@ -42,6 +44,10 @@ function Main:update(dt)
 
   for i,player in pairs(Player.instances) do
     player:update(dt)
+  end
+
+  for _,predator in pairs(Predator.instances) do
+    predator:update(dt)
   end
 
   Collider:update(dt)
@@ -60,6 +66,10 @@ function Main:draw()
 
   for i,player in pairs(Player.instances) do
     player:draw()
+  end
+
+  for _,predator in pairs(Predator.instances) do
+    predator:draw()
   end
 
   -- for i,boid in pairs(BoidedEntity.instances) do
