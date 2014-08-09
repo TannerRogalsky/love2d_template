@@ -32,6 +32,10 @@ end
 
 function Beta:on_collide(dt, object_two, mtv_x, mtv_y)
   if object_two:isInstanceOf(Beta) and self.alpha ~= object_two.alpha then
+    -- collided with opposing beta
+    self:destroy()
+  elseif object_two:isInstanceOf(Alpha) and self.alpha ~= object_two then
+    -- collided with opposing alpha
     self:destroy()
   end
 end
