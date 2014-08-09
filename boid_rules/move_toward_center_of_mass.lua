@@ -8,7 +8,7 @@ end
 
 function center_of_mass(boid, neighbors)
   local center_of_mass = Vector(0, 0)
-  local count = 0
+  local count = 1
   for _,neighbor in pairs(neighbors) do
     if neighbor ~= boid then
       count = count + 1

@@ -2,15 +2,15 @@ local Boid = class('Boid', Base)
 Boid.static.instances = {}
 
 local rules = {}
+local active_rules = require("boid_rules.active_rules")
 local lfs = love.filesystem
 local directory = "boid_rules"
-for index,filename in ipairs(lfs.getDirectoryItems(directory)) do
+for _, filename in ipairs(active_rules) do
   local file = directory .. "/" .. filename
-  if lfs.isFile(file) and file:match("%.lua$") then
-    local rule = require(file:gsub("%.lua", ""))
-    assert(is_func(rule), file .. " doesn't return a rule function")
-    table.insert(rules, rule)
-  end
+  print(file)
+  local rule = require(file:gsub("%.lua", ""))
+  assert(is_func(rule), file .. " doesn't return a rule function")
+  table.insert(rules, rule)
 end
 
 function Boid:initialize(position)

@@ -7,6 +7,7 @@ function BoidedEntity:initialize(position, radius)
 
   self.position = position:clone()
   self.boid = Boid:new(position)
+  self.boid.parent = self
 
   self._physics_body = Collider:addCircle(position.x, position.y, radius)
   self._physics_body.parent = self

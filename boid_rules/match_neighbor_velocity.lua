@@ -7,7 +7,7 @@ end
 
 function average_velocity(boid, neighbors)
   local average_velocity = Vector(0, 0)
-  local count = 0
+  local count = 1
   for _,neighbor in pairs(neighbors) do
     if neighbor ~= boid then
       count = count + 1

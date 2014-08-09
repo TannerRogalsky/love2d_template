@@ -3,9 +3,9 @@ local Beta = class('Beta', BoidedEntity)
 
 local RADIUS = 5
 
-function Beta:initialize(position)
+function Beta:initialize(position, alpha)
   BoidedEntity.initialize(self, position, RADIUS)
-
+  self.alpha = alpha
 end
 
 return Beta

@@ -9,7 +9,7 @@ function Main:enteredState()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
-  self.player1 = Player:new()
+  self.player1 = Player:new(COLORS.red)
   self.player1.controls = {
     keyboard = {
       up = Player.up,
