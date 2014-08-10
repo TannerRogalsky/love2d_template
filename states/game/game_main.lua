@@ -95,10 +95,10 @@ function Main:draw()
   --   boid:draw()
   -- end
 
-  g.setColor(COLORS.white:rgb())
-  for k,shape in Collider:activeShapes() do
-    shape:draw()
-  end
+  -- g.setColor(COLORS.white:rgb())
+  -- for k,shape in Collider:activeShapes() do
+  --   shape:draw()
+  -- end
   -- Collider._hash:draw("line", false, true)
 
   self.camera:unset()

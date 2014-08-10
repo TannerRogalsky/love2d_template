@@ -28,7 +28,7 @@ function Resource:on_collide(dt, object_two, mtv_x, mtv_y)
 end
 
 function Resource:destroy()
-  self.section.resources[self.id] = nil
+  self.section.resources:remove(self)
   Collider:remove(self._physics_body)
   Resource.instances[self.id] = nil
 end

@@ -13,7 +13,8 @@ function Section:initialize(player, x, y, w, h)
   self.x, self.y, self.w, self.h = x, y, w, h
   self.boids = {}
   self.alphas = {}
-  self.resources = {}
+  self.resources = Set.new()
+  self.max_resource_count = self.resources:size()
 
   Section.instances[self.id] = self
 end
@@ -42,6 +43,9 @@ function Section:update(dt)
       self.alphas[shape.parent.id] = shape.parent
     end
   end
+  if self.player == nil and self.resources:size() <= self.max_resource_count / 2 then
+    self:spawn_new_resources(0.1)
+  end
 end
 
 function Section:spawn_new_resources(probability)
@@ -53,10 +57,11 @@ function Section:spawn_new_resources(probability)
       if r() <= probability then
         local ox, oy = r(size_x), r(size_y)
         local resource = Resource:new(Vector(self.x + ox + x * size_x, self.y + oy + y * size_y), self)
-        self.resources[resource.id] = resource
+        self.resources:insert(resource)
       end
     end
   end
+  self.max_resource_count = self.resources:size()
 end
 
 function Section:shapesInRange()
