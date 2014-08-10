@@ -52,7 +52,8 @@ function Section:spawn_new_resources(probability)
     for y=0,sy do
       if r() <= probability then
         local ox, oy = r(size_x), r(size_y)
-        Resource:new(Vector(self.x + ox + x * size_x, self.y + oy + y * size_y))
+        local resource = Resource:new(Vector(self.x + ox + x * size_x, self.y + oy + y * size_y), self)
+        self.resources[resource.id] = resource
       end
     end
   end

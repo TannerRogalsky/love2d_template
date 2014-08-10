@@ -17,8 +17,9 @@ function Player:initialize(color, alpha_image, beta_image)
   Player.instances[self.id] = self
 end
 
-function Player:spawn_beta()
-  local pos = self.alpha.position:clone()
+function Player:spawn_beta(position)
+  position = position or self.alpha.position
+  local pos = position:clone()
   local beta = Beta:new(pos, self.alpha, self.beta_image)
   self.betas[beta.id] = beta
 end
@@ -28,6 +29,12 @@ function Player:update(dt)
     if love.keyboard.isDown(key) then
       action(self, dt)
     end
+  end
+
+  if self.joystick then
+    local x = self.joystick:getGamepadAxis("leftx")
+    local y = self.joystick:getGamepadAxis("lefty")
+    self.alpha._physics_body:move(x * Alpha.SPEED * dt, y * Alpha.SPEED * dt)
   end
 
   self.alpha:update(dt)

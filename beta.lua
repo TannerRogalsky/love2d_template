@@ -47,7 +47,7 @@ function Beta:on_collide(dt, object_two, mtv_x, mtv_y)
   elseif object_two:isInstanceOf(Predator) then
     self:destroy()
   elseif object_two:isInstanceOf(Resource) then
-    self.alpha.player:spawn_beta()
+    self.alpha.player:spawn_beta(self.position)
   end
 end
 

@@ -4,13 +4,16 @@ local Vector  = require('lib.vector')
 function Main:enteredState()
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
 
+  love.mouse.setVisible(false)
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
+  local joysticks = love.joystick.getJoysticks()
   local i = game.preloaded_images
   self.player1 = Player:new(COLORS.red, i["alpha_red.png"], i["beta_red.png"])
+  self.player1.joystick = joysticks[1]
   self.player1.controls = {
     keyboard = {
       up = Player.up,
@@ -21,6 +24,7 @@ function Main:enteredState()
   }
 
   self.player2 = Player:new(COLORS.blue, i["alpha_blue.png"], i["beta_blue.png"])
+  self.player2.joystick = joysticks[2]
   self.player2.controls = {
     keyboard = {
       w = Player.up,
@@ -161,6 +165,7 @@ function Main:exitedState()
 
   Collider:clear()
   Collider = nil
+  love.mouse.setVisible(true)
 end
 
 return Main
