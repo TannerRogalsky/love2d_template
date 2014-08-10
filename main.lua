@@ -8,6 +8,7 @@ function love.load(args)
     k_args[key] = value
   end
 
+  g.setDefaultFilter("nearest", "nearest")
   LovePixlr.init()
   LovePixlr.bind(1280, 720)
 

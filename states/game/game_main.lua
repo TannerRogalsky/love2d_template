@@ -9,7 +9,8 @@ function Main:enteredState()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
 
-  self.player1 = Player:new(COLORS.red)
+  local i = game.preloaded_images
+  self.player1 = Player:new(COLORS.red, i["alpha_red.png"], i["beta_red.png"])
   self.player1.controls = {
     keyboard = {
       up = Player.up,
@@ -19,7 +20,7 @@ function Main:enteredState()
     }
   }
 
-  self.player2 = Player:new(COLORS.blue)
+  self.player2 = Player:new(COLORS.blue, i["alpha_blue.png"], i["beta_blue.png"])
   self.player2.controls = {
     keyboard = {
       w = Player.up,
@@ -63,10 +64,12 @@ end
 
 function Main:draw()
   self.camera:set()
+  g.setColor(COLORS.white:rgb())
+  g.draw(game.preloaded_images["background.png"], 0, 0)
 
-  for _,section in pairs(Section.instances) do
-    section:draw()
-  end
+  -- for _,section in pairs(Section.instances) do
+  --   section:draw()
+  -- end
 
   for i,player in pairs(Player.instances) do
     player:draw()
@@ -80,11 +83,11 @@ function Main:draw()
   --   boid:draw()
   -- end
 
-  g.setColor(COLORS.white:rgb())
-  for k,shape in Collider:activeShapes() do
-    shape:draw()
-  end
-  Collider._hash:draw("line", false, true)
+  -- g.setColor(COLORS.white:rgb())
+  -- for k,shape in Collider:activeShapes() do
+  --   shape:draw()
+  -- end
+  -- Collider._hash:draw("line", false, true)
 
   self.camera:unset()
 

@@ -1,17 +1,17 @@
 local Player = class('Player', Base)
 Player.static.instances = {}
 
-function Player:initialize(color)
+function Player:initialize(color, alpha_image, beta_image)
   Base.initialize(self)
 
   self.color = color
 
-  self.alpha = Alpha:new(self, Vector(g.getWidth() / 2, g.getHeight() / 2))
+  self.alpha = Alpha:new(self, Vector(g.getWidth() / 2, g.getHeight() / 2), alpha_image)
   self.betas = {}
 
   self.spawning_cron_id = cron.every(1, function()
     local pos = self.alpha.position:clone()
-    local beta = Beta:new(pos, self.alpha)
+    local beta = Beta:new(pos, self.alpha, beta_image)
     self.betas[beta.id] = beta
   end)
 
@@ -32,8 +32,8 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  g.setColor(self.color:rgb())
   self.alpha:draw()
+  g.setColor(self.color:rgb())
   for _,beta in pairs(self.betas) do
     beta:draw(dt)
   end

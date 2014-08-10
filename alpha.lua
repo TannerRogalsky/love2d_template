@@ -1,17 +1,20 @@
 local Alpha = class('Alpha', Base)
 Alpha.static.instances = {}
-Alpha.static.RADIUS = 10
+Alpha.static.RADIUS = 15
 Alpha.static.SPEED = 100
 Alpha.static.HEALTH = 10
 
 
-function Alpha:initialize(player, position)
+function Alpha:initialize(player, position, image)
   Base.initialize(self)
 
   self.player = player
+  self.image = image
   self.position = position:clone()
   self.radius = Alpha.RADIUS
   self.health = Alpha.HEALTH
+  self.last_x, self.last_y = position.x, position.y
+  self.angle = 0
 
   self._physics_body = Collider:addCircle(self.position.x, self.position.y, self.radius)
   self._physics_body.parent = self
@@ -27,9 +30,13 @@ function Alpha:on_collide(dt, object_two, mtv_x, mtv_y)
 end
 
 function Alpha:update(dt)
-  self:bounds_check()
   local x, y = self._physics_body:center()
-  self.position = Vector(x, y)
+  if x ~= self.last_x or y ~= self.last_y then
+    self:bounds_check()
+    self.angle = math.atan2(self.last_y - y, self.last_x - x) - math.pi / 2
+    self.last_x, self.last_y = x, y
+    self.position = Vector(x, y)
+  end
 end
 
 function Alpha:bounds_check()
@@ -44,7 +51,8 @@ function Alpha:bounds_check()
 end
 
 function Alpha:draw()
-  g.circle("fill", self.position.x, self.position.y, self.radius)
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.image, self.position.x, self.position.y, self.angle, 1, 1, self.radius, self.radius)
 end
 
 function Alpha:damage(delta)
