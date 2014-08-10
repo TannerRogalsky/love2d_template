@@ -29,12 +29,16 @@ function Main:enteredState()
     }
   }
 
-  local w_fourth = g.getWidth() / 4
-  Section:new(self.player2, w_fourth * 0, 0, w_fourth, g.getHeight())
-  local neutral_zone = Section:new(nil, w_fourth * 1, 0, w_fourth * 2, g.getHeight())
-  Section:new(self.player1, w_fourth * 3, 0, w_fourth, g.getHeight())
+  local w_fourth = LovePixlr._w / 4
+  Section:new(self.player2, w_fourth * 0, 0, w_fourth, LovePixlr._h)
+  local neutral_zone = Section:new(nil, w_fourth * 1, 0, w_fourth * 2, LovePixlr._h)
+  Section:new(self.player1, w_fourth * 3, 0, w_fourth, LovePixlr._h)
 
-  Predator:new(neutral_zone, Vector(g.getWidth() / 2, g.getHeight() / 2))
+  Predator:new(neutral_zone, Vector(LovePixlr._w / 2, LovePixlr._h / 2))
+  Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 4, LovePixlr._h / 3))
+  Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 4, LovePixlr._h / 3 * 2))
+  Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3))
+  Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3 * 2))
 end
 
 function Main:update(dt)

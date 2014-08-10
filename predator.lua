@@ -9,7 +9,7 @@ function Predator:initialize(section, origin)
 
   self.radius = Predator.RADIUS
   self.health = Predator.HEALTH
-  self.dt = 0
+  self.dt = love.math.random(100)
   self.section = section
   self.origin = origin:clone()
   self.x, self.y = self.origin.x, self.origin.y

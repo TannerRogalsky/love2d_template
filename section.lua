@@ -12,6 +12,7 @@ function Section:initialize(player, x, y, w, h)
 
   self.x, self.y, self.w, self.h = x, y, w, h
   self.boids = {}
+  self.alphas = {}
 
   Section.instances[self.id] = self
 end
@@ -30,11 +31,14 @@ end
 function Section:update(dt)
   local shapes = Collider:shapesInRange(self.x, self.y, self.x + self.w, self.y + self.h)
   self.boids = {}
+  self.alphas = {}
   for _,shape in pairs(shapes) do
     local boid = shape.boid
     if boid then
       boid.section = self
       self.boids[boid.id] = boid
+    elseif shape.parent:isInstanceOf(Alpha) then
+      self.alphas[shape.parent.id] = shape.parent
     end
   end
 end

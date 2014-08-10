@@ -35,10 +35,11 @@ end
 function Alpha:bounds_check()
   local x1, y1, x2, y2 = self._physics_body:bbox()
   local dx, dy = 0, 0
+  local w, h = LovePixlr._w,LovePixlr._h
   if x1 < 0 then dx = dy - x1 end
   if y1 < 0 then dy = dy - y1 end
-  if x2 > g.getWidth() then dx = dx + (g.getWidth() - x2) end
-  if y2 > g.getHeight() then dy = dy + (g.getHeight() - y2) end
+  if x2 > w then dx = dx + (w - x2) end
+  if y2 > h then dy = dy + (h - y2) end
   self._physics_body:move(dx, dy)
 end
 
