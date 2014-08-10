@@ -13,6 +13,7 @@ function Main:enteredState()
   local joysticks = love.joystick.getJoysticks()
   local i = game.preloaded_images
   self.player1 = Player:new(COLORS.red, i["alpha_red.png"], i["beta_red.png"])
+  self.player1.game_over_image = self.preloaded_images["winp2.png"]
   self.player1.joystick = joysticks[1]
   self.player1.controls = {
     keyboard = {
@@ -24,6 +25,7 @@ function Main:enteredState()
   }
 
   self.player2 = Player:new(COLORS.blue, i["alpha_blue.png"], i["beta_blue.png"])
+  self.player2.game_over_image = self.preloaded_images["winp1.png"]
   self.player2.joystick = joysticks[2]
   self.player2.controls = {
     keyboard = {

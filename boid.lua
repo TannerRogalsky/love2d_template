@@ -1,5 +1,6 @@
 local Boid = class('Boid', Base)
 Boid.static.instances = {}
+Boid.static.MAX_SPEED = 80
 
 local rules = {}
 local active_rules = require("boid_rules.active_rules")
@@ -29,10 +30,9 @@ function Boid:update(dt)
     self.velocity = self.velocity + rule(self, Boid.instances)
   end
 
-  local max_speed = 50
   local absolute_speed = math.abs(self.velocity:len())
-  if absolute_speed > max_speed then
-    self.velocity = (self.velocity / absolute_speed) * max_speed
+  if absolute_speed > Boid.MAX_SPEED then
+    self.velocity = (self.velocity / absolute_speed) * Boid.MAX_SPEED
   end
 
   self.position = self.position + (self.velocity * dt)
