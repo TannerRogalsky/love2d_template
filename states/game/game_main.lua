@@ -31,15 +31,17 @@ function Main:enteredState()
   }
 
   local w_fourth = LovePixlr._w / 4
-  Section:new(self.player2, w_fourth * 0, 0, w_fourth, LovePixlr._h)
+  local player2_zone = Section:new(self.player2, w_fourth * 0, 0, w_fourth, LovePixlr._h)
   local neutral_zone = Section:new(nil, w_fourth * 1, 0, w_fourth * 2, LovePixlr._h)
-  Section:new(self.player1, w_fourth * 3, 0, w_fourth, LovePixlr._h)
+  local player1_zone = Section:new(self.player1, w_fourth * 3, 0, w_fourth, LovePixlr._h)
 
   Predator:new(neutral_zone, Vector(LovePixlr._w / 2, LovePixlr._h / 2))
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 4, LovePixlr._h / 3))
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 4, LovePixlr._h / 3 * 2))
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3))
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3 * 2))
+
+
 end
 
 function Main:update(dt)
@@ -135,6 +137,18 @@ function Main.on_stop_collide(dt, shape_one, shape_two)
 end
 
 function Main:exitedState()
+  for _,section in pairs(Section.instances) do
+    section:destroy()
+  end
+
+  for i,player in pairs(Player.instances) do
+    player:destroy()
+  end
+
+  for _,predator in pairs(Predator.instances) do
+    predator:destroy()
+  end
+
   Collider:clear()
   Collider = nil
 end

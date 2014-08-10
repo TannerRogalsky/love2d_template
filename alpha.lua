@@ -26,6 +26,8 @@ function Alpha:on_collide(dt, object_two, mtv_x, mtv_y)
   if object_two:isInstanceOf(Beta) and self ~= object_two.alpha then
     print("damage")
     self:damage(1)
+  elseif object_two:isInstanceOf(Predator) then
+    self:damage(Alpha.HEALTH)
   end
 end
 
@@ -63,8 +65,14 @@ function Alpha:damage(delta)
 end
 
 function Alpha:die()
-  print("i died")
-  self:destroy()
+  local other_player
+  for _,player in pairs(Player.instances) do
+    if player ~= self.player then
+      other_player = player
+      break
+    end
+  end
+  game:gotoState("Over", other_player)
 end
 
 function Alpha:destroy()
