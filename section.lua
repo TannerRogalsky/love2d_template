@@ -13,6 +13,7 @@ function Section:initialize(player, x, y, w, h)
   self.x, self.y, self.w, self.h = x, y, w, h
   self.boids = {}
   self.alphas = {}
+  self.resources = {}
 
   Section.instances[self.id] = self
 end
@@ -39,6 +40,20 @@ function Section:update(dt)
       self.boids[boid.id] = boid
     elseif shape.parent:isInstanceOf(Alpha) then
       self.alphas[shape.parent.id] = shape.parent
+    end
+  end
+end
+
+function Section:spawn_new_resources(probability)
+  local r = love.math.random
+  local size_x, size_y = 20, 20
+  local sx, sy = self.w / size_x - 1, self.h / size_y - 1
+  for x=0,sx do
+    for y=0,sy do
+      if r() <= probability then
+        local ox, oy = r(size_x), r(size_y)
+        Resource:new(Vector(self.x + ox + x * size_x, self.y + oy + y * size_y))
+      end
     end
   end
 end

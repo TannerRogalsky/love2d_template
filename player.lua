@@ -6,16 +6,21 @@ function Player:initialize(color, alpha_image, beta_image)
 
   self.color = color
 
+  self.alpha_image = alpha_image
+  self.beta_image = beta_image
+
   self.alpha = Alpha:new(self, Vector(g.getWidth() / 2, g.getHeight() / 2), alpha_image)
   self.betas = {}
 
-  self.spawning_cron_id = cron.every(1, function()
-    local pos = self.alpha.position:clone()
-    local beta = Beta:new(pos, self.alpha, beta_image)
-    self.betas[beta.id] = beta
-  end)
+  self.spawning_cron_id = cron.every(1, self.spawn_beta, self)
 
   Player.instances[self.id] = self
+end
+
+function Player:spawn_beta()
+  local pos = self.alpha.position:clone()
+  local beta = Beta:new(pos, self.alpha, self.beta_image)
+  self.betas[beta.id] = beta
 end
 
 function Player:update(dt)

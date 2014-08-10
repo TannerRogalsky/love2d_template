@@ -42,6 +42,7 @@ Alpha = require("alpha")
 Beta = require("beta")
 Section = require("section")
 Predator = require("predator")
+Resource = require("resource")
 
 Direction = require("direction")
 

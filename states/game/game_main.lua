@@ -41,7 +41,9 @@ function Main:enteredState()
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3))
   Predator:new(neutral_zone, Vector(LovePixlr._w / 10 * 6, LovePixlr._h / 3 * 2))
 
-
+  player1_zone:spawn_new_resources(0.1)
+  neutral_zone:spawn_new_resources(0.2)
+  player2_zone:spawn_new_resources(0.1)
 end
 
 function Main:update(dt)
@@ -73,6 +75,10 @@ function Main:draw()
   --   section:draw()
   -- end
 
+  for _,resource in pairs(Resource.instances) do
+    resource:draw()
+  end
+
   for i,player in pairs(Player.instances) do
     player:draw()
   end
@@ -85,10 +91,10 @@ function Main:draw()
   --   boid:draw()
   -- end
 
-  -- g.setColor(COLORS.white:rgb())
-  -- for k,shape in Collider:activeShapes() do
-  --   shape:draw()
-  -- end
+  g.setColor(COLORS.white:rgb())
+  for k,shape in Collider:activeShapes() do
+    shape:draw()
+  end
   -- Collider._hash:draw("line", false, true)
 
   self.camera:unset()
@@ -137,6 +143,10 @@ function Main.on_stop_collide(dt, shape_one, shape_two)
 end
 
 function Main:exitedState()
+  for _,resource in pairs(Resource.instances) do
+    resource:destroy()
+  end
+
   for _,section in pairs(Section.instances) do
     section:destroy()
   end

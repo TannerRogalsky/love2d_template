@@ -72,7 +72,9 @@ function Alpha:die()
       break
     end
   end
-  game:gotoState("Over", other_player)
+  cron.after(0.1, function()
+    game:gotoState("Over", other_player)
+  end)
 end
 
 function Alpha:destroy()
