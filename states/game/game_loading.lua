@@ -30,7 +30,6 @@ function Loading:enteredState()
     local bg_music = love.audio.newSource("sounds/Jimmy James in the Cretacious Period.ogg")
     bg_music:play()
     bg_music:setLooping(true)
-    bg_music:setVolume(0)
 
     self:gotoState("Menu")
   end)
