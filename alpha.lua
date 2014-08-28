@@ -24,7 +24,6 @@ end
 
 function Alpha:on_collide(dt, object_two, mtv_x, mtv_y)
   if object_two:isInstanceOf(Beta) and self ~= object_two.alpha then
-    print("damage")
     self:damage(1)
   elseif object_two:isInstanceOf(Predator) then
     self:damage(Alpha.HEALTH)

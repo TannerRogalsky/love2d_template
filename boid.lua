@@ -8,7 +8,7 @@ local lfs = love.filesystem
 local directory = "boid_rules"
 for _, filename in ipairs(active_rules) do
   local file = directory .. "/" .. filename
-  print(file)
+  -- print(file)
   local rule = require(file:gsub("%.lua", ""))
   assert(is_func(rule), file .. " doesn't return a rule function")
   table.insert(rules, rule)
