@@ -1,6 +1,6 @@
 local Boid = class('Boid', Base)
 Boid.static.instances = {}
-Boid.static.MAX_SPEED = 80
+Boid.static.MAX_SPEED = 160
 
 local rules = {}
 local active_rules = require("boid_rules.active_rules")

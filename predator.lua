@@ -2,7 +2,7 @@ local Predator = class('Predator', Base)
 Predator.static.instances = {}
 Predator.static.RADIUS = 20
 Predator.static.SPEED = 100
-Predator.static.HEALTH = 40
+Predator.static.HEALTH = 5
 
 function Predator:initialize(section, origin)
   Base.initialize(self)
