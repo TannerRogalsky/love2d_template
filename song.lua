@@ -50,16 +50,24 @@ function Song:build_state_sequence(actions)
   local current_action_index = 1
   local current_action = actions[current_action_index]
   for beat = current_action.start_time, self.length do
-    state_sequence[beat] = {}
-    local loop_time = (current_action.hold_time or 1) + (current_action.rest_time or 0)
-    local start_time_offset = beat - current_action.start_time
-    local iteration = math.floor(start_time_offset / loop_time)
-    state_sequence[beat].button = current_action.gamepadbutton or Button.None
-
     local next_action = actions[current_action_index + 1]
     if next_action and beat >= next_action.start_time then
       current_action_index = current_action_index + 1
       current_action = actions[current_action_index]
+    end
+
+    state_sequence[beat] = {}
+    local loop_time = current_action.hold_time + current_action.rest_time
+    local start_time_offset = beat - current_action.start_time
+    local iteration = math.floor(start_time_offset / loop_time)
+    local iteration_start_beat = current_action.start_time + loop_time * iteration
+    local iteration_hold_start = iteration_start_beat
+    local iteration_hold_end = iteration_hold_start + current_action.hold_time
+
+    if beat >= iteration_hold_start and beat < iteration_hold_end then
+      state_sequence[beat].button = current_action.gamepadbutton or Button.None
+    else
+      state_sequence[beat].button = Button.None
     end
   end
 

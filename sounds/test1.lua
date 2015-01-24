@@ -25,7 +25,7 @@ return {
     {
       player = 1,
       start_time = 26,
-      hold_time = 0,
+      hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.None,
       gamepadaxis = Stick.None
