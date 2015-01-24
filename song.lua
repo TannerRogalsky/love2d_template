@@ -69,6 +69,7 @@ function Song:build_state_sequence(actions)
     else
       state_sequence[beat].button = Button.None
     end
+    state_sequence[beat].stick = current_action.gamepadaxis or Stick.None
   end
 
   return state_sequence
