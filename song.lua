@@ -6,7 +6,7 @@ function Song:initialize(data)
   self.bpm = data.bpm
   self.length = data.length
   self.source = love.audio.newSource(data.file)
-  -- self.source:play()
+  self.source:play()
 
   self.players = {}
   self.actions = {}
@@ -26,9 +26,7 @@ function Song:initialize(data)
       return a.start_time < b.start_time
     end)
     local state_sequence = self:build_state_sequence(actions)
-
     self.players[i] = Player:new(self.actions_by_player[i], state_sequence)
-    print(self.players[i]:buttons_sequence_to_string())
     self.actions[i] = {}
   end
 
@@ -69,6 +67,7 @@ function Song:build_state_sequence(actions)
     else
       state_sequence[beat].button = Button.None
     end
+    -- print(beat, iteration_start_beat, iteration_hold_start, iteration_hold_end, loop_time, state_sequence[beat].button)
     state_sequence[beat].stick = current_action.gamepadaxis or Stick.None
   end
 
