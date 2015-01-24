@@ -20,6 +20,9 @@ function Main:draw()
   self.camera:set()
 
   g.print(self.song.current_beat)
+  for i,player in ipairs(self.song.players) do
+    g.print(player:buttons_sequence_to_string(), 0, i * 25)
+  end
 
   self.camera:unset()
 end

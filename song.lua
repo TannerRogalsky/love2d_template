@@ -68,7 +68,7 @@ end
 
 
 function Song:tick_beat()
-  print(self.current_beat, self.players[1]:get_state(self.current_beat).button)
+  -- print(self.current_beat, self.players[1]:get_state(self.current_beat).button)
 end
 
 return Song
