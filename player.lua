@@ -16,3 +16,5 @@ function Player:destroy()
   Player.instances[self.id] = nil
   Player.instance_count = Player.instance_count - 1
 end
+
+return Player

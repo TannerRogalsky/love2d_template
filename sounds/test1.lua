@@ -13,11 +13,12 @@ local Button = {
   Y = 'y'
 }
 
--- all timings in bpm
+-- all timings in bpm unless otherwise noted
 
 return {
   file = 'sounds/DJ Amuro - A (HQ)-JMV2qLTX1_g.mp3',
-  bpm = 120,
+  bpm = 96,
+  starting_offset = 0, -- seconds
   players = 2,
   actions = {
     {
