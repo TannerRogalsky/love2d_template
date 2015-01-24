@@ -3,6 +3,7 @@
 return {
   file = 'sounds/ddr_59-psX1hLeUDFA.mp3',
   bpm = 135,
+  scroll_speed = 10,
   length = 235,
   starting_offset = 0.279, -- seconds
   players = 1,

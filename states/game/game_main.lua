@@ -24,6 +24,12 @@ function Main:draw()
     g.print(player:buttons_sequence_to_string(), 0, i * 15)
   end
 
+  g.line(0, g.getHeight() - 60, g.getWidth(), g.getHeight() - 60)
+  for beat, action in ipairs(self.song.players[1].state_sequence) do
+    local y = g.getHeight() - ((self.song.time * -self.song.bpm) + beat * 60)
+    g.print(action.button, g.getWidth() / 2, y)
+  end
+
   self.camera:unset()
 end
 
