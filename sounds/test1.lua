@@ -19,7 +19,7 @@ return {
   file = 'sounds/DJ Amuro - A (HQ)-JMV2qLTX1_g.mp3',
   bpm = 96,
   starting_offset = 0, -- seconds
-  players = 2,
+  players = 1,
   actions = {
     {
       player = 1,
