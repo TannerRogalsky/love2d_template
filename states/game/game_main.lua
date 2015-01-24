@@ -1,19 +1,25 @@
 local Main = Game:addState('Main')
 
-function Main:enteredState()
+function Main:enteredState(song)
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
 
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
   g.setFont(self.preloaded_fonts["04b03_16"])
+
+  -- self.song = song
+  self.song = Song:new(require('sounds.test1'))
 end
 
 function Main:update(dt)
+  self.song:update(dt)
 end
 
 function Main:draw()
   self.camera:set()
+
+  g.print(self.song.current_beat)
 
   self.camera:unset()
 end

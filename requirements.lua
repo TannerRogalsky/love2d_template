@@ -35,6 +35,7 @@ Boid = require("lib.boid")
 
 Base = require("base")
 Game = require("game")
+Song = require("song")
 
 Direction = require("direction")
 
