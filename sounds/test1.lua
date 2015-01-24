@@ -1,23 +1,9 @@
-local Stick = {
-  Up = {lefty=-1, leftx=0},
-  Down = {lefty=1, leftx=0},
-  Right = {lefty=0, leftx=1},
-  Left = {lefty=0, leftx=-1},
-  None = {lefty=0, leftx=1},
-}
-
-local Button = {
-  A = 'a',
-  B = 'b',
-  X = 'x',
-  Y = 'y'
-}
-
 -- all timings in bpm unless otherwise noted
 
 return {
   file = 'sounds/DJ Amuro - A (HQ)-JMV2qLTX1_g.mp3',
   bpm = 96,
+  length = 30,
   starting_offset = 0, -- seconds
   players = 1,
   actions = {
@@ -27,6 +13,7 @@ return {
       hold_time = 1,
       rest_time = 0,
       gamepadaxis = Stick.UP,
+      gamepadbutton = Button.A
     },
     {
       player = 1,

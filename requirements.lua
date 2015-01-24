@@ -38,6 +38,9 @@ Game = require("game")
 Song = require("song")
 Player = require("player")
 
+Stick = require("action_constants").Stick
+Button = require("action_constants").Button
+
 Direction = require("direction")
 
 local function require_all(directory)
