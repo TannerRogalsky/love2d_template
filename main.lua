@@ -3,6 +3,11 @@ love.filesystem.load('requirements.lua')()
 function love.load(args)
   LovePixlr.bind(1280, 720)
 
+  good_audio = {}
+  for i=1,21 do
+    table.insert(good_audio, love.audio.newSource("sounds/good/good-" .. string.format("%02i", i) .. ".mp3"))
+  end
+
   local k_args = {}
   for _,arg in ipairs(args) do
     local key, value = arg:match("(.*)=(.*)")

@@ -7,6 +7,7 @@ function Song:initialize(data)
   self.length = data.length
   self.scroll_speed = data.scroll_speed or 20
   self.source = love.audio.newSource(data.file)
+  self.source:setVolume(0.5)
   self.source:play()
 
   self.players = {}
@@ -68,8 +69,8 @@ function Song:gamepadpressed(joystick, button)
   if player == nil then return false end
 
   local success = self:is_action_valid(player, joystick, button, self.current_beat)
-  print(success)
   if success then
+    good_audio[math.random(#good_audio)]:play()
     table.insert(player.successes, self.current_beat)
   else
     table.insert(player.failures, self.current_beat)
