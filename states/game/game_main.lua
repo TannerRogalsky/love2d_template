@@ -1,7 +1,6 @@
 local Main = Game:addState('Main')
 
 function Main:enteredState(song)
-  Collider = HC(100, self.on_start_collide, self.on_stop_collide)
 
   local Camera = require("lib/camera")
   self.camera = Camera:new()
@@ -28,11 +27,14 @@ function Main:draw()
   for index, player in ipairs(self.song.players) do
     self:render_player(player, 35)
   end
+  for index,sequence in ipairs(self.song.sequences) do
+    x = 35 + (380 + 35) * (index - 1)
+    self:render_sequence(sequence, x)
+  end
 
   g.line(0, g.getHeight() - 60, g.getWidth(), g.getHeight() - 60)
   g.print(self.song.current_beat, g.getWidth() / 2 - 20, g.getHeight() - 75)
   local player = self.song.players[1]
-
 
   self.camera:unset()
 end
@@ -41,13 +43,15 @@ function Main:render_player(player, offset)
   local pos = player.position
   local pos_x = offset + (380 + offset) * pos
   g.draw(player.image, pos_x, 0)
+end
 
-  for beat, action in ipairs(player.state_sequence) do
+function Main:render_sequence(sequence, offset)
+  for beat, action in ipairs(sequence) do
     if action.button ~= Button.None then
       local y = g.getHeight() - 90 - ((self.song.time * -self.song.bpm) + beat * 60)
-      g.draw(game.preloaded_images["button_" .. action.button .. ".png"], pos_x + 220, y)
+      g.draw(game.preloaded_images["button_" .. action.button .. ".png"], offset + 220, y)
       if action.button ~= Button.None and action.stick ~= Stick.None then
-        g.draw(game.preloaded_images["button_" .. action.stick.name .. ".png"], pos_x + 60, y)
+        g.draw(game.preloaded_images["button_" .. action.stick.name .. ".png"], offset + 60, y)
       end
     end
   end
@@ -60,13 +64,27 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:keypressed(key, unicode)
+  if key == "r" then
+    self:gotoState("Main")
+  end
 end
 
 function Main:keyreleased(key, unicode)
 end
 
 function Main:gamepadpressed(joystick, button)
-  self.song:gamepadpressed(joystick, button)
+  if button == 'rightshoulder' or button == 'leftshoulder' then
+    local player = self.song.players[joystick:getID()]
+    self:switch_position(player)
+  else
+    self.song:gamepadpressed(joystick, button)
+  end
+end
+
+function Main:switch_position(player)
+  local song = self.song
+  player.position, song.unused_sequence_position = song.unused_sequence_position, player.position
+  player.state_sequence, song.unused_sequence = song.unused_sequence, player.state_sequence
 end
 
 function Main:gamepadreleased(joystick, button)
@@ -94,8 +112,6 @@ function Main.on_stop_collide(dt, shape_one, shape_two)
 end
 
 function Main:exitedState()
-  Collider:clear()
-  Collider = nil
 end
 
 return Main

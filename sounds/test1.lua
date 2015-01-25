@@ -26,6 +26,15 @@ return {
       gamepadbutton = Button.None,
       gamepadaxis = Stick.None
     },
+    {
+      -- dummy for beat 1 must be present
+      player = 3,
+      start_time = 1,
+      hold_time = 1,
+      rest_time = 10,
+      gamepadbutton = Button.None,
+      gamepadaxis = Stick.None
+    },
 
     --learning
     {

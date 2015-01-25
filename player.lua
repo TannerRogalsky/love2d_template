@@ -29,9 +29,9 @@ function Player:next_action(beat)
 
 end
 
-function Player:buttons_sequence_to_string()
+function Player.buttons_sequence_to_string(state_sequence)
   local buttons = {}
-  for i,state in ipairs(self.state_sequence) do
+  for i,state in ipairs(state_sequence) do
     buttons[i] = state.button
   end
   return table.concat(buttons, '')

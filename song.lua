@@ -21,10 +21,12 @@ function Song:initialize(data)
     table.insert(self.actions_by_player[action.player], action)
   end
 
+  self.sequences = {}
   for index,actions in ipairs(self.actions_by_player) do
     table.sort(actions, function(a, b)
       return a.start_time < b.start_time
     end)
+    self.sequences[index] = self:build_state_sequence(actions)
   end
 
   for i=1,data.players do
@@ -36,6 +38,7 @@ function Song:initialize(data)
   end
 
   self.unused_sequence = self:build_state_sequence(self.actions_by_player[3])
+  self.unused_sequence_position = 2
 
   self.time = -data.starting_offset
   self.current_beat = 0
@@ -55,6 +58,7 @@ function Song:gamepadpressed(joystick, button)
   if player == nil then return false end
 
   local success = self:is_action_valid(player, joystick, button, self.current_beat)
+  print(success)
   if success then
     table.insert(player.successes, self.current_beat)
   else
