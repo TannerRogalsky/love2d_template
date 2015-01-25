@@ -32,13 +32,13 @@ function Song:initialize(data)
 
   for i=1,data.players do
     local actions = self.actions_by_player[i]
-    local state_sequence = self:build_state_sequence(actions)
+    local state_sequence = self.sequences[i]
     self.players[i] = Player:new(self.actions_by_player[i], state_sequence, i - 1)
     self.players[i].image = game.preloaded_images["bg_p" .. i .. ".png"]
     self.actions[i] = {}
   end
 
-  self.unused_sequence = self:build_state_sequence(self.actions_by_player[3])
+  self.unused_sequence = self.sequences[3]
   self.unused_sequence_position = 2
 
   self.time = -data.starting_offset
@@ -71,6 +71,9 @@ function Song:gamepadpressed(joystick, button)
   local success = self:is_action_valid(player, joystick, button, self.current_beat)
   if success then
     good_audio[math.random(#good_audio)]:play()
+    local state = player:get_state(self.current_beat)
+    state.button_image = game.preloaded_images["button_" .. state.button .. "_on.png"]
+    state.stick_image = game.preloaded_images["button_" .. state.stick.name .. "_on.png"]
     table.insert(player.successes, self.current_beat)
   else
     table.insert(player.failures, self.current_beat)
@@ -99,7 +102,7 @@ function Song:is_action_valid(player, joystick, button, beat)
   local state = player:get_state(beat)
   -- print(state.button, state.stick.leftx, state.stick.lefty)
   -- print(state.button == button, state.stick.leftx == leftx, state.stick.lefty == lefty)
-  return state.button == button and state.stick.leftx == leftx and state.stick.lefty == lefty
+  return state and state.button == button and state.stick.leftx == leftx and state.stick.lefty == lefty
 end
 
 function Song:build_state_sequence(actions)
@@ -122,13 +125,17 @@ function Song:build_state_sequence(actions)
     local iteration_hold_end = iteration_hold_start + current_action.hold_time
 
     if beat >= iteration_hold_start and beat < iteration_hold_end then
-      state_sequence[beat].button = current_action.gamepadbutton or Button.None
+      local button = current_action.gamepadbutton or Button.None
+      state_sequence[beat].button = button
+      state_sequence[beat].button_image = game.preloaded_images["button_" .. button .. ".png"]
     else
       state_sequence[beat].button = Button.None
     end
     -- print(beat, iteration_start_beat, iteration_hold_start, iteration_hold_end,
       -- loop_time, state_sequence[beat].button)
-    state_sequence[beat].stick = current_action.gamepadaxis or Stick.None
+    local stick = current_action.gamepadaxis or Stick.None
+    state_sequence[beat].stick = stick
+    state_sequence[beat].stick_image = game.preloaded_images["button_" .. stick.name .. ".png"]
   end
 
   return state_sequence

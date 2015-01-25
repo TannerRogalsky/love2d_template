@@ -51,16 +51,9 @@ function Main:render_sequence(sequence, offset, index)
   for beat, action in ipairs(sequence) do
     if action.button ~= Button.None then
       local y = g.getHeight() - 220 - ((self.song.time * -self.song.bpm) + beat * 60)
-      local button_image = "button_" .. action.button
-      if player then
-        local current_action = player:get_state(self.song.current_beat)
-        if action == current_action then
-          button_image = button_image .. "_on"
-        end
-      end
-      g.draw(game.preloaded_images[button_image .. ".png"], offset + 220, y)
+      g.draw(action.button_image, offset + 220, y)
       if action.button ~= Button.None and action.stick ~= Stick.None then
-        g.draw(game.preloaded_images["button_" .. action.stick.name .. ".png"], offset + 60, y)
+        g.draw(action.stick_image, offset + 60, y)
       end
     end
   end
