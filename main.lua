@@ -1,6 +1,8 @@
 love.filesystem.load('requirements.lua')()
 
 function love.load(args)
+  LovePixlr.bind(1280, 720)
+
   local k_args = {}
   for _,arg in ipairs(args) do
     local key, value = arg:match("(.*)=(.*)")
