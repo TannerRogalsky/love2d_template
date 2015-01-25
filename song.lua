@@ -31,6 +31,7 @@ function Song:initialize(data)
     local actions = self.actions_by_player[i]
     local state_sequence = self:build_state_sequence(actions)
     self.players[i] = Player:new(self.actions_by_player[i], state_sequence, i - 1)
+    self.players[i].image = game.preloaded_images["bg_p" .. i .. ".png"]
     self.actions[i] = {}
   end
 

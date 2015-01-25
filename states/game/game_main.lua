@@ -25,19 +25,8 @@ function Main:draw()
     x = x + 380 + 35
   end
 
-  x = 35
   for index, player in ipairs(self.song.players) do
-    local pos = player.position
-    local pos_x = x + (380 + 35) * pos
-    g.draw(self.preloaded_images["bg_p" .. index .. ".png"], pos_x, 0)
-
-    for beat, action in ipairs(player.state_sequence) do
-      local y = g.getHeight() - 90 - ((self.song.time * -self.song.bpm) + beat * 60)
-      g.print(action.button, pos_x + 20, y)
-      if action.button ~= Button.None then
-        g.print(action.stick.name, pos_x + 20 + 20, y)
-      end
-    end
+    self:render_player(player, 35)
   end
 
   g.line(0, g.getHeight() - 60, g.getWidth(), g.getHeight() - 60)
@@ -46,6 +35,22 @@ function Main:draw()
 
 
   self.camera:unset()
+end
+
+function Main:render_player(player, offset)
+  local pos = player.position
+  local pos_x = offset + (380 + offset) * pos
+  g.draw(player.image, pos_x, 0)
+
+  for beat, action in ipairs(player.state_sequence) do
+    if action.button ~= Button.None then
+      local y = g.getHeight() - 90 - ((self.song.time * -self.song.bpm) + beat * 60)
+      g.draw(game.preloaded_images["button_" .. action.button .. ".png"], pos_x + 220, y)
+      if action.button ~= Button.None and action.stick ~= Stick.None then
+        g.draw(game.preloaded_images["button_" .. action.stick.name .. ".png"], pos_x + 60, y)
+      end
+    end
+  end
 end
 
 function Main:mousepressed(x, y, button)

@@ -34,7 +34,7 @@ return {
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.A,
-      gamepadaxis = Stick.None
+      gamepadaxis = Stick.Up
     },
     {
       player = 2,

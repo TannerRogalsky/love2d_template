@@ -1,8 +1,8 @@
 local Stick = {
-  Up = {lefty=-1, leftx=0, name="Up"},
-  Down = {lefty=1, leftx=0, name="Down"},
-  Right = {lefty=0, leftx=1, name="Right"},
-  Left = {lefty=0, leftx=-1, name="Left"},
+  Up = {lefty=-1, leftx=0, name="u"},
+  Down = {lefty=1, leftx=0, name="d"},
+  Right = {lefty=0, leftx=1, name="r"},
+  Left = {lefty=0, leftx=-1, name="l"},
   None = {lefty=0, leftx=0, name="None"},
 }
 
