@@ -21,15 +21,20 @@ function Song:initialize(data)
     table.insert(self.actions_by_player[action.player], action)
   end
 
-  for i=1,data.players do
-    local actions = self.actions_by_player[i]
+  for index,actions in ipairs(self.actions_by_player) do
     table.sort(actions, function(a, b)
       return a.start_time < b.start_time
     end)
+  end
+
+  for i=1,data.players do
+    local actions = self.actions_by_player[i]
     local state_sequence = self:build_state_sequence(actions)
-    self.players[i] = Player:new(self.actions_by_player[i], state_sequence)
+    self.players[i] = Player:new(self.actions_by_player[i], state_sequence, i - 1)
     self.actions[i] = {}
   end
+
+  self.unused_sequence = self:build_state_sequence(self.actions_by_player[3])
 
   self.time = -data.starting_offset
   self.current_beat = 0
@@ -42,6 +47,43 @@ function Song:update(dt)
     self.current_beat = beat
     self:tick_beat()
   end
+end
+
+function Song:gamepadpressed(joystick, button)
+  local player = self.players[joystick:getID()]
+  if player == nil then return false end
+
+  local success = self:is_action_valid(player, joystick, button, self.current_beat)
+  if success then
+    table.insert(player.successes, self.current_beat)
+  else
+    table.insert(player.failures, self.current_beat)
+  end
+end
+
+function Song:is_action_valid(player, joystick, button, beat)
+  local leftx = joystick:getGamepadAxis('leftx')
+  local lefty = joystick:getGamepadAxis('lefty')
+  if leftx > 0.5 then
+    leftx = 1
+  elseif leftx < -0.5 then
+    leftx = -1
+  else
+    leftx = 0
+  end
+
+  if lefty > 0.5 then
+    lefty = 1
+  elseif lefty < -0.5 then
+    lefty = -1
+  else
+    lefty = 0
+  end
+
+  local state = player:get_state(beat)
+  -- print(state.button, state.stick.leftx, state.stick.lefty)
+  -- print(state.button == button, state.stick.leftx == leftx, state.stick.lefty == lefty)
+  return state.button == button and state.stick.leftx == leftx and state.stick.lefty == lefty
 end
 
 function Song:build_state_sequence(actions)

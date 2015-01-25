@@ -1,15 +1,14 @@
 local Player = class('Player', Base):include(Stateful)
-Player.static.instances = {}
-Player.static.instance_count = 0
 
-function Player:initialize(actions, state_sequence)
+function Player:initialize(actions, state_sequence, position)
   Base.initialize(self)
 
+  self.successes = {}
+  self.failures = {}
+
+  self.position = position
   self.actions = actions
   self.state_sequence = state_sequence
-
-  Player.instances[self.id] = self
-  Player.instance_count = Player.instance_count + 1
 end
 
 function Player:get_action(beat)
@@ -39,8 +38,6 @@ function Player:buttons_sequence_to_string()
 end
 
 function Player:destroy()
-  Player.instances[self.id] = nil
-  Player.instance_count = Player.instance_count - 1
 end
 
 return Player

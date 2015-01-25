@@ -19,16 +19,31 @@ end
 function Main:draw()
   self.camera:set()
 
-  g.print(self.song.current_beat)
-  for i,player in ipairs(self.song.players) do
-    g.print(player:buttons_sequence_to_string(), 0, i * 15)
+  local x = 35
+  for i=0,2 do
+    g.draw(self.preloaded_images["bg_p0.png"], x, 0)
+    x = x + 380 + 35
+  end
+
+  x = 35
+  for index, player in ipairs(self.song.players) do
+    local pos = player.position
+    local pos_x = x + (380 + 35) * pos
+    g.draw(self.preloaded_images["bg_p" .. index .. ".png"], pos_x, 0)
+
+    for beat, action in ipairs(player.state_sequence) do
+      local y = g.getHeight() - 90 - ((self.song.time * -self.song.bpm) + beat * 60)
+      g.print(action.button, pos_x + 20, y)
+      if action.button ~= Button.None then
+        g.print(action.stick.name, pos_x + 20 + 20, y)
+      end
+    end
   end
 
   g.line(0, g.getHeight() - 60, g.getWidth(), g.getHeight() - 60)
-  for beat, action in ipairs(self.song.players[1].state_sequence) do
-    local y = g.getHeight() - ((self.song.time * -self.song.bpm) + beat * 60)
-    g.print(action.button, g.getWidth() / 2, y)
-  end
+  g.print(self.song.current_beat, g.getWidth() / 2 - 20, g.getHeight() - 75)
+  local player = self.song.players[1]
+
 
   self.camera:unset()
 end
@@ -45,10 +60,11 @@ end
 function Main:keyreleased(key, unicode)
 end
 
-function Main:joystickpressed(joystick, button)
+function Main:gamepadpressed(joystick, button)
+  self.song:gamepadpressed(joystick, button)
 end
 
-function Main:joystickreleased(joystick, button)
+function Main:gamepadreleased(joystick, button)
 end
 
 function Main:focus(has_focus)

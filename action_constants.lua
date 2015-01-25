@@ -1,9 +1,9 @@
 local Stick = {
-  Up = {lefty=-1, leftx=0},
-  Down = {lefty=1, leftx=0},
-  Right = {lefty=0, leftx=1},
-  Left = {lefty=0, leftx=-1},
-  None = {lefty=0, leftx=1},
+  Up = {lefty=-1, leftx=0, name="Up"},
+  Down = {lefty=1, leftx=0, name="Down"},
+  Right = {lefty=0, leftx=1, name="Right"},
+  Left = {lefty=0, leftx=-1, name="Left"},
+  None = {lefty=0, leftx=0, name="None"},
 }
 
 local Button = {
