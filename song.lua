@@ -53,6 +53,16 @@ function Song:update(dt)
   end
 end
 
+function Song:player_at_position(position)
+  local player = nil
+  for i,player in ipairs(self.players) do
+    if player.position == position then
+      return player
+    end
+  end
+  return player
+end
+
 function Song:gamepadpressed(joystick, button)
   local player = self.players[joystick:getID()]
   if player == nil then return false end

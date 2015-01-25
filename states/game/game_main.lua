@@ -29,7 +29,7 @@ function Main:draw()
   end
   for index,sequence in ipairs(self.song.sequences) do
     x = 35 + (380 + 35) * (index - 1)
-    self:render_sequence(sequence, x)
+    self:render_sequence(sequence, x, index)
   end
 
   self.camera:unset()
@@ -39,13 +39,26 @@ function Main:render_player(player, offset)
   local pos = player.position
   local pos_x = offset + (380 + offset) * pos
   g.draw(player.image, pos_x, 0)
+  -- g.print(player.id, pos_x, 100)
 end
 
-function Main:render_sequence(sequence, offset)
+function Main:render_sequence(sequence, offset, index)
+  local player = self.song:player_at_position(index - 1)
+  -- print(player)
+  -- if player and player:get_state(self.song.current_beat) then
+  --   print(player, player:get_state(self.song.current_beat).button)
+  -- end
   for beat, action in ipairs(sequence) do
     if action.button ~= Button.None then
       local y = g.getHeight() - 220 - ((self.song.time * -self.song.bpm) + beat * 60)
-      g.draw(game.preloaded_images["button_" .. action.button .. ".png"], offset + 220, y)
+      local button_image = "button_" .. action.button
+      if player then
+        local current_action = player:get_state(self.song.current_beat)
+        if action == current_action then
+          button_image = button_image .. "_on"
+        end
+      end
+      g.draw(game.preloaded_images[button_image .. ".png"], offset + 220, y)
       if action.button ~= Button.None and action.stick ~= Stick.None then
         g.draw(game.preloaded_images["button_" .. action.stick.name .. ".png"], offset + 60, y)
       end
