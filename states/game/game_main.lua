@@ -5,7 +5,7 @@ function Main:enteredState(song)
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  g.setFont(self.preloaded_fonts["04b03_16"])
+  g.setFont(self.preloaded_fonts["04b03_32"])
 
   -- self.song = song
   self.song = Song:new(require('sounds.test1'))
@@ -13,6 +13,10 @@ end
 
 function Main:update(dt)
   self.song:update(dt)
+
+  if self.song.current_beat >= self.song.length + 10 then
+    self.gotoState("Over")
+  end
 end
 
 function Main:draw()
@@ -39,7 +43,11 @@ function Main:render_player(player, offset)
   local pos = player.position
   local pos_x = offset + (380 + offset) * pos
   g.draw(player.image, pos_x, 0)
-  -- g.print(player.id, pos_x, 100)
+  -- g.setColor(COLORS.black:rgb())
+  -- g.printf("SUCCESS: " .. #player.successes, pos_x, 20, 380, 'center')
+  -- g.setColor(COLORS.red:rgb())
+  -- g.printf("FAILURE: " .. #player.failures, pos_x, 50, 380, 'center')
+  -- g.setColor(COLORS.white:rgb())
 end
 
 function Main:render_sequence(sequence, offset, index)
@@ -68,6 +76,8 @@ end
 function Main:keypressed(key, unicode)
   if key == "r" then
     self:gotoState("Main")
+  elseif key == 'n' then
+    self:gotoState("Over")
   end
 end
 

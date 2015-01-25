@@ -39,39 +39,52 @@ return {
     --learning
     {
       player = 1,
-      start_time = 17,
+      start_time = 16,
+      hold_time = 1,
+      rest_time = 7,
+      gamepadbutton = Button.A,
+    },
+    {
+      player = 2,
+      start_time = 16,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.A,
       gamepadaxis = Stick.Up
     },
     {
-      player = 2,
-      start_time = 17,
-      hold_time = 1,
-      rest_time = 7,
-      gamepadbutton = Button.A,
-      gamepadaxis = Stick.None
-    },
-    {
       player = 1,
-      start_time = 25,
+      start_time = 23,
       hold_time = 1,
-      rest_time = 7,
-      gamepadbutton = Button.X,
+      rest_time = 9,
+      gamepadbutton = Button.None,
     },
     {
       player = 2,
-      start_time = 25,
+      start_time = 23,
       hold_time = 1,
-      rest_time = 7,
+      rest_time = 9,
       gamepadbutton = Button.B,
+    },
+    {
+      player = 3,
+      start_time = 23,
+      hold_time = 1,
+      rest_time = 9,
+      gamepadbutton = Button.Y,
+    },
+    {
+      player = 3,
+      start_time = 24,
+      hold_time = 1,
+      rest_time = 0,
+      gamepadbutton = Button.None,
     },
 
     --start beat
     {
       player = 1,
-      start_time = 33,
+      start_time = 31,
       hold_time = 1,
       rest_time = 3,
       gamepadbutton = Button.B,
@@ -79,7 +92,7 @@ return {
     },
     {
       player = 2,
-      start_time = 33,
+      start_time = 31,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.B,
@@ -88,8 +101,16 @@ return {
 
     --first switch
     {
+      player = 1,
+      start_time = 47,
+      hold_time = 1,
+      rest_time = 3,
+      gamepadbutton = Button.None,
+      gamepadaxis = Stick.None,
+    },
+    {
       player = 3,
-      start_time = 49,
+      start_time = 47,
       hold_time = 1,
       rest_time = 3,
       gamepadbutton = Button.Y,
@@ -97,7 +118,7 @@ return {
     },
     {
       player = 2,
-      start_time = 49,
+      start_time = 47,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.Y,
@@ -105,7 +126,7 @@ return {
     },
     {
       player = 3,
-      start_time = 65,
+      start_time = 63,
       hold_time = 1,
       rest_time = 3,
       gamepadbutton = Button.X,
@@ -113,15 +134,15 @@ return {
     },
     {
       player = 2,
-      start_time = 65,
+      start_time = 64,
       hold_time = 1,
       rest_time = 0,
-      gamepadbutton = Button.X,
+      gamepadbutton = Button.None,
       gamepadaxis = Stick.Right,
     },
     {
       player = 1,
-      start_time = 69,
+      start_time = 68,
       hold_time = 1,
       rest_time = 3,
       gamepadbutton = Button.Y,
@@ -129,7 +150,7 @@ return {
     },
     {
       player = 1,
-      start_time = 73,
+      start_time = 72,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.B,
@@ -137,15 +158,15 @@ return {
     },
     {
       player = 1,
-      start_time = 99,
+      start_time = 98,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.None,
-      gamepadaxis = Stick.Left,
+      gamepadaxis = Stick.None,
     },
     {
       player = 2,
-      start_time = 101,
+      start_time = 100,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.None,
@@ -153,7 +174,7 @@ return {
     },
     {
       player = 3,
-      start_time = 103,
+      start_time = 102,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.None,
@@ -161,7 +182,7 @@ return {
     },
     {
       player = 1,
-      start_time = 105,
+      start_time = 104,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.None,
@@ -169,7 +190,7 @@ return {
     },
     {
       player = 1,
-      start_time = 109,
+      start_time = 108,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.A,
@@ -177,7 +198,7 @@ return {
     },
     {
       player = 3,
-      start_time = 113,
+      start_time = 111,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.B,
@@ -185,7 +206,7 @@ return {
     },
     {
       player = 3,
-      start_time = 118,
+      start_time = 114,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.A,
@@ -193,7 +214,7 @@ return {
     },
     {
       player = 2,
-      start_time = 125,
+      start_time = 124,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.X,
@@ -202,7 +223,7 @@ return {
     --together!
     {
       player = 1,
-      start_time = 133,
+      start_time = 127,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.Y,
@@ -210,7 +231,7 @@ return {
     },
     {
       player = 3,
-      start_time = 133,
+      start_time = 127,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.Y,
@@ -218,33 +239,33 @@ return {
     },
     {
       player = 1,
-      start_time = 138,
+      start_time = 132,
       hold_time = 1,
       rest_time = 7,
-      gamepadbutton = Button.Y,
-      gamepadaxis = Stick.Down,
+      gamepadbutton = Button.None,
+      gamepadaxis = Stick.None,
     },
     {
       player = 3,
-      start_time = 138,
+      start_time = 132,
       hold_time = 1,
       rest_time = 7,
-      gamepadbutton = Button.Y,
-      gamepadaxis = Stick.Down,
+      gamepadbutton = Button.None,
+      gamepadaxis = Stick.None,
     },
 
 
     {
       player = 1,
-      start_time = 138,
+      start_time = 137,
       hold_time = 1,
-      rest_time = 7,
+      rest_time = 1,
       gamepadbutton = Button.A,
       gamepadaxis = Stick.None,
     },
     {
       player = 3,
-      start_time = 138,
+      start_time = 137,
       hold_time = 1,
       rest_time = 7,
       gamepadbutton = Button.B,
@@ -254,7 +275,7 @@ return {
     --cymbal hit switch
     {
       player = 2,
-      start_time = 149,
+      start_time = 148,
       hold_time = 1,
       rest_time = 20,
       gamepadbutton = Button.X,
@@ -262,7 +283,7 @@ return {
     },
     {
       player = 2,
-      start_time = 152,
+      start_time = 151,
       hold_time = 1,
       rest_time = 20,
       gamepadbutton = Button.None,
@@ -271,21 +292,21 @@ return {
 
     {
       player = 1,
-      start_time = 165,
+      start_time = 163,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.B,
     },
     {
       player = 2,
-      start_time = 166,
+      start_time = 164,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.B,
     },
     {
       player = 3,
-      start_time = 165,
+      start_time = 163,
       hold_time = 1,
       rest_time = 3,
       gamepadbutton = Button.B,
@@ -294,28 +315,28 @@ return {
     --awkward switchup
     {
       player = 1,
-      start_time = 180,
+      start_time = 179,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.X,
     },
     {
       player = 1,
-      start_time = 181,
+      start_time = 180,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.None,
     },
     {
       player = 2,
-      start_time = 181,
+      start_time = 180,
       hold_time = 1,
       rest_time = 1,
       gamepadbutton = Button.X,
     },
     {
       player = 3,
-      start_time = 183,
+      start_time = 182,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.Y,
@@ -324,7 +345,7 @@ return {
     --finishing line
     {
       player = 1,
-      start_time = 197,
+      start_time = 196,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -332,7 +353,7 @@ return {
     },
     {
       player = 2,
-      start_time = 197,
+      start_time = 196,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.None,
@@ -340,7 +361,7 @@ return {
     },
     {
       player = 3,
-      start_time = 197,
+      start_time = 196,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.Y,
@@ -349,7 +370,7 @@ return {
 
     {
       player = 1,
-      start_time = 199,
+      start_time = 198,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -357,7 +378,7 @@ return {
     },
     {
       player = 3,
-      start_time = 199,
+      start_time = 198,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.Y,
@@ -366,7 +387,7 @@ return {
 
     {
       player = 1,
-      start_time = 201,
+      start_time = 200,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -374,7 +395,7 @@ return {
     },
     {
       player = 3,
-      start_time = 201,
+      start_time = 200,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -382,7 +403,7 @@ return {
     },
     {
       player = 1,
-      start_time = 203,
+      start_time = 202,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -390,7 +411,7 @@ return {
     },
     {
       player = 3,
-      start_time = 203,
+      start_time = 202,
       hold_time = 1,
       rest_time = 0,
       gamepadbutton = Button.X,
@@ -405,9 +426,15 @@ return {
       player = 1,
       start_time = 213,
       hold_time = 1,
-      rest_time = 21,
-      gamepadbutton = Button.None,
-      gamepadaxis = Stick.Left
+      rest_time = 3,
+      gamepadbutton = Button.Y,
+      },
+    {
+      player = 3,
+      start_time = 213,
+      hold_time = 1,
+      rest_time = 3,
+      gamepadbutton = Button.B
     },
   }
 }
