@@ -14,8 +14,8 @@ end
 function Main:update(dt)
   self.song:update(dt)
 
-  if self.song.current_beat >= self.song.length + 10 then
-    self.gotoState("Over")
+  if self.song.current_beat >= self.song.length + 1 then
+    self:gotoState("Over")
   end
 end
 
