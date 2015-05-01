@@ -156,11 +156,11 @@ function Main.on_start_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
   local object_one, object_two = shape_one.parent, shape_two.parent
 
   if object_one and is_func(object_one.on_collide) then
-    object_one:on_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
+    object_one:on_collide(dt, object_two, mtv_x, mtv_y)
   end
 
   if object_two and is_func(object_two.on_collide) then
-    object_two:on_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
+    object_two:on_collide(dt, object_one, -mtv_x, -mtv_y)
   end
 end
 

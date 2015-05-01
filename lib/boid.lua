@@ -1,4 +1,4 @@
-Boid = class('Boid', Base)
+local Boid = class('Boid', Base)
 local vector  = require('lib.HardonCollider.vector-light')
 
 local BOID_SIZE = 4
@@ -51,9 +51,9 @@ function Boid:steer(target, slowdown)
     if slowdown and d < 100 then
       -- This damping is somewhat arbitrary
       local damp_speed = self.max_speed * (d / 100)
-      desired.x, desired.y = vector.mul(damp_speed desired.x, desired.y)
+      desired.x, desired.y = vector.mul(damp_speed, desired.x, desired.y)
     else
-      desired.x, desired.y = vector.mul(self.max_speed desired.x, desired.y)
+      desired.x, desired.y = vector.mul(self.max_speed, desired.x, desired.y)
     end
 
     local v = self.velocity
@@ -105,7 +105,7 @@ function Boid:wander()
   local circle_location = {x = self.velocity.x, y = self.velocity.y}
 
   local p = self.position
-  circle_location = vector.normalize(circle_location.x circle_location.y)
+  circle_location = vector.normalize(circle_location.x, circle_location.y)
   circle_location = vector.mult(wanderD, circle_location.x, circle_location.y)
   circle_location = vector.add(p.x, p.y, circle_location.x, circle_location.y)
 
@@ -120,3 +120,5 @@ function Boid:wander()
   local dx, dy = self:steer(circle_location, false)
   a.x, a.y = vector.add(a.x, a.y, dx, dy)
 end
+
+return Boid

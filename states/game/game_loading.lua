@@ -1,7 +1,7 @@
 local Loading = Game:addState('Loading')
 
 function Loading:enteredState()
-  self.loader = require 'lib/love-loader'
+  self.loader = require 'lib/love-loader/love-loader'
   self.preloaded_images = {}
   self.preloaded_fonts = {}
 
@@ -13,14 +13,15 @@ function Loading:enteredState()
   end
 
   local sizes = {12, 14, 16, 20, 24}
-  -- for index, font in ipairs(love.filesystem.getDirectoryItems('fonts')) do
-  --   if font:match('(.*).ttf$') ~= nil then
-  --     for _,size in ipairs(sizes) do
-  --       local key = font .. "_" .. tostring(size)
-  --       self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. font, size)
-  --     end
-  --   end
-  -- end
+  for index, filename in ipairs(love.filesystem.getDirectoryItems('fonts')) do
+    font = filename:match('(.*).ttf$') or filename:match('(.*).TTF$')
+    if font then
+      for _,size in ipairs(sizes) do
+        local key = font .. "_" .. tostring(size)
+        self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. filename, size)
+      end
+    end
+  end
 
   self.loader.start(function()
     -- loader finished callback

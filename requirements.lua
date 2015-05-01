@@ -18,20 +18,22 @@ function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
-class = require("lib/middleclass")
-Stateful = require("lib/stateful")
-skiplist = require("lib/skiplist")
-HC = require("lib/HardonCollider")
-inspect = require("lib/inspect")
-require("lib/AnAL")
-require("lib/LoveFrames")
-cron = require("lib/cron")
-COLORS = require("lib/colors")
-tween = require("lib/tween")
-beholder = require("lib/beholder")
-Grid = require("lib/grid")
-Line = require("lib/line")
+class = require("lib.middleclass")
+Stateful = require("lib.stateful")
+skiplist = require("lib.skiplist")
+HC = require("lib.HardonCollider")
+inspect = require("lib.inspect")
+anim8 = require("lib.anim8.anim8")
+require("lib.LoveFrames")
+cron = require("lib.cron")
+COLORS = require("lib.colors")
+tween = require("lib.tween")
+beholder = require("lib.beholder")
+Grid = require("lib.grid")
+Line = require("lib.line")
+Boid = require("lib.boid")
 require("lib/love_pixlr").init()
+
 
 Base = require("base")
 Game = require("game")
@@ -51,5 +53,5 @@ local function require_all(directory)
 end
 require_all("states")
 
-lovebird = require("lib/lovebird/lovebird")
+lovebird = require("lib.lovebird.lovebird")
 lovebird.port = 3100
