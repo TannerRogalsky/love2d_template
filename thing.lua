@@ -13,7 +13,7 @@ function Thing:initialize(x, y)
 
   Thing.instances[self.id] = self
 
-  self.move_cron = cron.every(1, function()
+  self.move_cron = cron.every(1 + love.math.random(), function()
     self.x = self.x + love.math.random(3) - 2
     self.y = self.y + love.math.random(3) - 2
 

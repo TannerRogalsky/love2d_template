@@ -1,0 +1,17 @@
+return {
+  MapX = math.random(1024) - 1,
+  MapY = math.random(1024) - 1,
+  Misc0 = 0,
+  Misc1 = math.random(65536) - 1,
+  Misc2 = math.random(65536) - 1,
+  Misc3 = 65536 - 1,
+  PlayerName = 'pixy',
+  Switch0 = 'TRUE',
+  Switch1 = 'TRUE',
+  Switch2 = 'TRUE',
+  Switch3 = 'TRUE',
+  Switch4 = 'TRUE',
+  Switch5 = 'TRUE',
+  Switch6 = 'TRUE',
+  Switch7 = 'TRUE',
+}

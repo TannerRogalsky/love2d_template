@@ -3,16 +3,17 @@ local Main = Game:addState('Main')
 function Main:enteredState()
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
 
+  love.math.setRandomSeed(1)
+
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
   self.default_font = g.newFont("fonts/04b03.TTF", 8)
   g.setFont(self.default_font)
 
-  self.pixels = Grid:new(32 * 1000, 32 * 1000)
-
+  self.pixels = Grid:new(1024, 1024)
   simplex_offset = {
-    x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
+    x = game_data.MapX + 1, y = game_data.MapY
   }
   -- simplex_offset = {x = 0, y = 0}
   self:generate_empty_pixels()
@@ -28,14 +29,8 @@ function Main:enteredState()
   end
   g.setCanvas()
 
-  -- cron.every(0.3, function()
-  --   simplex_offset.x = simplex_offset.x + 1
-  --   simplex_offset.y = simplex_offset.y + 1
-  -- end)
-
-
-  for i=1,10 do
-    Thing:new(simplex_offset.x + love.math.random(32), simplex_offset.y + love.math.random(32))
+  for i=1,10000 do
+    Thing:new(love.math.random(1024), love.math.random(1024))
   end
 end
 
@@ -124,11 +119,11 @@ function Main:draw()
   end
 
   g.setColor(0, 0, 0, 200)
-  for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 4, 4) do
+  for x, y, pixel in self.pixels:each(simplex_offset.x + 14, simplex_offset.y + 14, 4, 4) do
     x = x - simplex_offset.x
     y = y - simplex_offset.y
-    if x ~= y and x ~= 32 - y + 1 then
-      g.point(x - 1, y - 1)
+    if x ~= y and x ~= 30 - y + 1 then
+      g.point(x, y)
     end
   end
 

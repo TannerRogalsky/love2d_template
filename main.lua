@@ -1,4 +1,5 @@
 love.filesystem.load('requirements.lua')()
+game_data = require('o_o')
 
 function love.load(args)
   local k_args = {}
