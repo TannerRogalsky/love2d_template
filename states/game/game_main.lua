@@ -9,19 +9,12 @@ function Main:enteredState()
   self.default_font = g.newFont("fonts/04b03.TTF", 8)
   g.setFont(self.default_font)
 
-  self.pixels = Grid:new(32, 32)
-  for x, y, _ in self.pixels:each() do
-    local v = math.floor(love.math.noise(x, y) * 255)
-    self.pixels:set(x, y, {
-      r = v,
-      g = v,
-      b = v
-    })
-  end
+  self.pixels = Grid:new(32 * 1000, 32 * 1000)
 
   simplex_offset = {
-    x = 0, y = 0
+    x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
   }
+  self:generate_empty_pixels()
 
   -- cron.every(0.3, function()
   --   simplex_offset.x = simplex_offset.x + 1
@@ -30,13 +23,32 @@ function Main:enteredState()
 end
 
 function Main:update(dt)
-  for x, y, pixel in self.pixels:each() do
-    local noise = love.math.noise(x + simplex_offset.x, y + simplex_offset.y)
-    local red = math.floor(math.sin(noise) * 255)
-    local blue = math.floor(math.cos(noise) * 255)
-    local green = math.floor(math.tan(noise) * 255)
-    pixel.r, pixel.g, pixel.b = find_closest_prefered_colour(red, green, blue)
+  self:generate_empty_pixels()
+end
+
+function Main:generate_empty_pixels()
+  for x = simplex_offset.x, simplex_offset.x + 32 do
+    for y = simplex_offset.y, simplex_offset.y + 32 do
+      local pixel = self.pixels:get(x, y)
+      if pixel == nil then
+        local red, green, blue = self:generate_color(x, y)
+        pixel = {
+          r = red,
+          g = green,
+          b = blue
+        }
+        self.pixels:set(x, y, pixel)
+      end
+    end
   end
+end
+
+function Main:generate_color(x, y)
+  local noise = love.math.noise(x, y)
+  local red = math.floor(math.sin(noise) * 255)
+  local blue = math.floor(math.cos(noise) * 255)
+  local green = math.floor(math.tan(noise) * 255)
+  return find_closest_prefered_colour(red, green, blue)
 end
 
 local prefered_colors = {
@@ -76,23 +88,27 @@ end
 function Main:draw()
   self.camera:set()
 
-  for x, y, pixel in self.pixels:each() do
+  for x, y, pixel in self.pixels:each(simplex_offset.x, simplex_offset.y, 32, 32) do
     g.setColor(pixel.r, pixel.g, pixel.b)
-    g.point(x - 1, y - 1)
+    g.point(x - simplex_offset.x, y - simplex_offset.y)
   end
 
   g.setColor(0, 0, 0, 200)
-  for x, y, pixel in self.pixels:each(15, 15, 4, 4) do
+  for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 4, 4) do
+    x = x - simplex_offset.x
+    y = y - simplex_offset.y
     if x ~= y and x ~= 32 - y + 1 then
       g.point(x - 1, y - 1)
     end
   end
 
   -- pixel vignette
-  for x, y, _ in self.pixels:each() do
+  for x, y, _ in self.pixels:each(simplex_offset.x, simplex_offset.y, 32, 32) do
+    x = x - simplex_offset.x + 1
+    y = y - simplex_offset.y + 1
     local dx = math.abs(x / 16.5 - 1)
     local dy = math.abs(y / 16.5 - 1)
-    local a = (dx + dy) / 1 * 255
+    local a = (dx + dy * 2) / 3 * 255
     g.setColor(0, 0, 0, a)
     g.point(x - 1, y - 1)
   end
@@ -113,27 +129,43 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:move_down()
-  simplex_offset.x = simplex_offset.x + 1
+  -- simplex_offset.x = simplex_offset.x + 1
   simplex_offset.y = simplex_offset.y + 1
 end
 
 function Main:move_left()
   simplex_offset.x = simplex_offset.x - 1
-  simplex_offset.y = simplex_offset.y + 1
+  -- simplex_offset.y = simplex_offset.y + 1
 end
 
 function Main:move_up()
-  simplex_offset.x = simplex_offset.x - 1
+  -- simplex_offset.x = simplex_offset.x - 1
   simplex_offset.y = simplex_offset.y - 1
 end
 
 function Main:move_right()
   simplex_offset.x = simplex_offset.x + 1
-  simplex_offset.y = simplex_offset.y - 1
+  -- simplex_offset.y = simplex_offset.y - 1
 end
 
+function Main:project_colors()
+  for x, y, pixel in self.pixels:each(16, 16, 2, 2) do
+    print(pixel.r, pixel.g, pixel.b)
+  end
+end
+
+local commands = {
+  keyboard = {
+    down = Main.move_down,
+    left = Main.move_left,
+    up = Main.move_up,
+    right = Main.move_right,
+    [' '] = Main.project_colors,
+  }
+}
+
 function Main:keypressed(key, unicode)
-  local action = self["move_" .. key]
+  local action = commands.keyboard[key]
   if is_func(action) then action(self) end
 end
 
