@@ -28,6 +28,15 @@ function Thing:initialize(x, y, pixels)
     local gridx = math.ceil(self.x / 32)
     local gridy = math.ceil(self.y / 32)
 
+    self.start_colors = {}
+    for x, y, pixel in self.pixels:each(self.x, self.y, 2, 2) do
+      table.insert(self.start_colors, {
+        r = pixel.r,
+        g = pixel.g,
+        b = pixel.b
+      })
+    end
+
     self.x = self.x + love.math.random(1, 3) - 2
     self.y = self.y + love.math.random(1, 3) - 2
 
