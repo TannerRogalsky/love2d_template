@@ -11,9 +11,9 @@ function Main:enteredState()
 
   self.pixels = Grid:new(32 * 1000, 32 * 1000)
 
-  -- simplex_offset = {
-  --   x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
-  -- }
+  simplex_offset = {
+    x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
+  }
   -- simplex_offset = {x = 0, y = 0}
   self:generate_empty_pixels()
 
@@ -32,9 +32,18 @@ function Main:enteredState()
   --   simplex_offset.x = simplex_offset.x + 1
   --   simplex_offset.y = simplex_offset.y + 1
   -- end)
+
+
+  for i=1,10 do
+    Thing:new(simplex_offset.x + love.math.random(32), simplex_offset.y + love.math.random(32))
+  end
 end
 
 function Main:update(dt)
+  if love.keyboard.isDown(' ') then
+    dt = dt * 10
+  end
+
   self:generate_empty_pixels()
 
   for id,thing in pairs(Thing.instances) do
@@ -172,7 +181,7 @@ local commands = {
     left = Main.move_left,
     up = Main.move_up,
     right = Main.move_right,
-    [' '] = Main.make_thing,
+    -- [' '] = Main.make_thing,
   }
 }
 

@@ -13,20 +13,20 @@ function Thing:initialize(x, y)
 
   Thing.instances[self.id] = self
 
-  self:timed_move()
-end
-
-function Thing:timed_move()
-  cron.after(math.random(5), function()
-    self.x = self.x + math.random(3) - 2
-    self.y = self.y + math.random(3) - 2
+  self.move_cron = cron.every(1, function()
+    self.x = self.x + love.math.random(3) - 2
+    self.y = self.y + love.math.random(3) - 2
 
     self:timed_move()
   end)
 end
 
-function Thing:update(dt)
+function Thing:timed_move()
 
+end
+
+function Thing:update(dt)
+  self.move_cron:update(dt)
 end
 
 function Thing:destroy()
