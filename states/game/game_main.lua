@@ -162,23 +162,33 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:move_down()
-  -- simplex_offset.x = simplex_offset.x + 1
-  simplex_offset.y = simplex_offset.y + 1
+  self:move(1, 1)
 end
 
 function Main:move_left()
-  simplex_offset.x = simplex_offset.x - 1
-  -- simplex_offset.y = simplex_offset.y + 1
+  self:move(-1, 1)
 end
 
 function Main:move_up()
-  -- simplex_offset.x = simplex_offset.x - 1
-  simplex_offset.y = simplex_offset.y - 1
+  self:move(-1, -1)
 end
 
 function Main:move_right()
-  simplex_offset.x = simplex_offset.x + 1
-  -- simplex_offset.y = simplex_offset.y - 1
+  self:move(1, -1)
+end
+
+function Main:move(dx, dy)
+  simplex_offset.x = simplex_offset.x + dx
+  simplex_offset.y = simplex_offset.y + dy
+
+  if self.paint_colors then
+    local index = 1
+    for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 2, 2) do
+      local color = self.paint_colors[index]
+      pixel.r, pixel.g, pixel.b = unpack(color)
+      index = index + 1
+    end
+  end
 end
 
 function Main:make_thing(x, y)
@@ -217,6 +227,17 @@ function Main:smooth_pixels()
   end
 end
 
+function Main:begin_paint()
+  self.paint_colors = {}
+  for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 2, 2) do
+    table.insert(self.paint_colors, {pixel.r, pixel.g, pixel.b})
+  end
+end
+
+function Main:end_paint()
+  self.paint_colors = nil
+end
+
 local commands = {
   keyboard = {
     down = Main.move_down,
@@ -225,6 +246,10 @@ local commands = {
     right = Main.move_right,
     -- [' '] = Main.make_thing,
     a = Main.smooth_pixels,
+    s = Main.begin_paint
+  },
+  keyboard_released = {
+    s = Main.end_paint
   }
 }
 
@@ -234,6 +259,8 @@ function Main:keypressed(key, unicode)
 end
 
 function Main:keyreleased(key, unicode)
+  local action = commands.keyboard_released[key]
+  if is_func(action) then action(self) end
 end
 
 function Main:joystickpressed(joystick, button)
