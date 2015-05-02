@@ -2,8 +2,6 @@ local Main = Game:addState('Main')
 local frag_code = love.filesystem.read('shaders/test.c')
 
 function Main:enteredState()
-  Collider = HC(100, self.on_start_collide, self.on_stop_collide)
-
   love.math.setRandomSeed(1)
 
   local Camera = require("lib/camera")
@@ -33,7 +31,7 @@ function Main:enteredState()
   for x, y, _ in self.pixels:each(1, 1, 32, 32) do
     local dx = math.abs(x / 16.5 - 1)
     local dy = math.abs(y / 16.5 - 1)
-    local a = (dx + dy * 2) / 3 * 255
+    local a = (dx + (dy * 2)) / 3 * 255
     g.setColor(0, 0, 0, a)
     g.point(x - 1, y - 1)
   end
@@ -238,6 +236,11 @@ function Main:end_paint()
   self.paint_colors = nil
 end
 
+function Main:restart()
+  g.clear()
+  self:gotoState('Main')
+end
+
 local commands = {
   keyboard = {
     down = Main.move_down,
@@ -246,7 +249,8 @@ local commands = {
     right = Main.move_right,
     -- [' '] = Main.make_thing,
     a = Main.smooth_pixels,
-    s = Main.begin_paint
+    s = Main.begin_paint,
+    q = Main.restart,
   },
   keyboard_released = {
     s = Main.end_paint
@@ -272,27 +276,7 @@ end
 function Main:focus(has_focus)
 end
 
--- shape_one and shape_two are the colliding shapes. mtv_x and mtv_y define the minimum translation vector,
--- i.e. the direction and magnitude shape_one has to be moved so that the collision will be resolved.
--- Note that if one of the shapes is a point shape, the translation vector will be invalid.
-function Main.on_start_collide(dt, shape_one, shape_two, mtv_x, mtv_y)
-  local object_one, object_two = shape_one.parent, shape_two.parent
-
-  if object_one and is_func(object_one.on_collide) then
-    object_one:on_collide(dt, object_two, mtv_x, mtv_y)
-  end
-
-  if object_two and is_func(object_two.on_collide) then
-    object_two:on_collide(dt, object_one, -mtv_x, -mtv_y)
-  end
-end
-
-function Main.on_stop_collide(dt, shape_one, shape_two)
-end
-
 function Main:exitedState()
-  Collider:clear()
-  Collider = nil
 end
 
 return Main
