@@ -182,6 +182,38 @@ function Main:make_thing(x, y)
   local thing = Thing:new(x, y, self.pixels)
 end
 
+function Main:smooth_pixels()
+  local colors = {}
+  for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 2, 2) do
+    for _, color in ipairs(prefered_colors) do
+      local r, g, b = unpack(color)
+      if r == pixel.r and g == pixel.g and b == pixel.b then
+        colors[color] = colors[color] or 0
+        colors[color] = colors[color] + 1
+        break
+      end
+    end
+  end
+
+  local smoothing_color = nil
+  local highest = 0
+  for color,num in pairs(colors) do
+    if num > highest then
+      highest = num
+      smoothing_color = color
+    end
+  end
+
+  if highest >= 3 then
+    local r, g, b = unpack(smoothing_color)
+    for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 2, 2) do
+      pixel.r = r
+      pixel.g = g
+      pixel.b = b
+    end
+  end
+end
+
 local commands = {
   keyboard = {
     down = Main.move_down,
@@ -189,6 +221,7 @@ local commands = {
     up = Main.move_up,
     right = Main.move_right,
     -- [' '] = Main.make_thing,
+    a = Main.smooth_pixels,
   }
 }
 
