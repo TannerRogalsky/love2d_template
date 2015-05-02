@@ -13,7 +13,6 @@ end
 function love.update(dt)
   lovebird.update()
   game:update(dt)
-  cron.update(dt)
   tween.update(dt)
   loveframes.update(dt)
 end
