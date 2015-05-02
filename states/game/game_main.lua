@@ -116,7 +116,12 @@ function Main:draw()
   self.camera:set()
 
   for x, y, pixel in self.pixels:each(simplex_offset.x, simplex_offset.y, 32, 32) do
-    g.setColor(pixel.r, pixel.g, pixel.b)
+    if x % 32 == 0 or y % 32 == 0 then
+      g.setColor({255, 255, 255})
+    else
+      g.setColor(pixel.r, pixel.g, pixel.b)
+    end
+
     g.point(x - simplex_offset.x, y - simplex_offset.y)
   end
 

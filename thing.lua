@@ -25,11 +25,14 @@ function Thing:initialize(x, y, pixels)
   Thing.instances[self.id] = self
 
   self.move_cron = cron.every(1 + love.math.random(), function()
+    local gridx = math.ceil(self.x / 32)
+    local gridy = math.ceil(self.y / 32)
+
     self.x = self.x + love.math.random(1, 3) - 2
     self.y = self.y + love.math.random(1, 3) - 2
 
-    self.x = math.clamp(1, self.x, 1023)
-    self.y = math.clamp(1, self.y, 1023)
+    self.x = math.clamp((gridx - 1) * 32 + 1, self.x, gridx * 32 - 2)
+    self.y = math.clamp((gridy - 1) * 32 + 1, self.y, gridy * 32 - 2)
 
     local index = 1
     local dimensions = math.sqrt(#self.start_colors)
