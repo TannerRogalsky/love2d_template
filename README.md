@@ -1,3 +1,9 @@
-Love2D Template
+ArtMaschine: An Exploration in Solo-Collaborative Digital Painting
 ===
-This is a template that is meant to be appropriate for any Love2D game. It includes some structure, helpers and libraries.
+
+See if you can get the vignette to attrite faster so that things are less dark.
+See if you can get more colors.
+
+In general: brighter, more variety.
+
+More emergent behaviours!
