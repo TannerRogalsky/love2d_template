@@ -11,10 +11,22 @@ function Main:enteredState()
 
   self.pixels = Grid:new(32 * 1000, 32 * 1000)
 
-  simplex_offset = {
-    x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
-  }
+  -- simplex_offset = {
+  --   x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
+  -- }
+  -- simplex_offset = {x = 0, y = 0}
   self:generate_empty_pixels()
+
+  self.vignette = g.newCanvas(32, 32)
+  g.setCanvas(self.vignette)
+  for x, y, _ in self.pixels:each(1, 1, 32, 32) do
+    local dx = math.abs(x / 16.5 - 1)
+    local dy = math.abs(y / 16.5 - 1)
+    local a = (dx + dy * 2) / 3 * 255
+    g.setColor(0, 0, 0, a)
+    g.point(x - 1, y - 1)
+  end
+  g.setCanvas()
 
   -- cron.every(0.3, function()
   --   simplex_offset.x = simplex_offset.x + 1
@@ -24,6 +36,10 @@ end
 
 function Main:update(dt)
   self:generate_empty_pixels()
+
+  for id,thing in pairs(Thing.instances) do
+    thing:update(dt)
+  end
 end
 
 function Main:generate_empty_pixels()
@@ -93,6 +109,11 @@ function Main:draw()
     g.point(x - simplex_offset.x, y - simplex_offset.y)
   end
 
+  for id,thing in pairs(Thing.instances) do
+    g.setColor(thing.r, thing.g, thing.b)
+    g.rectangle("fill", thing.x - simplex_offset.x, thing.y - simplex_offset.y, 2, 2)
+  end
+
   g.setColor(0, 0, 0, 200)
   for x, y, pixel in self.pixels:each(simplex_offset.x + 15, simplex_offset.y + 15, 4, 4) do
     x = x - simplex_offset.x
@@ -103,15 +124,8 @@ function Main:draw()
   end
 
   -- pixel vignette
-  for x, y, _ in self.pixels:each(simplex_offset.x, simplex_offset.y, 32, 32) do
-    x = x - simplex_offset.x + 1
-    y = y - simplex_offset.y + 1
-    local dx = math.abs(x / 16.5 - 1)
-    local dy = math.abs(y / 16.5 - 1)
-    local a = (dx + dy * 2) / 3 * 255
-    g.setColor(0, 0, 0, a)
-    g.point(x - 1, y - 1)
-  end
+  g.setColor(COLORS.white:rgb())
+  g.draw(self.vignette, 0, 0)
 
   g.setColor(4, 174, 204)
   g.print("UP", 0, -1)
@@ -148,10 +162,8 @@ function Main:move_right()
   -- simplex_offset.y = simplex_offset.y - 1
 end
 
-function Main:project_colors()
-  for x, y, pixel in self.pixels:each(16, 16, 2, 2) do
-    print(pixel.r, pixel.g, pixel.b)
-  end
+function Main:make_thing()
+  Thing:new(simplex_offset.x + 15, simplex_offset.y + 15)
 end
 
 local commands = {
@@ -160,7 +172,7 @@ local commands = {
     left = Main.move_left,
     up = Main.move_up,
     right = Main.move_right,
-    [' '] = Main.project_colors,
+    [' '] = Main.make_thing,
   }
 }
 

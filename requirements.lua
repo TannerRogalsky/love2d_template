@@ -37,6 +37,7 @@ require("lib/love_pixlr").init()
 
 Base = require("base")
 Game = require("game")
+Thing = require("thing")
 
 Direction = require("direction")
 
