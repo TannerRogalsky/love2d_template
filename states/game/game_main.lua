@@ -1,4 +1,5 @@
 local Main = Game:addState('Main')
+local frag_code = love.filesystem.read('shaders/test.c')
 
 function Main:enteredState()
   Collider = HC(100, self.on_start_collide, self.on_stop_collide)
@@ -41,6 +42,8 @@ function Main:enteredState()
   for i=1,10000 do
     self:make_thing(love.math.random(1, self.pixels.width - 1), love.math.random(1, self.pixels.height - 1))
   end
+
+  self.test_shader = g.newShader(frag_code)
 end
 
 function Main:update(dt)
