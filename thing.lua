@@ -1,7 +1,7 @@
 local Thing = class('Thing', Base):include(Stateful)
 Thing.static.instances = {}
 
-function Thing:initialize(x, y)
+function Thing:initialize(x, y, pixels)
   Base.initialize(self)
 
   self.x = x
@@ -11,18 +11,36 @@ function Thing:initialize(x, y)
   self.g = 62
   self.b = 68
 
+  self.pixels = pixels
+
+  self.start_colors = {}
+  for x, y, pixel in self.pixels:each(self.x, self.y, 2, 2) do
+    table.insert(self.start_colors, {
+      r = pixel.r,
+      g = pixel.g,
+      b = pixel.b
+    })
+  end
+
   Thing.instances[self.id] = self
 
   self.move_cron = cron.every(1 + love.math.random(), function()
-    self.x = self.x + love.math.random(3) - 2
-    self.y = self.y + love.math.random(3) - 2
+    self.x = self.x + love.math.random(1, 3) - 2
+    self.y = self.y + love.math.random(1, 3) - 2
 
-    self:timed_move()
+    self.x = math.clamp(1, self.x, 1023)
+    self.y = math.clamp(1, self.y, 1023)
+
+    local index = 1
+    local dimensions = math.sqrt(#self.start_colors)
+    for x, y, pixel in self.pixels:each(self.x, self.y, dimensions, dimensions) do
+      local new_color = self.start_colors[index]
+      pixel.r = new_color.r
+      pixel.g = new_color.g
+      pixel.b = new_color.b
+      index = index + 1
+    end
   end)
-end
-
-function Thing:timed_move()
-
 end
 
 function Thing:update(dt)

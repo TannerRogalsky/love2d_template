@@ -12,11 +12,20 @@ function Main:enteredState()
   g.setFont(self.default_font)
 
   self.pixels = Grid:new(1024, 1024)
+  for x, y, _ in self.pixels:each() do
+    local red, green, blue = self:generate_color(x, y)
+    self.pixels:set(x, y, {
+      r = red,
+      g = green,
+      b = blue
+    })
+  end
+
+
   simplex_offset = {
     x = game_data.MapX + 1, y = game_data.MapY
   }
   -- simplex_offset = {x = 0, y = 0}
-  self:generate_empty_pixels()
 
   self.vignette = g.newCanvas(32, 32)
   g.setCanvas(self.vignette)
@@ -30,7 +39,7 @@ function Main:enteredState()
   g.setCanvas()
 
   for i=1,10000 do
-    Thing:new(love.math.random(1024), love.math.random(1024))
+    self:make_thing(love.math.random(1, self.pixels.width - 1), love.math.random(1, self.pixels.height - 1))
   end
 end
 
@@ -38,8 +47,6 @@ function Main:update(dt)
   if love.keyboard.isDown(' ') then
     dt = dt * 10
   end
-
-  self:generate_empty_pixels()
 
   for id,thing in pairs(Thing.instances) do
     thing:update(dt)
@@ -166,8 +173,8 @@ function Main:move_right()
   -- simplex_offset.y = simplex_offset.y - 1
 end
 
-function Main:make_thing()
-  Thing:new(simplex_offset.x + 15, simplex_offset.y + 15)
+function Main:make_thing(x, y)
+  local thing = Thing:new(x, y, self.pixels)
 end
 
 local commands = {
