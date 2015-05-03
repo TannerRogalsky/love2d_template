@@ -159,6 +159,7 @@ function Main:draw()
     -- g.print("RI", 24, -1)
     -- g.print("LE", 0, 26)
     -- g.print("DN", 23, 26)
+    -- g.print(love.timer.getFPS(), 0, -1)
   end
 
   self.camera:unset()

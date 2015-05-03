@@ -12,8 +12,8 @@ function Game:initialize(args)
     love.graphics.rectangle("fill", x, y, 1, 1)
   end
 
-  sharecart_data = self:load_sharecart_data()
-  self:save_sharecart_data(sharecart_data)
+  -- sharecart_data = self:load_sharecart_data()
+  -- self:save_sharecart_data(sharecart_data)
 
   self:gotoState("Loading")
 end
@@ -39,6 +39,8 @@ local sharecart_keys = {
 function Game:load_sharecart_data()
   local data = {}
   local file = io.open("../dat/o_o.ini")
+  if not file then return end
+
   for line in file:lines() do
     local key, value = line:match("(%w+)=(.*)")
     if key and value then
