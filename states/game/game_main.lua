@@ -172,19 +172,19 @@ function Main:mousereleased(x, y, button)
 end
 
 function Main:move_down()
-  self:move(1, 1)
+  self:move(0, 1)
 end
 
 function Main:move_left()
-  self:move(-1, 1)
+  self:move(-1, 0)
 end
 
 function Main:move_up()
-  self:move(-1, -1)
+  self:move(0, -1)
 end
 
 function Main:move_right()
-  self:move(1, -1)
+  self:move(1, 0)
 end
 
 function Main:move(dx, dy)
