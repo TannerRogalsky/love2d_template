@@ -56,8 +56,10 @@ function Main:enteredState()
 end
 
 function Main:update(dt)
-  self.joystick_x, self.joystick_y = self.joystick:getAxes()
-  self.movement_cron:update(dt)
+  if self.joystick then
+    self.joystick_x, self.joystick_y = self.joystick:getAxes()
+    self.movement_cron:update(dt)
+  end
 
   dt = dt * (self.speed_multiplier or 1)
 
