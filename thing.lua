@@ -1,6 +1,24 @@
 local Thing = class('Thing', Base):include(Stateful)
 Thing.static.instances = {}
 
+local prefered_colors = {
+  {148, 146, 76},
+  {73,  84,  65},
+  {4, 174, 204},
+  {148, 74,  28},
+  {60,  136, 68},
+  {252, 254, 252},
+  {95,  57,  31},
+  {108, 250, 220},
+  {144, 144, 152},
+  {50,  45,  35},
+  {28,  62,  68},
+  {220, 198, 124},
+  {28,  70,  36},
+  {164, 218, 196},
+  {4, 92,  156},
+}
+
 function Thing:initialize(x, y, pixels)
   Base.initialize(self)
 
@@ -15,11 +33,7 @@ function Thing:initialize(x, y, pixels)
 
   self.start_colors = {}
   for x, y, pixel in self.pixels:each(self.x, self.y, 2, 2) do
-    table.insert(self.start_colors, {
-      r = pixel.r,
-      g = pixel.g,
-      b = pixel.b
-    })
+    table.insert(self.start_colors, {pixel.r,pixel.g,pixel.b})
   end
 
   Thing.instances[self.id] = self
@@ -30,11 +44,12 @@ function Thing:initialize(x, y, pixels)
 
     self.start_colors = {}
     for x, y, pixel in self.pixels:each(self.x, self.y, 2, 2) do
-      table.insert(self.start_colors, {
-        r = pixel.r,
-        g = pixel.g,
-        b = pixel.b
-      })
+      table.insert(self.start_colors, {pixel.r,pixel.g,pixel.b})
+    end
+
+    if love.math.random() > 0.98 then
+      local random_color = prefered_colors[love.math.random(1, #prefered_colors)]
+      self.start_colors[love.math.random(1, #self.start_colors)] = random_color
     end
 
     self.x = self.x + love.math.random(1, 3) - 2
@@ -47,9 +62,10 @@ function Thing:initialize(x, y, pixels)
     local dimensions = math.sqrt(#self.start_colors)
     for x, y, pixel in self.pixels:each(self.x, self.y, dimensions, dimensions) do
       local new_color = self.start_colors[index]
-      pixel.r = new_color.r
-      pixel.g = new_color.g
-      pixel.b = new_color.b
+      local red, green, blue = unpack(new_color)
+      pixel.r = red
+      pixel.g = green
+      pixel.b = blue
       index = index + 1
     end
   end)
