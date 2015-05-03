@@ -23,10 +23,13 @@ function Main:enteredState()
   self.joystick = love.joystick.getJoysticks()[1]
   self.ui_off = false
 
-  simplex_offset = {
-    x = game_data.MapX + 1, y = game_data.MapY
-  }
+  -- simplex_offset = {
+  --   x = game_data.MapX + 1, y = game_data.MapY
+  -- }
   -- simplex_offset = {x = 0, y = 0}
+  simplex_offset = {
+    x = math.floor(self.pixels.width / 2), y = math.floor(self.pixels.height / 2)
+  }
 
   self.vignette = g.newCanvas(32, 32)
   g.setCanvas(self.vignette)
