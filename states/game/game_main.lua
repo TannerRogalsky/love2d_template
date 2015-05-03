@@ -20,6 +20,8 @@ function Main:enteredState()
     })
   end
 
+  self.joystick = love.joystick.getJoysticks()[1]
+
 
   simplex_offset = {
     x = game_data.MapX + 1, y = game_data.MapY
@@ -31,7 +33,7 @@ function Main:enteredState()
   for x, y, _ in self.pixels:each(1, 1, 32, 32) do
     local dx = math.abs(x / 16.5 - 1)
     local dy = math.abs(y / 16.5 - 1)
-    local a = (dx + (dy * 2)) / 3 * 255
+    local a = (dx + dy)  / 3 * 255
     g.setColor(0, 0, 0, a)
     g.point(x - 1, y - 1)
   end
@@ -42,12 +44,19 @@ function Main:enteredState()
   end
 
   self.test_shader = g.newShader(frag_code)
+
+  self.movement_cron = cron.every(0.1, function()
+    local dx = math.round(self.joystick_x)
+    local dy = math.round(self.joystick_y)
+    self:move(dx, dy)
+  end)
 end
 
 function Main:update(dt)
-  if love.keyboard.isDown(' ') then
-    dt = dt * 10
-  end
+  self.joystick_x, self.joystick_y = self.joystick:getAxes()
+  self.movement_cron:update(dt)
+
+  dt = dt * (self.speed_multiplier or 1)
 
   for id,thing in pairs(Thing.instances) do
     thing:update(dt)
@@ -241,19 +250,38 @@ function Main:restart()
   self:gotoState('Main')
 end
 
+function Main:speed_up()
+  self.speed_multiplier = 10
+end
+
+function Main:slow_down()
+  self.speed_multiplier = 1
+end
+
 local commands = {
   keyboard = {
     down = Main.move_down,
     left = Main.move_left,
     up = Main.move_up,
     right = Main.move_right,
-    -- [' '] = Main.make_thing,
+    [' '] = Main.speed_up,
     a = Main.smooth_pixels,
     s = Main.begin_paint,
     q = Main.restart,
   },
   keyboard_released = {
-    s = Main.end_paint
+    s = Main.end_paint,
+    [' '] = Main.slow_down
+  },
+  gamepadpressed = {
+    a = Main.begin_paint,
+    b = Main.speed_up,
+    back = Main.restart,
+    start = Main.restart
+  },
+  gamepadreleased = {
+    a = Main.end_paint,
+    b = Main.slow_down
   }
 }
 
@@ -264,6 +292,16 @@ end
 
 function Main:keyreleased(key, unicode)
   local action = commands.keyboard_released[key]
+  if is_func(action) then action(self) end
+end
+
+function Main:gamepadpressed(joystick, button)
+  local action = commands.gamepadpressed[button]
+  if is_func(action) then action(self) end
+end
+
+function Main:gamepadreleased(joystick, button)
+  local action = commands.gamepadreleased[button]
   if is_func(action) then action(self) end
 end
 
