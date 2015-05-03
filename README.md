@@ -7,3 +7,5 @@ See if you can get more colors.
 In general: brighter, more variety.
 
 More emergent behaviours!
+
+Turn off UI so you can just see the painting.

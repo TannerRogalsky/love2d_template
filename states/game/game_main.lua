@@ -21,7 +21,7 @@ function Main:enteredState()
   end
 
   self.joystick = love.joystick.getJoysticks()[1]
-
+  self.ui_off = false
 
   simplex_offset = {
     x = game_data.MapX + 1, y = game_data.MapY
@@ -135,29 +135,31 @@ function Main:draw()
     g.point(x - simplex_offset.x, y - simplex_offset.y)
   end
 
-  for id,thing in pairs(Thing.instances) do
-    g.setColor(thing.r, thing.g, thing.b)
-    g.rectangle("fill", thing.x - simplex_offset.x, thing.y - simplex_offset.y, 2, 2)
-  end
-
-  g.setColor(0, 0, 0, 200)
-  for x, y, pixel in self.pixels:each(simplex_offset.x + 14, simplex_offset.y + 14, 4, 4) do
-    x = x - simplex_offset.x
-    y = y - simplex_offset.y
-    if x ~= y and x ~= 30 - y + 1 then
-      g.point(x, y)
+  if self.ui_off == false then
+    for id,thing in pairs(Thing.instances) do
+      g.setColor(thing.r, thing.g, thing.b)
+      g.rectangle("fill", thing.x - simplex_offset.x, thing.y - simplex_offset.y, 2, 2)
     end
+
+    g.setColor(0, 0, 0, 200)
+    for x, y, pixel in self.pixels:each(simplex_offset.x + 14, simplex_offset.y + 14, 4, 4) do
+      x = x - simplex_offset.x
+      y = y - simplex_offset.y
+      if x ~= y and x ~= 30 - y + 1 then
+        g.point(x, y)
+      end
+    end
+
+    -- pixel vignette
+    g.setColor(COLORS.white:rgb())
+    g.draw(self.vignette, 0, 0)
+
+    -- g.setColor(4, 174, 204)
+    -- g.print("UP", 0, -1)
+    -- g.print("RI", 24, -1)
+    -- g.print("LE", 0, 26)
+    -- g.print("DN", 23, 26)
   end
-
-  -- pixel vignette
-  g.setColor(COLORS.white:rgb())
-  g.draw(self.vignette, 0, 0)
-
-  g.setColor(4, 174, 204)
-  g.print("UP", 0, -1)
-  g.print("RI", 24, -1)
-  g.print("LE", 0, 26)
-  g.print("DN", 23, 26)
 
   self.camera:unset()
 end
@@ -258,6 +260,14 @@ function Main:slow_down()
   self.speed_multiplier = 1
 end
 
+function Main:turn_off_ui()
+  self.ui_off = true
+end
+
+function Main:turn_on_ui()
+  self.ui_off = false
+end
+
 local commands = {
   keyboard = {
     down = Main.move_down,
@@ -277,11 +287,13 @@ local commands = {
     a = Main.begin_paint,
     b = Main.speed_up,
     back = Main.restart,
-    start = Main.restart
+    start = Main.restart,
+    rightshoulder = Main.turn_off_ui
   },
   gamepadreleased = {
     a = Main.end_paint,
-    b = Main.slow_down
+    b = Main.slow_down,
+    rightshoulder = Main.turn_on_ui
   }
 }
 
