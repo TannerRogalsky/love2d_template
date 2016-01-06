@@ -18,7 +18,7 @@ function Loading:enteredState()
     if font then
       for _,size in ipairs(sizes) do
         local key = font .. "_" .. tostring(size)
-        self.loader.newFont(self.preloaded_fonts, key, 'fonts/' .. filename, size)
+        self.preloaded_fonts[key] = g.newFont('fonts/' .. filename, size)
       end
     end
   end
