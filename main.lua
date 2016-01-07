@@ -28,18 +28,18 @@ function love.mousereleased(x, y, button)
   loveframes.mousereleased(x, y, button)
 end
 
-function love.keypressed(key, unicode)
-  game:keypressed(key, unicode)
-  loveframes.keypressed(key, unicode)
+function love.keypressed(key, scancode, isrepeat)
+  game:keypressed(key, scancode, isrepeat)
+  loveframes.keypressed(key, scancode, isrepeat)
 
   if key == "escape" then
     love.event.push("quit")
   end
 end
 
-function love.keyreleased(key, unicode)
-  game:keyreleased(key, unicode)
-  loveframes.keyreleased(key, unicode)
+function love.keyreleased(key, scancode)
+  game:keyreleased(key, scancode)
+  loveframes.keyreleased(key, scancode)
 end
 
 function love.joystickpressed(joystick, button)

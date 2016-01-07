@@ -22,10 +22,10 @@ end
 function Game:mousereleased(x, y, button)
 end
 
-function Game:keypressed(key, unicode)
+function Game:keypressed(key, scancode, isrepeat)
 end
 
-function Game:keyreleased(key, unicode)
+function Game:keyreleased(key, scancode)
 end
 
 function Game:joystickpressed(joystick, button)

@@ -24,10 +24,10 @@ end
 function Main:mousereleased(x, y, button)
 end
 
-function Main:keypressed(key, unicode)
+function Main:keypressed(key, scancode, isrepeat)
 end
 
-function Main:keyreleased(key, unicode)
+function Main:keyreleased(key, scancode)
 end
 
 function Main:joystickpressed(joystick, button)
