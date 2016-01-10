@@ -13,3 +13,6 @@
 [submodule "lib/love-loader"]
 	path = lib/love-loader
 	url = https://github.com/kikito/love-loader.git
+[submodule "lib/cron"]
+	path = lib/cron
+	url = https://github.com/kikito/cron.lua.git
