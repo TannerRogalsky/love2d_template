@@ -16,14 +16,18 @@ function love.update(dt)
   loveframes.update(dt)
 end
 
-function love.mousepressed(x, y, button)
-  game:mousepressed(x, y, button)
-  loveframes.mousepressed(x, y, button)
+function love.mousepressed(x, y, button, isTouch)
+  game:mousepressed(x, y, button, isTouch)
+  loveframes.mousepressed(x, y, button, isTouch)
 end
 
-function love.mousereleased(x, y, button)
-  game:mousereleased(x, y, button)
-  loveframes.mousereleased(x, y, button)
+function love.mousereleased(x, y, button, isTouch)
+  game:mousereleased(x, y, button, isTouch)
+  loveframes.mousereleased(x, y, button, isTouch)
+end
+
+function love.wheelmoved(x, y)
+  game:wheelmoved(x, y)
 end
 
 function love.keypressed(key, scancode, isrepeat)

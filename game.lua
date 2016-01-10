@@ -16,10 +16,13 @@ end
 function Game:draw()
 end
 
-function Game:mousepressed(x, y, button)
+function Game:mousepressed(x, y, button, isTouch)
 end
 
-function Game:mousereleased(x, y, button)
+function Game:mousereleased(x, y, button, isTouch)
+end
+
+function Game:wheelmoved(x, y)
 end
 
 function Game:keypressed(key, scancode, isrepeat)

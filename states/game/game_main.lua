@@ -16,10 +16,10 @@ function Main:draw()
   self.camera:unset()
 end
 
-function Main:mousepressed(x, y, button)
+function Main:mousepressed(x, y, button, isTouch)
 end
 
-function Main:mousereleased(x, y, button)
+function Main:mousereleased(x, y, button, isTouch)
 end
 
 function Main:keypressed(key, scancode, isrepeat)
@@ -28,10 +28,10 @@ end
 function Main:keyreleased(key, scancode)
 end
 
-function Main:joystickpressed(joystick, button)
+function Main:gamepadpressed(joystick, button)
 end
 
-function Main:joystickreleased(joystick, button)
+function Main:gamepadreleased(joystick, button)
 end
 
 function Main:focus(has_focus)
