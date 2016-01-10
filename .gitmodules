@@ -16,3 +16,6 @@
 [submodule "lib/cron"]
 	path = lib/cron
 	url = https://github.com/kikito/cron.lua.git
+[submodule "lib/tween"]
+	path = lib/tween
+	url = https://github.com/kikito/tween.lua
