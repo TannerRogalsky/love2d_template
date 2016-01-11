@@ -16,11 +16,11 @@ function is_num(n) return type(n) == "number" end
 function is_string(s) return type(s) == "string" end
 
 -- Put any game-wide requirements in here
-class = require("lib.middleclass")
-Stateful = require("lib.stateful")
+class = require("lib.middleclass.middleclass")
+Stateful = require("lib.stateful.stateful")
 skiplist = require("lib.skiplist")
 HC = require("lib.HardonCollider")
-inspect = require("lib.inspect")
+inspect = require("lib.inspect.inspect")
 anim8 = require("lib.anim8.anim8")
 loveframes = require("lib.LoveFrames")
 cron = require("lib.cron.cron")

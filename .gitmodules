@@ -19,3 +19,12 @@
 [submodule "lib/tween"]
 	path = lib/tween
 	url = https://github.com/kikito/tween.lua
+[submodule "lib/middleclass"]
+	path = lib/middleclass
+	url = https://github.com/kikito/middleclass.git
+[submodule "lib/stateful"]
+	path = lib/stateful
+	url = https://github.com/kikito/stateful.lua.git
+[submodule "lib/inspect"]
+	path = lib/inspect
+	url = https://github.com/kikito/inspect.lua
