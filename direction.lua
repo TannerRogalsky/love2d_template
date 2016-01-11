@@ -27,10 +27,8 @@ function Direction.static.from_vector(x, y)
   if math.abs(x) > math.abs(y) then y = 0 else x = 0 end
 
   -- is there a better way to force numbers to 1 or -1 depending on their sign?
-  if x < 0 then x = -1 end
-  if x > 0 then x = 1 end
-  if y < 0 then y = -1 end
-  if y > 0 then y = 1 end
+  if x < 0 then x = -1 elseif x > 0 then x = 1 end
+  if y < 0 then y = -1 elseif y > 0 then y = 1 end
 
   return Direction[x][y]
 end
