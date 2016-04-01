@@ -100,7 +100,6 @@ end
 function LovePixlr.getMaxScale()
   local _,_,flags = love.window.getMode()
   local w,h = love.window.getDesktopDimensions(flags.display)
-  print(w, h, LovePixlr.getScale(w,h))
   return LovePixlr.getScale(w,h)
 end
 
