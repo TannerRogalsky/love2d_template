@@ -1,9 +1,9 @@
 #ifdef VERTEX
 vec4 position(mat4 transform_projection, vec4 vertex_position)
 {
-  float half_width = love_ScreenSize.x / 2;
-  vertex_position.x *= smoothstep(0, 1, vertex_position.y / love_ScreenSize.y);
-  vertex_position.x -= smoothstep(0, 1, vertex_position.y / love_ScreenSize.y) * half_width;
+  float half_width = love_ScreenSize.x / 2.0;
+  vertex_position.x *= smoothstep(0.0, 1.0, vertex_position.y / love_ScreenSize.y);
+  vertex_position.x -= smoothstep(0.0, 1.0, vertex_position.y / love_ScreenSize.y) * half_width;
   vertex_position.x += half_width;
   return transform_projection * vertex_position;
 }
