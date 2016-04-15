@@ -3,6 +3,17 @@ local Game = class('Game', Base):include(Stateful)
 function Game:initialize(args)
   Base.initialize(self)
 
+  LovePixlr.bind(64, 64, "nearest")
+  do
+    local old_points = g.points
+    g.points = function(...)
+      g.push()
+      g.translate(0.5, 0.5)
+      old_points(...)
+      g.pop()
+    end
+  end
+
   for k,v in pairs(args) do
     self[k] = v
   end
