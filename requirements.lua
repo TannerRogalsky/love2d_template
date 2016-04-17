@@ -33,6 +33,7 @@ Boid = require("lib.boid")
 
 Base = require("base")
 Game = require("game")
+Ball = require("ball")
 
 Direction = require("direction")
 
