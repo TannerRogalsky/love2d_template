@@ -16,7 +16,7 @@ end
 --- Function to be called to draw the object.
 --
 -- Ensures a minimum functionality. Can be overridden.
-function Base:render()
+function Base:draw()
 end
 
 --- Returns a string representation of the object.

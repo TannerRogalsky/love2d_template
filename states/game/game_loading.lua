@@ -12,6 +12,7 @@ function Loading:enteredState()
   self.loader = require 'lib/love-loader/love-loader'
   self.preloaded_images = {}
   self.preloaded_fonts = {}
+  self.preloaded_levels = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -28,6 +29,12 @@ function Loading:enteredState()
         local key = font .. "_" .. tostring(size)
         self.preloaded_fonts[key] = g.newFont('fonts/' .. filename, size)
       end
+    end
+  end
+
+  for i,filename in ipairs(love.filesystem.getDirectoryItems('levels')) do
+    if filename:match('(.*).dat$') ~= nil then
+      table.insert(self.preloaded_levels, binser.deserialize(love.filesystem.read('levels/' .. filename))[1])
     end
   end
 

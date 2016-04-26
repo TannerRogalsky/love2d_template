@@ -28,3 +28,6 @@
 [submodule "lib/inspect"]
 	path = lib/inspect
 	url = https://github.com/kikito/inspect.lua
+[submodule "lib/binser"]
+	path = lib/binser
+	url = https://github.com/bakpakin/binser.git

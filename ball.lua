@@ -15,7 +15,6 @@ local function generateVertices(sides, radius)
 end
 
 local function generatePolygon(sides, radius)
-
   return love.physics.newPolygonShape(vertices)
 end
 

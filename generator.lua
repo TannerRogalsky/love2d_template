@@ -1,16 +1,22 @@
-local function newTile(x, y, z)
+local function newTile(x, y)
   return {
     x = x,
-    y = y,
-    z = z
+    y = y
   }
 end
 
+local lookupmt = {}
+function lookupmt.__index()
+  return setmetatable({}, lookupmt)
+end
+
 local function generate()
-  local tiles = {}
+  local tiles, lookup = {}, setmetatable({}, lookupmt)
   local x, y = 0, 0
+
   for i=0,10 do
-    local tile = newTile(x, y, 0)
+    local tile = newTile(x, y)
+    lookup[x][y] = tile
     table.insert(tiles, tile)
     if love.math.random() < 0.5 then
       x = x+1
