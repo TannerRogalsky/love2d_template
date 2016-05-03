@@ -44,7 +44,7 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Main")
+    self:gotoState("Main", self.preloaded_levels[1])
   end)
 
   local hexFormatStringPart = '%X '

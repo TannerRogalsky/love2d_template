@@ -21,34 +21,20 @@ end
 function Ball:initialize(world, x, y, radius)
   Base.initialize(self)
 
-  self.radius = radius
   self.body = love.physics.newBody(world, x, y, 'dynamic')
   self.body:setLinearDamping(0.5)
   self.body:setAngularDamping(0.5)
-  self:setVertexNumber(8)
+
+  self.fixture = love.physics.newFixture(self.body, love.physics.newCircleShape(0, 0, radius))
+  self.fixture:setUserData(self)
+  self.fixture:setRestitution(1)
 end
 
-function Ball:setVertexNumber(num)
-  for _,fixture in ipairs(self.body:getFixtureList()) do
-    fixture:destroy()
-  end
+function Ball:getRadius()
+  return self.fixture:getShape():getRadius()
+end
 
-  self.sides = num
-  local triangles = love.math.triangulate(generateVertices(self.sides, self.radius))
-
-  local meshVertices = {}
-  for _,triangle in ipairs(triangles) do
-    local fixture = love.physics.newFixture(self.body, love.physics.newPolygonShape(triangle))
-    fixture:setRestitution(1)
-
-    for i = 1, #triangle, 2 do
-      table.insert(meshVertices, {
-        triangle[i], triangle[i + 1]
-      })
-    end
-  end
-
-  self.mesh = love.graphics.newMesh(meshVertices, 'triangles', 'static')
+function Ball:update(dt)
 end
 
 function Ball:draw()
@@ -67,8 +53,29 @@ function Ball:draw()
   --   g.line(vertices)
   -- end
 
-  g.draw(self.mesh)
+  g.circle('fill', 0, 0, self:getRadius())
   g.pop()
+end
+
+function Ball:presolve(object_two, contact, nx, ny)
+  if object_two and (object_two:isInstanceOf(Obstacle) or object_two:isInstanceOf(Goal)) then
+    local selfRadius = self:getRadius()
+    local otherRadius = object_two:getRadius()
+
+    if object_two.radius < selfRadius then
+      local len = math.sqrt(nx*nx + ny*ny)
+      self.fixture:getShape():setRadius(selfRadius + len * 0.8)
+
+      local newOtherRadius = otherRadius - len
+      if newOtherRadius <= 0 then
+        object_two:destroy()
+      else
+        object_two.fixture:getShape():setRadius(newOtherRadius)
+      end
+
+      contact:setEnabled(false)
+    end
+  end
 end
 
 return Ball

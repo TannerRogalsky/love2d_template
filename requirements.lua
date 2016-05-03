@@ -30,10 +30,13 @@ beholder = require("lib.beholder")
 Grid = require("lib.grid")
 Line = require("lib.line")
 Boid = require("lib.boid")
+binser = require("lib.binser.binser")
 
 Base = require("base")
 Game = require("game")
 Ball = require("ball")
+Obstacle = require('obstacle')
+Goal = require('Goal')
 
 Direction = require("direction")
 

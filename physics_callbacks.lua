@@ -3,7 +3,6 @@ local physics_callbacks = {}
 for _,callback_name in ipairs(physics_callback_names) do
   local function callback(fixture_a, fixture_b, contact, ...)
     local object_one, object_two = fixture_a:getUserData(), fixture_b:getUserData()
-    -- print(callback_name, object_one, object_two, ...)
     local nx, ny = contact:getNormal()
     if object_one and is_func(object_one[callback_name]) then
       object_one[callback_name](object_one, object_two, contact, nx, ny, ...)
@@ -14,4 +13,4 @@ for _,callback_name in ipairs(physics_callback_names) do
   end
   table.insert(physics_callbacks, callback)
 end
-return unpack(physics_callbacks)
+return physics_callbacks
