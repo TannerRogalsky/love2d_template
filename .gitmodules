@@ -31,3 +31,6 @@
 [submodule "lib/binser"]
 	path = lib/binser
 	url = https://github.com/bakpakin/binser.git
+[submodule "lib/SUIT"]
+	path = lib/SUIT
+	url = https://github.com/vrld/SUIT.git

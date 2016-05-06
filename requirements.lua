@@ -22,7 +22,7 @@ skiplist = require("lib.skiplist")
 HC = require("lib.HardonCollider")
 inspect = require("lib.inspect.inspect")
 anim8 = require("lib.anim8.anim8")
-loveframes = require("lib.LoveFrames")
+-- loveframes = require("lib.LoveFrames")
 cron = require("lib.cron.cron")
 COLORS = require("lib.colors")
 tween = require("lib.tween.tween")
@@ -36,7 +36,7 @@ Base = require("base")
 Game = require("game")
 Ball = require("ball")
 Obstacle = require('obstacle')
-Goal = require('Goal')
+Goal = require('goal')
 
 Direction = require("direction")
 
@@ -52,6 +52,3 @@ local function require_all(directory)
   end
 end
 require_all("states")
-
-lovebird = require("lib.lovebird.lovebird")
-lovebird.port = 3100

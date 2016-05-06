@@ -53,8 +53,8 @@ function Main:enteredState(level_data)
 
   for _,object in ipairs(level_data) do
     if object.type == 'start' then
-      self.ball = Ball:new(self.world, object.x, object.y, 50)
-      self.ball.body:setAngle(math.pi / 2)
+      self.ball = Ball:new(self.world, object.x, object.y, object.radius)
+      -- self.ball.body:setAngle(math.pi / 2)
       -- self.ball = Ball:new(self.world, 250, 250, 250)
     elseif object.type == 'obstacle' then
       Obstacle:new(self.world, object.x, object.y, object.radius)
@@ -74,23 +74,21 @@ function Main:enteredState(level_data)
   self.camera:setPosition(cx, cy)
   g.setFont(self.preloaded_fonts["04b03_16"])
 
-  self.sphere_shader = g.newShader('shaders/sphere.glsl')
+  -- self.sphere_shader = g.newShader('shaders/sphere.glsl')
 end
 
 function Main:update(dt)
   self.world:update(dt)
   self.ball:update(dt)
 
-  -- self.sphere_shader:send('time', love.timer.getTime() / 100)
+  -- local delta = 5
+  -- local mx, my = self.camera:mousePosition()
+  -- local cx, cy = 0, 0
 
-  local delta = 5
-  local mx, my = self.camera:mousePosition()
-  local cx, cy = 0, 0
-
-  if mx <= self.camera.x + delta then cx = cx - delta end
-  if mx >= self.camera.x + g.getWidth() - delta then cx = cx + delta end
-  if my <= self.camera.y + delta then cy = cy - delta end
-  if my >= self.camera.y + g.getHeight() - delta then cy = cy + delta end
+  -- if mx <= self.camera.x + delta then cx = cx - delta end
+  -- if mx >= self.camera.x + g.getWidth() - delta then cx = cx + delta end
+  -- if my <= self.camera.y + delta then cy = cy - delta end
+  -- if my >= self.camera.y + g.getHeight() - delta then cy = cy + delta end
 
   -- if cx == 0 and cy == 0 then
   --   cx = math.clamp(-delta, (self.world_width / 2 - g.getWidth() / 2) - self.camera.x, delta)
@@ -119,14 +117,15 @@ function Main:draw()
 
   local ballRadius = self.ball:getRadius()
   for id, obstacle in pairs(Obstacle.instances) do
-    local color = obstacle:getRadius() < ballRadius and {255, 0, 255, 255} or {0, 255, 255, 255}
-    drawBody(obstacle.body, color)
+    -- local color = obstacle:getRadius() < ballRadius and {255, 0, 255, 255} or {0, 255, 255, 255}
+    -- drawBody(obstacle.body, color)
+    obstacle:draw()
   end
 
   drawBody(self.goal.body, {0, 255, 0, 255})
 
   local bx, by = self.ball.body:getLinearVelocity()
-  if math.abs(bx) <= 1 and math.abs(by) <= 1 then
+  if math.abs(bx) <= 3 and math.abs(by) <= 3 then
     self.ball.body:setLinearVelocity(0, 0)
     local bx, by = self.ball.body:getPosition()
     local mx, my = self.camera:mousePosition()

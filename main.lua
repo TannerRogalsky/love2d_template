@@ -11,19 +11,15 @@ function love.load(args)
 end
 
 function love.update(dt)
-  lovebird.update()
   game:update(dt)
-  loveframes.update(dt)
 end
 
 function love.mousepressed(x, y, button, isTouch)
   game:mousepressed(x, y, button, isTouch)
-  loveframes.mousepressed(x, y, button, isTouch)
 end
 
 function love.mousereleased(x, y, button, isTouch)
   game:mousereleased(x, y, button, isTouch)
-  loveframes.mousereleased(x, y, button, isTouch)
 end
 
 function love.wheelmoved(x, y)
@@ -32,7 +28,6 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
   game:keypressed(key, scancode, isrepeat)
-  loveframes.keypressed(key, scancode, isrepeat)
 
   if key == "escape" then
     love.event.push("quit")
@@ -41,7 +36,6 @@ end
 
 function love.keyreleased(key, scancode)
   game:keyreleased(key, scancode)
-  loveframes.keyreleased(key, scancode)
 end
 
 function love.joystickpressed(joystick, button)
@@ -83,12 +77,10 @@ end
 
 function love.textinput(text)
   game:textinput(text)
-  loveframes.textinput(text)
 end
 
 function love.draw()
   game:draw()
-  loveframes.draw()
 end
 
 function love.focus(has_focus)

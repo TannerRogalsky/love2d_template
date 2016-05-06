@@ -30,7 +30,7 @@ function Ball:initialize(world, x, y, radius)
   Base.initialize(self)
 
   self.body = love.physics.newBody(world, x, y, 'dynamic')
-  self.body:setLinearDamping(0.5)
+  self.body:setLinearDamping(1)
   self.body:setAngularDamping(0.5)
 
   self.fixture = love.physics.newFixture(self.body, love.physics.newCircleShape(0, 0, radius))
@@ -60,10 +60,8 @@ function Ball:update(dt)
   if self.position.x ~= px or self.position.y ~= py then
     local dx, dy = px - self.position.x, py - self.position.y
     local angle = self.body:getAngle()
-    -- print(dx, dy, angle, math.cos(angle), math.sin(angle))
     local c, s = math.cos(angle), math.sin(angle)
     dx, dy = c * dx - s * dy, s * dx + c * dy
-    -- print(dx, dy)
 
     local radius = self:getRadius()
 
@@ -84,6 +82,7 @@ end
 function Ball:draw()
   local body = self.body
   local x, y = body:getPosition()
+  local angle = body:getAngle()
 
   local radius = self:getRadius()
   local shade = game.preloaded_images['planet_shade.png']
@@ -95,7 +94,7 @@ function Ball:draw()
   local atmosphere_ratio = radius / atmosphere_half_width
 
   g.setColor(255, 255, 255)
-  g.draw(self.mesh, x, y, body:getAngle())
+  g.draw(self.mesh, x, y, angle)
 
   g.setColor(255, 255, 255, 150)
   g.draw(shade, x, y, 0, shade_ratio, shade_ratio, shade_half_width, shade_half_width)
@@ -103,6 +102,9 @@ function Ball:draw()
   g.setColor(65, 105, 225, 150) -- royal blue
   -- g.setColor(100, 149, 237, 150) -- cornflower blue
   g.draw(atmosphere, x, y, 0, atmosphere_ratio * 2, atmosphere_ratio * 2, atmosphere_half_width, atmosphere_half_width)
+
+  g.setColor(0, 0, 0, 255)
+  g.line(x, y, x + math.cos(angle) * radius, y + math.sin(angle) * radius)
 end
 
 function Ball:presolve(object_two, contact, nx, ny)
@@ -110,7 +112,7 @@ function Ball:presolve(object_two, contact, nx, ny)
     local selfRadius = self:getRadius()
     local otherRadius = object_two:getRadius()
 
-    if object_two.radius < selfRadius then
+    if otherRadius < selfRadius then
       local len = math.sqrt(nx*nx + ny*ny)
       local newSelfRadius = selfRadius + len * 0.8
       self.fixture:getShape():setRadius(newSelfRadius)
@@ -121,6 +123,7 @@ function Ball:presolve(object_two, contact, nx, ny)
         object_two:destroy()
       else
         object_two.fixture:getShape():setRadius(newOtherRadius)
+        object_two.mesh:setVertices(generateVertices(SIDES, newOtherRadius, 0, 0))
       end
 
       contact:setEnabled(false)

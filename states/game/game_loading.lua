@@ -34,7 +34,7 @@ function Loading:enteredState()
 
   for i,filename in ipairs(love.filesystem.getDirectoryItems('levels')) do
     if filename:match('(.*).dat$') ~= nil then
-      table.insert(self.preloaded_levels, binser.deserialize(love.filesystem.read('levels/' .. filename))[1])
+      self.preloaded_levels[filename] = binser.deserialize(love.filesystem.read('levels/' .. filename))[1]
     end
   end
 
@@ -44,7 +44,7 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Main", self.preloaded_levels[1])
+    self:gotoState("Menu")
   end)
 
   local hexFormatStringPart = '%X '
