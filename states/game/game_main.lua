@@ -53,22 +53,35 @@ function Main:enteredState(level_data)
 
   for _,object in ipairs(level_data) do
     if object.type == 'start' then
-      self.ball = Ball:new(self.world, object.x, object.y, object.radius)
+      self.ball = Ball:new(self.world, object.x, object.y, 50)
+      self.ball.body:setAngle(math.pi / 2)
+      -- self.ball = Ball:new(self.world, 250, 250, 250)
     elseif object.type == 'obstacle' then
       Obstacle:new(self.world, object.x, object.y, object.radius)
     elseif object.type == 'end' then
       self.goal = Goal:new(self.world, object.x, object.y, object.radius)
+      -- self.goal = Goal:new(self.world, 1000, 1000, object.radius)
     end
   end
 
+  g.setBackgroundColor(255, 255, 255)
   love.mouse.setGrabbed(true)
   local cx, cy = self.world_width / 2 - g.getWidth() / 2, self.world_height / 2 - g.getHeight() / 2
+  self.camera.bounds.negative_x = -500
+  self.camera.bounds.negative_y = -500
+  self.camera.bounds.positive_x = 0
+  self.camera.bounds.positive_y = 0
   self.camera:setPosition(cx, cy)
   g.setFont(self.preloaded_fonts["04b03_16"])
+
+  self.sphere_shader = g.newShader('shaders/sphere.glsl')
 end
 
 function Main:update(dt)
   self.world:update(dt)
+  self.ball:update(dt)
+
+  -- self.sphere_shader:send('time', love.timer.getTime() / 100)
 
   local delta = 5
   local mx, my = self.camera:mousePosition()
@@ -90,11 +103,19 @@ end
 function Main:draw()
   self.camera:set()
 
-  g.setColor(255, 255, 255)
+  g.setWireframe(love.keyboard.isDown('space'))
+
+  g.setColor(0, 0, 0)
   g.rectangle('fill', 0, 0, 500, 500)
 
+  -- g.setShader(self.sphere_shader)
+  -- g.draw(game.preloaded_images['earth.png'], 500, 0, 0, 0.5)
+  -- g.setShader()
+
   g.setColor(255, 0, 0)
+  -- g.setShader(self.sphere_shader)
   self.ball:draw()
+  -- g.setShader()
 
   local ballRadius = self.ball:getRadius()
   for id, obstacle in pairs(Obstacle.instances) do
