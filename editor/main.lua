@@ -32,43 +32,52 @@ end
 
 local function saveData(data)
   love.filesystem.createDirectory('levels')
-  love.filesystem.write('levels/' .. save_files[current_save_file], binser.serialize(data))
+  if #level_data.objects > 0 then
+    love.filesystem.write('levels/' .. save_files[current_save_file], binser.serialize(data))
+  end
 end
 
 local function loadData(filename)
-  objects = binser.deserialize(love.filesystem.read('levels/' .. filename))[1]
+  level_data = binser.deserialize(love.filesystem.read('levels/' .. filename))[1]
 end
 
 function love.load(args)
   current_radius = 25
   current_object_type = 1
-  objects = {}
+  level_data = {
+    seed = {text = love.math.random()},
+    objects = {}
+  }
 
+  new_level_input = {text = ''}
   populateSaveFiles()
-  current_save_file = #save_files
-  loadData(save_files[current_save_file])
+  if #save_files > 0 then
+    current_save_file = #save_files
+    loadData(save_files[current_save_file])
+    new_level = false
+  else
+    new_level = true
+  end
 end
 
-local new_level = false
-local new_level_input = {text = ''}
 function love.update(dt)
   SUIT.layout:reset(510, 10)
 
   for i,file in ipairs(save_files) do
     if SUIT.Button(file, SUIT.layout:row(200, 30)).hit then
-      saveData(objects)
+      saveData(level_data)
       loadData(file)
       current_save_file = i
     end
   end
 
   if new_level then
-    SUIT.Input(new_level_input, SUIT.layout:row(200, 30))
-    if SUIT.Button("Create", SUIT.layout:col(200, 30)).hit then
-      if #objects > 0 then
-        saveData(objects)
+    if SUIT.Input(new_level_input, SUIT.layout:row(200, 30)).submitted then
+      saveData(level_data)
+      level_data = {
+        seed = {text = love.math.random()},
         objects = {}
-      end
+      }
       new_level = false
       table.insert(save_files, new_level_input.text)
       new_level_input.text = ''
@@ -83,7 +92,7 @@ function love.draw()
   g.setColor(255, 255, 255)
   g.rectangle('fill', 0, 0, 500, 500)
 
-  for _,object in ipairs(objects) do
+  for _,object in ipairs(level_data.objects) do
     local data = object_data[object.type]
     g.setColor(data.color)
     g.circle('fill', object.x, object.y, object.radius)
@@ -97,23 +106,13 @@ function love.draw()
     g.circle('fill', x, y, current_radius)
   end
 
-
-  -- for i,save_file in ipairs(save_files) do
-  --   if i == current_save_file then
-  --     g.setColor(0, 255, 255)
-  --   else
-  --     g.setColor(255, 255, 255)
-  --   end
-  --   g.print(save_file, 500, (i - 1) * 20)
-  -- end
-
   SUIT.draw()
 end
 
 function love.mousepressed(x, y, button, isTouch)
   if x > current_radius and y > current_radius and
     x < 500 - current_radius and y < 500 - current_radius then
-    table.insert(objects, {
+    table.insert(level_data.objects, {
       type = object_types[current_object_type],
       x = x,
       y = y,
@@ -190,4 +189,5 @@ function love.focus(has_focus)
 end
 
 function love.quit()
+  saveData(level_data)
 end

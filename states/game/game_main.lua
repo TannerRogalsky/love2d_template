@@ -51,16 +51,14 @@ function Main:enteredState(level_data)
   self.world_width, self.world_height = 500, 500
   buildBounds(self.world, self.world_width, self.world_height)
 
-  for _,object in ipairs(level_data) do
+  love.math.setRandomSeed(tonumber(level_data.seed.text))
+  for _,object in ipairs(level_data.objects) do
     if object.type == 'start' then
       self.ball = Ball:new(self.world, object.x, object.y, object.radius)
-      -- self.ball.body:setAngle(math.pi / 2)
-      -- self.ball = Ball:new(self.world, 250, 250, 250)
     elseif object.type == 'obstacle' then
       Obstacle:new(self.world, object.x, object.y, object.radius)
     elseif object.type == 'end' then
       self.goal = Goal:new(self.world, object.x, object.y, object.radius)
-      -- self.goal = Goal:new(self.world, 1000, 1000, object.radius)
     end
   end
 
@@ -80,6 +78,11 @@ end
 function Main:update(dt)
   self.world:update(dt)
   self.ball:update(dt)
+
+  local bx, by = self.ball.body:getLinearVelocity()
+  if math.abs(bx) <= 3 and math.abs(by) <= 3 then
+    self.ball.body:setLinearVelocity(0, 0)
+  end
 
   -- local delta = 5
   -- local mx, my = self.camera:mousePosition()
@@ -122,12 +125,10 @@ function Main:draw()
     obstacle:draw()
   end
 
-  drawBody(self.goal.body, {0, 255, 0, 255})
+  self.goal:draw()
 
-  local bx, by = self.ball.body:getLinearVelocity()
-  if math.abs(bx) <= 3 and math.abs(by) <= 3 then
-    self.ball.body:setLinearVelocity(0, 0)
-    local bx, by = self.ball.body:getPosition()
+  if self.mouse_down then
+    local bx, by = self.mouse_down.x, self.mouse_down.y
     local mx, my = self.camera:mousePosition()
     g.setColor(0, 255, 0)
     g.line(mx, my, bx, by)
@@ -146,12 +147,17 @@ function Main:wheelmoved(x, y)
 end
 
 function Main:mousepressed(x, y, button, isTouch)
+  if not self.ball.body:isAwake() then
+    x, y = self.camera:mousePosition()
+    self.mouse_down = {x = x, y = y}
+  end
 end
 
 function Main:mousereleased(x, y, button, isTouch)
-  if not self.ball.body:isAwake() then
+  if self.mouse_down then
     x, y = self.camera:mousePosition()
-    local bx, by = self.ball.body:getPosition()
+    local bx, by = self.mouse_down.x, self.mouse_down.y
+    self.mouse_down = nil
     local s = 100
     self.ball.body:applyForce((bx - x) * s, (by - y) * s)
   end

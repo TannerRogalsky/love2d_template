@@ -17,6 +17,12 @@ function Goal:getRadius()
   return self.fixture:getShape():getRadius()
 end
 
+function Goal:draw()
+  local x, y = self.body:getPosition()
+  g.setColor(0, 255, 0, 255)
+  g.circle('fill', x, y, self:getRadius())
+end
+
 function Goal:destroy()
   game:over()
   self.body:destroy()

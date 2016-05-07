@@ -1,3 +1,5 @@
+package.path = './?/init.lua;' .. package.path
+
 -- Helper assignments and erata
 g = love.graphics
 GRAVITY = 700
