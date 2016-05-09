@@ -1,12 +1,6 @@
 [submodule "lib/HardonCollider"]
 	path = lib/HardonCollider
 	url = https://github.com/vrld/HardonCollider.git
-[submodule "lib/LoveFrames"]
-	path = lib/LoveFrames
-	url = https://github.com/NikolaiResokav/LoveFrames.git
-[submodule "lib/lovebird"]
-	path = lib/lovebird
-	url = https://github.com/rxi/lovebird.git
 [submodule "lib/anim8"]
 	path = lib/anim8
 	url = https://github.com/kikito/anim8.git
