@@ -29,6 +29,7 @@ beholder = require("lib.beholder")
 Grid = require("lib.grid")
 Line = require("lib.line")
 Boid = require("lib.boid")
+LovePixlr = require("lib.love_pixlr").init()
 
 Base = require("base")
 Game = require("game")

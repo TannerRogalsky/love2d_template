@@ -7,6 +7,9 @@ function love.load(args)
     key, value = key or arg, value or true
     k_args[key] = value
   end
+
+  LovePixlr.bind(1280, 720)
+
   game = Game:new(k_args)
 end
 
