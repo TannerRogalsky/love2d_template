@@ -33,6 +33,7 @@ local function hsl2rgb(h, s, l)
   return r * 255, g * 255, b * 255
 end
 
+local function inQuad(t, b, c, d) return c * math.pow(t / d, 2) + b end
 local function inQuint(t, b, c, d) return c * math.pow(t / d, 5) + b end
 
 local SIZE = 20
@@ -41,53 +42,11 @@ function Main:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  local num_blocks = 4
-  blocks = {
-    {0xff0000, 0x00ff00, 0x0000ff},
-  }
-  for y=1,num_blocks - 1 do
-    local colors = {}
-    local prev_row = blocks[y]
-
-    for x=1,#prev_row do
-      local prev_color_1 = prev_row[x]
-      local prev_color_2 = prev_row[x + 1]
-      if prev_color_2 == nil then prev_color_2 = prev_row[1] end
-
-      table.insert(colors, prev_color_1)
-      -- table.insert(colors, bit.bor(prev_color_1, prev_color_2))
-      table.insert(colors, (prev_color_1 + prev_color_2) / 2)
-    end
-
-    table.insert(blocks, colors)
-  end
-
-  -- for b=1,5 do
-  --   for i=1,5 do
-  --     print(i, b, (i + b) % 5)
-  --   end
-  --   print('')
-  -- end
-
-  -- mesh = g.newMesh({
-  --   {-SIZE / 2, -SIZE / 2},
-  --   {-SIZE / 2, SIZE / 2},
-  --   {SIZE / 2, SIZE / 2},
-  --   {SIZE / 2, -SIZE / 2},
-  -- })
   mesh = g.newMesh({
     {0, -SIZE / 2},
     {SIZE / 2, SIZE / 2},
     {-SIZE / 2, SIZE / 2}
   })
-
-  -- for i,row in ipairs(blocks) do
-  --   local t = {}
-  --   for i,block in ipairs(row) do
-  --     table.insert(t, bit.tohex(block))
-  --   end
-  --   print(unpack(t))
-  -- end
 
   g.setFont(self.preloaded_fonts["04b03_16"])
   self.camera:move(-g.getWidth() / 2, -g.getHeight() / 2)
@@ -100,34 +59,23 @@ end
 function Main:draw()
   self.camera:set()
 
-  -- do
-  --   local size = 20
-  --   local padding_x, padding_y = 5, 10
-  --   local y = 0
-  --   g.setColor(255, 255, 255)
-  --   for i=3,num_blocks do
-  --     local half_width = i / 2
-  --     for x=1,i do
-  --       local px = (x - 1 - half_width) * (size + padding_x) + g.getWidth() / 2
-  --       local py = y * (size + padding_y) + 100
-  --       g.rectangle('fill', px, py, size, size)
-  --     end
-  --     y = y + 1
-  --   end
-  -- end
-
   do
     local tau = math.pi * 2
     local time = love.timer.getTime()
-    for y,row in ipairs(blocks) do
+    local abs_t = time
+    local rows = 4
+
+    for y=1, rows do
       time = time * -1
-      local t = tau / #row
+      local columns = (y + 1) ^ 2
+      local t = tau / columns
       local radius = SIZE * y
-      for x,block in ipairs(row) do
-        local px = (radius + math.cos(x * t) * 10 + (math.cos(math.abs(time)) + math.pi) * 10) * math.cos((x - 1) * t + time)
-        local py = (radius + math.sin(x * t) * 10 + (math.sin(math.abs(time)) + math.pi) * 10) * math.sin((x - 1) * t + time)
+      for x=1,columns do
+        local px = (radius + math.cos(x * t) * 20 + (math.cos(abs_t) + math.pi) * 10) * math.cos((x - 1) * t + time)
+        local py = (radius + math.sin(x * t) * 20 + (math.sin(abs_t) + math.pi) * 10) * math.sin((x - 1) * t + time)
         local angle = math.atan2(px, -py)
-        g.setColor(hsl2rgb(angle / tau, 1, y / #blocks - (math.sin(math.abs(time)) + math.pi) / tau))
+        g.setColor(hsl2rgb(angle / tau, 1, y / rows - (math.sin(abs_t) + math.pi) / tau))
+        -- g.setColor(hsl2rgb(angle / tau, 1, y / rows / 2 - math.sin(abs_t) * (rows - y) / rows / 2))
         g.draw(mesh, px, py, angle)
       end
     end
@@ -147,7 +95,7 @@ function Main:draw()
 
     for i=1,num do
       local n = (i + cycle) % num
-      local angle = (n + time * time_scale) * golden_mean * math.pi / arms - time * 2
+      local angle = (n + time * time_scale) * golden_mean * math.pi / arms - time * 1.9
       local ratio = n / num * radius
 
       local x = math.cos(angle) * ratio
@@ -156,7 +104,7 @@ function Main:draw()
       g.setColor(hsl2rgb(i / num, 1, 0.5 - inQuint(ratio, 0, 0.5, radius)))
       -- g.setColor(hsl2rgb((angle % tau) / tau, 1, 0.5 - inQuint(ratio, 0, 0.5, radius)))
       -- g.setColor(hsl2rgb(ratio / radius, 1, 0.5 - inQuint(ratio, 0, 0.5, radius)))
-      g.draw(mesh, x, y,  math.atan2(-x, y), 1)
+      g.draw(mesh, x, y,  0, 1)
     end
 
     g.pop()
@@ -183,30 +131,33 @@ function Main:draw()
     g.pop()
   end
 
-  -- do
-  --   local num_lines = 6
-  --   g.setColor(255, 255, 255)
-  --   for i=1,num_lines do
-  --     local t = (2 * math.pi) / num_lines
-  --     g.line(0, 0, math.cos(i * t) * 1000, math.sin(i * t) * 1000)
-  --   end
-  -- end
+  do
+    g.push()
+    local time = love.timer.getTime()
+    local tau = math.pi * 2
+    local golden_mean = (1 + math.sqrt(5) / 2)
+    local arms = 2
+    local num = 50
+    local radius = 125
+    local time_scale = 10
+    local cycle = ((time * time_scale) % -num) * -1 -- 0 through `num` exclusive
 
-  -- do
-  --   local y = 0
-  --   g.setColor(100, 100, 100)
-  --   for i=3,num_blocks - 1 do
-  --     local half_width = i / 2
-  --     for x=1,i do
-  --       local px = (x - 1 - half_width) * (size + padding_x) + g.getWidth() / 2
-  --       local py = y * (size + padding_y) + 100
-  --       local lx, ly = px + size / 2, py + size / 2
-  --       g.line(lx, ly, lx - ((size) / 2), ly + (size * 0.8) + padding_y)
-  --       g.line(lx, ly, lx + ((size) / 2), ly + (size * 0.8) + padding_y)
-  --     end
-  --     y = y + 1
-  --   end
-  -- end
+    g.translate(-g.getWidth() / 8, g.getHeight() / 2 - radius - SIZE / 2)
+
+    for i=1,num do
+      local n = (i + cycle) % num
+      local arm_index = (i % arms)
+      local angle = (n + time * time_scale) * golden_mean * math.pi / arms + arm_index * math.pi / 2
+      local ratio = n / num * radius
+      local x = math.cos(angle) * ratio
+      local y = math.sin(angle) * ratio
+      local red, green, blue = hsl2rgb(i / num, 1, 0.5)
+
+      g.setColor(red, green, blue, inQuint(ratio, 0, 1, radius) * 255)
+      g.draw(mesh, x, y, angle + math.pi)
+    end
+    g.pop()
+  end
 
   self.camera:unset()
 end

@@ -38,4 +38,17 @@ function love.conf(t)
   t.modules.video = true              -- Enable the video module (boolean)
   t.modules.window = true             -- Enable the window module (boolean)
   t.modules.thread = true             -- Enable the thread module (boolean)
+
+  t.releases = {
+    title = 'Colors',              -- The project title (string)
+    package = 'colors',            -- The project command and package name (string)
+    loveVersion = '0.10.0',        -- The project LÖVE version
+    version = '1.0.0',            -- The project version
+    author = 'Tanner Rogalsky',             -- Your name (string)
+    email = 'tanner@tannerrogalsky.com',              -- Your email (string)
+    description = nil,        -- The project description (string)
+    homepage = nil,           -- The project homepage (string)
+    identifier = 'com.tannerrogalsky.colors',         -- The project Uniform Type Identifier (string)
+    releaseDirectory = '../releases',   -- Where to store the project releases (string)
+  }
 end
