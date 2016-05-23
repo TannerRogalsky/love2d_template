@@ -1,7 +1,5 @@
 local Build = Game:addState('Build')
 
-local drawResources = require('factories.draw_resources')
-
 local function generateVertices(sides, radius)
   assert(type(sides) == 'number' and sides >= 3)
 
@@ -19,6 +17,24 @@ local function generateVertices(sides, radius)
   return vertices
 end
 
+local function newProtoFactory(...)
+  local factory = Factory:new(...)
+  factory:gotoState('Proto')
+  return factory
+end
+
+local function newProducingFactory(...)
+  local factory = Factory:new(...)
+  factory:gotoState('Producing')
+  return factory
+end
+
+local function getFactoryAtPoint(factories, x, y)
+  for _,factory in ipairs(factories) do
+    if factory:pointInside(x, y) then return factory end
+  end
+end
+
 local SIZE = 40
 
 function Build:enteredState()
@@ -31,13 +47,19 @@ function Build:enteredState()
   end
   meshes[0] = g.newMesh(generateVertices(50, SIZE))
 
-  factories = {
-    Factory:new(1, 0, 0),
-    Factory:new(0, SIZE * 2, SIZE)
+  self.factories = {
+    newProducingFactory(meshes[1], 0, 0),
   }
 
-  factories[1].connections[1] = factories[2]
-  factories[1].connections[1] = factories[1]
+  for x=-5,5 do
+    for y=-3,3 do
+      if x ~= 0 or y ~= 0 then
+        table.insert(self.factories, newProtoFactory(meshes[0], SIZE * 3 * x, SIZE * 3 * y))
+      end
+    end
+  end
+
+  self.mouse_down = nil
 
   g.setBackgroundColor(150, 150, 150)
   g.setFont(self.preloaded_fonts["04b03_16"])
@@ -48,42 +70,92 @@ function Build:update(dt)
   g.setWireframe(love.keyboard.isDown('space'))
 end
 
+local drawResources = require('factories.draw_resources')
 function Build:draw()
   self.camera:set()
-
   local time = love.timer.getTime()
-  local cycle_length = 3
-  local cycle = time % cycle_length
 
-  for _,factory in ipairs(factories) do
-    local mesh_type, x, y = factory.mesh_type, factory.x, factory.y
-    local mesh = meshes[mesh_type]
-
-    g.push()
-    g.translate(x, y)
-
-    g.setColor(255, 255, 255)
-    g.draw(mesh, 0, 0)
-
-    if mesh_type > 0 then
-      drawResources(mesh, SIZE * cycle / cycle_length)
-    end
-
-    g.pop()
+  for _,factory in ipairs(self.factories) do
+    factory:draw()
   end
 
-  -- g.setColor(255, 255, 255)
-  -- for i,mesh in ipairs(meshes) do
-  --   g.draw(mesh, i * SIZE * 3 - g.getWidth() / 2, 0)
-  -- end
+  do
+    local cycle_length = 3
+    local cycle = time % cycle_length
+
+    g.setBlendMode('subtract')
+    g.setColor(100, 100, 100)
+    for _,factory in ipairs(self.factories) do
+      if factory.connections then
+        local vertex_count = factory.mesh:getVertexCount()
+        local t = (2 * math.pi) / vertex_count
+        local vertex_offset = math.pi / vertex_count + math.pi / 2
+
+        for i=1,vertex_count do
+          local connection = factory.connections[i]
+          local cx = factory.x + SIZE * math.cos(i * t - vertex_offset)
+          local cy = factory.y + SIZE * math.sin(i * t - vertex_offset)
+
+          local curve
+          if connection then
+            curve = love.math.newBezierCurve(factory.x, factory.y, cx, cy, connection.x, connection.y)
+            g.line(curve:render())
+          else
+            curve = love.math.newBezierCurve(factory.x, factory.y, cx, cy)
+          end
+
+          local x, y = curve:evaluate(cycle / cycle_length)
+          g.draw(factory.mesh, x, y, math.atan2(factory.x - x, factory.y - y), 0.2)
+        end
+
+      end
+    end
+    g.setBlendMode('alpha')
+  end
+
+  if self.mouse_down then
+    local dx, dy = self.mouse_down.x, self.mouse_down.y
+    local mx, my = self.camera:mousePosition()
+    g.setColor(0, 0, 0)
+    g.line(dx, dy, mx, my)
+  end
 
   self.camera:unset()
 end
 
 function Build:mousepressed(x, y, button, isTouch)
+  local addConnection = isTouch or button == 1
+  local mx, my = self.camera:mousePosition()
+
+  if addConnection then
+    local factory = getFactoryAtPoint(self.factories, mx, my)
+    if factory and factory.connections then self.mouse_down = factory end
+  end
 end
 
 function Build:mousereleased(x, y, button, isTouch)
+  x, y = self.camera:mousePosition()
+  local addConnection = isTouch or button == 1
+
+  if addConnection then
+    local first = self.mouse_down
+    local second = getFactoryAtPoint(self.factories, x, y)
+    self.mouse_down = nil
+
+    if first and second then
+      local tau = math.pi * 2
+      local sides = first.mesh:getVertexCount()
+      local angle = math.atan2(first.y - y, first.x - x) - math.pi / 2
+      if angle < 0 then angle = angle + tau end
+      local index = math.ceil(angle / ((math.pi * 2) / sides))
+      first:addConnection(index, second)
+    end
+  else
+    local factory = getFactoryAtPoint(self.factories, x, y)
+    if factory then
+      factory:removeConnection(#factory.connections)
+    end
+  end
 end
 
 function Build:keypressed(key, scancode, isrepeat)
