@@ -35,6 +35,7 @@ hsl2rgb = require('lib.hsl')
 Base = require("base")
 Game = require("game")
 Factory = require('factory')
+Combinator = require('combinator')
 
 Direction = require("direction")
 

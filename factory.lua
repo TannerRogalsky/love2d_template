@@ -8,6 +8,13 @@ local function getMeshIndex(mesh)
   end
 end
 
+local function contains(list, value)
+  for _,v in pairs(list) do
+    if v == value then return true end
+  end
+  return false
+end
+
 function Factory:initialize(mesh, x, y)
   Base.initialize(self)
 
@@ -45,6 +52,10 @@ function Factory:addConnection(index, connection)
   assert(connection:isInstanceOf(Factory))
   assert(self ~= connection)
   assert(self.connections[index] == nil)
+
+  if connection.connections then
+    assert(contains(connection.connections, self) == false, "No switchback connections!")
+  end
 
   self.connections[index] = connection
   connection:connected(self)

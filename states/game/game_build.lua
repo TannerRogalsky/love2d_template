@@ -7,7 +7,7 @@ local function generateVertices(sides, radius)
   local t = (2 * math.pi) / sides
 
   local vertices = {}
-  for i=1,sides do
+  for i=0,sides-1 do
     local x, y = radius * math.cos(i * t - half_pi), radius * math.sin(i * t - half_pi)
 
     local vertex = {x, y}
@@ -51,13 +51,16 @@ function Build:enteredState()
     newProducingFactory(meshes[1], 0, 0),
   }
 
-  for x=-5,5 do
-    for y=-3,3 do
+  for x=-2,2 do
+    for y=-2,2 do
       if x ~= 0 or y ~= 0 then
         table.insert(self.factories, newProtoFactory(meshes[0], SIZE * 3 * x, SIZE * 3 * y))
       end
     end
   end
+
+  table.insert(self.factories, Combinator:new(-SIZE * 3 * 3, 0))
+  table.insert(self.factories, Combinator:new(SIZE * 3 * 3, 0))
 
   self.mouse_down = nil
 
