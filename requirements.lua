@@ -36,6 +36,7 @@ Base = require("base")
 Game = require("game")
 Factory = require('factory')
 Combinator = require('combinator')
+MultiMesh = require('multi_mesh')
 
 Direction = require("direction")
 

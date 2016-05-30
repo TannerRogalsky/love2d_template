@@ -62,6 +62,8 @@ function Build:enteredState()
   table.insert(self.factories, Combinator:new(-SIZE * 3 * 3, 0))
   table.insert(self.factories, Combinator:new(SIZE * 3 * 3, 0))
 
+  MultiMesh:new(meshes[1])
+
   self.mouse_down = nil
 
   g.setBackgroundColor(150, 150, 150)
@@ -73,7 +75,6 @@ function Build:update(dt)
   g.setWireframe(love.keyboard.isDown('space'))
 end
 
-local drawResources = require('factories.draw_resources')
 function Build:draw()
   self.camera:set()
   local time = love.timer.getTime()
@@ -89,29 +90,7 @@ function Build:draw()
     g.setBlendMode('subtract')
     g.setColor(100, 100, 100)
     for _,factory in ipairs(self.factories) do
-      if factory.connections then
-        local vertex_count = factory.mesh:getVertexCount()
-        local t = (2 * math.pi) / vertex_count
-        local vertex_offset = math.pi / vertex_count + math.pi / 2
-
-        for i=1,vertex_count do
-          local connection = factory.connections[i]
-          local cx = factory.x + SIZE * math.cos(i * t - vertex_offset)
-          local cy = factory.y + SIZE * math.sin(i * t - vertex_offset)
-
-          local curve
-          if connection then
-            curve = love.math.newBezierCurve(factory.x, factory.y, cx, cy, connection.x, connection.y)
-            g.line(curve:render())
-          else
-            curve = love.math.newBezierCurve(factory.x, factory.y, cx, cy)
-          end
-
-          local x, y = curve:evaluate(cycle / cycle_length)
-          g.draw(factory.mesh, x, y, math.atan2(factory.x - x, factory.y - y), 0.2)
-        end
-
-      end
+      factory:drawResources(SIZE, cycle / cycle_length)
     end
     g.setBlendMode('alpha')
   end

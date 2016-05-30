@@ -1,6 +1,7 @@
 local Factory = class('Factory', Base):include(Stateful)
 
 local drawResources = require('factories.draw_resources')
+local pointInside = require('factories.point_inside')
 
 local function getMeshIndex(mesh)
   for i,v in ipairs(meshes) do
@@ -24,27 +25,33 @@ function Factory:initialize(mesh, x, y)
 end
 
 function Factory:pointInside(x, y)
-  local vertex_count = self.mesh:getVertexCount()
-  local i, j, result = 0, vertex_count, false
+  return pointInside(x, y, self.mesh, self.x, self.y)
+end
+
+local function getClosestSideToAngle(requested_rotation, mesh)
+  local vertex_count = mesh:getVertexCount()
+  local j = vertex_count
 
   for i=1,vertex_count do
-    local vx_i, vy_i = self.mesh:getVertex(i)
-    local vx_j, vy_j = self.mesh:getVertex(j)
-    vx_i, vy_i = vx_i + self.x, vy_i + self.y
-    vx_j, vy_j = vx_j + self.x, vy_j + self.y
+    local ix, iy = mesh:getVertex(i)
+    local jx, jy = mesh:getVertex(j)
 
-    if ((vy_i > y) ~= (vy_j > y) and (x < (vx_j - vx_i) * (y - vy_i) / (vy_j-vy_i) + vx_i)) then
-      result = not result;
-    end
+    local mx, my = (ix + jx) / 2, (jx + jy) / 2
+
+    local angle = math.atan2(mx, my) - math.pi / 2
+    -- if angle < 0 then angle = angle + math.pi * 2 end
 
     j = i
   end
-  return result;
 end
 
 function Factory:draw()
   g.setColor(255, 255, 255)
   g.draw(self.mesh, self.x, self.y)
+end
+
+function Factory:drawResources(size, cycle)
+  drawResources(self.mesh, self.x, self.y, self.connections, size, cycle)
 end
 
 function Factory:addConnection(index, connection)

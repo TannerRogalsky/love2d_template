@@ -4,6 +4,8 @@ function Proto:enteredState()
   self.connections = nil
 end
 
+function Proto:drawResources() end
+
 function Proto:connected(other)
   self.mesh = meshes[1]
 
