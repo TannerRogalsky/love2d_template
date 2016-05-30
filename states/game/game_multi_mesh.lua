@@ -49,7 +49,7 @@ function MultiMeshTest:enteredState()
 
   meshes = {}
   for i=3,12 do
-    table.insert(meshes, g.newMesh(generateVertices(i, SIZE * (1 / math.cos(math.pi / i)))))
+    table.insert(meshes, g.newMesh(generateVertices(i, SIZE)))
   end
 
   self.camera:move(-g.getWidth() / 2, -g.getHeight() / 2)
@@ -71,17 +71,14 @@ function MultiMeshTest:draw()
     g.setColor(0, 0, 0)
     g.draw(center_mesh, 0, 0)
 
-    -- g.setColor(255, 0, 0)
-    -- g.circle('fill', 0, 0, SIZE)
-
     local outer_mesh = meshes[outer_mesh_index]
     local outer_vertex_count = outer_mesh:getVertexCount()
     local inner_outer_ratio = getSideLength(center_mesh) / getSideLength(outer_mesh)
 
     g.setColor(255, 255, 255)
     for i=0,vertex_count-1 do
-      local x = SIZE * (1 + inner_outer_ratio) * math.cos(i * t + math.pi / 2)
-      local y = SIZE * (1 + inner_outer_ratio) * math.sin(i * t + math.pi / 2)
+      local x = (SIZE * math.cos(math.pi / vertex_count) + SIZE * math.cos(math.pi / outer_vertex_count) * inner_outer_ratio) * math.cos(i * t + math.pi / 2)
+      local y = (SIZE * math.cos(math.pi / vertex_count) + SIZE * math.cos(math.pi / outer_vertex_count) * inner_outer_ratio) * math.sin(i * t + math.pi / 2)
 
       g.draw(outer_mesh, x, y, t * i + math.pi, inner_outer_ratio)
     end
