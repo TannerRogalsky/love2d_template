@@ -6,9 +6,14 @@ local function generateVertices(sides, radius)
   local half_pi = math.pi / 2
   local t = (2 * math.pi) / sides
 
+  local rotation_offset = half_pi
+  if sides % 2 == 0 then
+    rotation_offset = half_pi - t  / 2
+  end
+
   local vertices = {}
   for i=0,sides-1 do
-    local x, y = radius * math.cos(i * t - half_pi), radius * math.sin(i * t - half_pi)
+    local x, y = radius * math.cos(i * t - rotation_offset), radius * math.sin(i * t - rotation_offset)
 
     local vertex = {x, y}
     table.insert(vertices, vertex)
@@ -127,7 +132,10 @@ function Build:mousereleased(x, y, button, isTouch)
     if first and second then
       local tau = math.pi * 2
       local sides = first.mesh:getVertexCount()
+      local t = (2 * math.pi) / sides
       local angle = math.atan2(first.y - y, first.x - x) - math.pi / 2
+      local rotation_offset = half_pi
+      if sides % 2 == 0 then angle = angle - t  / 2 end
       if angle < 0 then angle = angle + tau end
       local index = math.ceil(angle / ((math.pi * 2) / sides))
       first:addConnection(index, second)

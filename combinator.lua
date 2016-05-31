@@ -33,47 +33,63 @@ local function copyVertices(mesh, verts, x, y, r)
   return verts
 end
 
+local function getSideLength(mesh)
+  local x1, y1 = mesh:getVertex(1)
+  local x2, y2 = mesh:getVertex(2)
+  local dx, dy = x1 - x2, y1 - y2
+
+  return math.sqrt(dx * dx + dy * dy)
+end
+
 local SIZE = 40
 local mesh = g.newMesh(generateVertices(SIZE, SIZE))
 
 function Combinator:initialize(x, y)
   Factory.initialize(self, mesh, x, y)
 
-  self.resource_mesh_vertices = {}
-  self.resource_mesh = nil
-
-  self.connected_meshes = {}
+  self.resources = {}
 end
 
 function Combinator:drawResources(size, cycle)
-  if #self.connected_meshes > 0 then
+  if #self.resources > 0 then
     local tau = math.pi * 2
     for i=1,2 do
       cycle = cycle * -1
-      local x = self.x + size * math.sin(cycle * tau)
-      local y = self.y + size * math.sin(cycle * tau) * math.cos(cycle * tau)
-      g.draw(self.resource_mesh.mesh, x, y, 0, 0.2)
+      local ox = self.x + size * math.sin(cycle * tau)
+      local oy = self.y + size * math.sin(cycle * tau) * math.cos(cycle * tau)
+      local scale = 0.2
+
+      do
+        local resource = self.resources[1]
+        g.draw(resource, ox, oy, 0, scale)
+      end
+
+      do
+        local resource = self.resources[2]
+
+        if resource then
+          local prev = self.resources[1]
+          local prev_vertex_count = prev:getVertexCount()
+          local curr_vertex_count = resource:getVertexCount()
+          local t = math.pi * 2 / prev_vertex_count
+
+          local inner_outer_ratio = (getSideLength(prev) / getSideLength(resource))
+
+          for i=0,prev_vertex_count-1 do
+            local x = (SIZE * math.cos(math.pi / prev_vertex_count) * scale + SIZE * math.cos(math.pi / curr_vertex_count) * scale * inner_outer_ratio) * math.cos(i * t + math.pi / 2)
+            local y = (SIZE * math.cos(math.pi / prev_vertex_count) * scale + SIZE * math.cos(math.pi / curr_vertex_count) * scale * inner_outer_ratio) * math.sin(i * t + math.pi / 2)
+
+            g.draw(resource, ox + x, oy + y, t * i + math.pi, inner_outer_ratio * scale)
+          end
+        end
+      end
     end
   end
 end
 
 function Combinator:connected(other)
   print(other.mesh:getVertexCount() .. ' vertex shaped connected to combinator.')
-
-  -- local ox, oy, r = 0, 0, 0
-  local previous_mesh = self.connected_meshes[#self.connected_meshes]
-  if previous_mesh then
-    -- ox = 0
-    -- oy = SIZE * #self.connected_meshes
-    -- r = math.pi / other.mesh:getVertexCount()
-    self.resource_mesh:addMesh(other.mesh, math.atan2(other.x - self.x, other.y - self.y))
-  else
-    self.resource_mesh = MultiMesh:new(other.mesh)
-  end
-  -- copyVertices(other.mesh, self.resource_mesh_vertices, ox, oy, r)
-  -- self.resource_mesh = g.newMesh(self.resource_mesh_vertices, 'triangles')
-
-  table.insert(self.connected_meshes, other.mesh)
+  table.insert(self.resources, other.mesh)
 end
 
 function Combinator:disconnected(other)
