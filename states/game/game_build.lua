@@ -64,6 +64,10 @@ function Build:enteredState()
     end
   end
 
+  self.factories[5 * 1 + 1].providing_color = 1 / 3--{1 / 3, 1, 0.5}
+  self.factories[5 * 3].providing_color = 2 / 3--{2 / 3, 1, 0.5}
+  self.factories[5 * 5].providing_color = 0 / 3--{3 / 3, 1, 0.5}
+
   table.insert(self.factories, Combinator:new(-SIZE * 3 * 3, 0))
   table.insert(self.factories, Combinator:new(SIZE * 3 * 3, 0))
 
@@ -92,9 +96,14 @@ function Build:draw()
     local cycle_length = 3
     local cycle = time % cycle_length
 
-    g.setBlendMode('subtract')
-    g.setColor(100, 100, 100)
+    g.setBlendMode('multiply')
+    -- g.setColor(100, 100, 100)
     for _,factory in ipairs(self.factories) do
+      if factory.color then
+        g.setColor(hsl2rgb(factory.color, 0.5, 0.5))
+      else
+        g.setColor(125, 125, 125)
+      end
       factory:drawResources(SIZE, cycle / cycle_length)
     end
     g.setBlendMode('alpha')
@@ -138,12 +147,17 @@ function Build:mousereleased(x, y, button, isTouch)
       if sides % 2 == 0 then angle = angle - t  / 2 end
       if angle < 0 then angle = angle + tau end
       local index = math.ceil(angle / ((math.pi * 2) / sides))
-      first:addConnection(index, second)
+
+      if first.connections[index] == nil then
+        first:addConnection(index, second)
+      end
     end
   else
     local factory = getFactoryAtPoint(self.factories, x, y)
     if factory then
-      factory:removeConnection(#factory.connections)
+      for i,connection in pairs(factory.connections) do
+        factory:removeConnection(i)
+      end
     end
   end
 end

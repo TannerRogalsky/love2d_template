@@ -16,37 +16,61 @@ local function contains(list, value)
   return false
 end
 
+local function circAve(a0, a1)
+  local r1, r2 = (a0 + a1) / 2, ((a0 + a1 + 1) / 2) % 1
+  if math.min(math.abs(a1-r1), math.abs(a0-r1)) < math.min(math.abs(a0-r2), math.abs(a1-r2)) then
+    return r1
+  else
+    return r2
+  end
+end
+
+local DEFAULT_COLOR = {255, 255, 255}
+
 function Factory:initialize(mesh, x, y)
   Base.initialize(self)
 
   self.mesh = mesh
   self.x = x
   self.y = y
+
+  self.providing_color = nil
+  self.color = nil
 end
 
 function Factory:pointInside(x, y)
   return pointInside(x, y, self.mesh, self.x, self.y)
 end
 
-local function getClosestSideToAngle(requested_rotation, mesh)
-  local vertex_count = mesh:getVertexCount()
-  local j = vertex_count
-
-  for i=1,vertex_count do
-    local ix, iy = mesh:getVertex(i)
-    local jx, jy = mesh:getVertex(j)
-
-    local mx, my = (ix + jx) / 2, (jx + jy) / 2
-
-    local angle = math.atan2(mx, my) - math.pi / 2
-    -- if angle < 0 then angle = angle + math.pi * 2 end
-
-    j = i
-  end
-end
-
 function Factory:draw()
-  g.setColor(255, 255, 255)
+  self.color = nil
+
+  if self.providing_color or self.reverse_connections then
+    local colors = {}
+    if self.reverse_connections then
+      for k,v in pairs(self.reverse_connections) do
+        if v.color then table.insert(colors, v.color) end
+      end
+    end
+    if self.providing_color then table.insert(colors, self.providing_color) end
+
+    if #colors == 1 then
+      self.color = colors[1]
+      g.setColor(hsl2rgb(colors[1], 1, 0.6))
+    elseif #colors >= 2 then
+      local color = colors[1]
+      for i=2,#colors do
+        color = circAve(color, colors[i])
+      end
+
+      self.color = color
+      g.setColor(hsl2rgb(color, 1, 0.6))
+    else
+      g.setColor(DEFAULT_COLOR)
+    end
+  else
+    g.setColor(DEFAULT_COLOR)
+  end
   g.draw(self.mesh, self.x, self.y)
 end
 
@@ -79,12 +103,26 @@ end
 
 function Factory:connected(other)
   self.mesh = meshes[getMeshIndex(self.mesh) + 1]
+  self.reverse_connections[other.id] = other
+
+  local colors = {}
+  if self.reverse_connections then
+    for k,v in pairs(self.reverse_connections) do
+      if v.color then table.insert(colors, v.color) end
+    end
+  end
+  if self.providing_color then table.insert(colors, self.providing_color) end
+  print(unpack(colors))
 end
 
 function Factory:disconnected(other)
+  self.reverse_connections[other.id] = nil
   local newMeshIndex = getMeshIndex(self.mesh) - 1
   self.mesh = meshes[newMeshIndex]
   if newMeshIndex == 0 then
+    for _,connection in pairs(self.connections) do
+      connection:disconnected(self)
+    end
     self:gotoState('Proto')
   end
 end

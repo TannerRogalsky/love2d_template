@@ -134,6 +134,27 @@ function Main:draw()
     g.pop()
   end
 
+  do
+    g.push()
+    local radius = 125
+    g.translate(g.getWidth() / 8, g.getHeight() / 2 - radius - SIZE / 2)
+
+    local tau = math.pi * 2
+
+    for n=3,7,3 do
+      local t = math.pi * 2 / n
+      for i=1,n do
+        local x = SIZE * (n / 2) * math.cos(i * t - math.pi / 2)
+        local y = SIZE * (n / 2) * math.sin(i * t - math.pi / 2)
+
+        g.setColor(hsl2rgb(i / n, 1, 0.5))
+        g.draw(mesh, x, y, i * t)
+      end
+    end
+
+    g.pop()
+  end
+
   self.camera:unset()
 end
 

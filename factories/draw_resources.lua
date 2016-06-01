@@ -1,4 +1,4 @@
-local function drawResources(mesh, x, y, connections, size, cycle)
+local function drawResources(mesh, sx, sy, connections, size, cycle)
   local vertex_count = mesh:getVertexCount()
   local t = (2 * math.pi) / vertex_count
 
@@ -9,19 +9,19 @@ local function drawResources(mesh, x, y, connections, size, cycle)
 
   for i=1,vertex_count do
     local connection = connections[i]
-    local cx = x + size * math.cos(i * t - rotation_offset)
-    local cy = y + size * math.sin(i * t - rotation_offset)
+    local cx = sx + size * math.cos(i * t - rotation_offset)
+    local cy = sy + size * math.sin(i * t - rotation_offset)
 
     local curve
     if connection then
-      curve = love.math.newBezierCurve(x, y, cx, cy, connection.x, connection.y)
+      curve = love.math.newBezierCurve(sx, sy, cx, cy, connection.x, connection.y)
       g.line(curve:render())
     else
-      curve = love.math.newBezierCurve(x, y, cx, cy)
+      curve = love.math.newBezierCurve(sx, sy, cx, cy)
     end
 
     local x, y = curve:evaluate(cycle)
-    g.draw(mesh, x, y, math.atan2(x - x, y - y), 0.2)
+    g.draw(mesh, x, y, math.atan2(sx - x, sy - y), 0.2)
   end
 end
 

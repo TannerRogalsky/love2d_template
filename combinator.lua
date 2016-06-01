@@ -41,6 +41,14 @@ local function getSideLength(mesh)
   return math.sqrt(dx * dx + dy * dy)
 end
 
+local function setFactoryColor(factory)
+  if factory.color then
+    g.setColor(hsl2rgb(factory.color, 1, 0.5))
+  else
+    g.setColor(100, 100, 100)
+  end
+end
+
 local SIZE = 40
 local mesh = g.newMesh(generateVertices(SIZE, SIZE))
 
@@ -60,15 +68,16 @@ function Combinator:drawResources(size, cycle)
       local scale = 0.2
 
       do
-        local resource = self.resources[1]
+        local resource = self.resources[1].mesh
+        setFactoryColor(self.resources[1])
         g.draw(resource, ox, oy, 0, scale)
       end
 
       do
-        local resource = self.resources[2]
-
-        if resource then
-          local prev = self.resources[1]
+        if self.resources[2] then
+          setFactoryColor(self.resources[2])
+          local resource = self.resources[2].mesh
+          local prev = self.resources[1].mesh
           local prev_vertex_count = prev:getVertexCount()
           local curr_vertex_count = resource:getVertexCount()
           local t = math.pi * 2 / prev_vertex_count
@@ -89,7 +98,7 @@ end
 
 function Combinator:connected(other)
   print(other.mesh:getVertexCount() .. ' vertex shaped connected to combinator.')
-  table.insert(self.resources, other.mesh)
+  table.insert(self.resources, other)
 end
 
 function Combinator:disconnected(other)
