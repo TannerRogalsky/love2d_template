@@ -45,22 +45,51 @@ local function vertexControlUI(label)
   return result
 end
 
-local function drawLayer(total_layers, layer_index, ox, oy)
-
-end
-
 local SIZE = 80
-local center_mesh_index = 1
-local outer_mesh_index = 1
 
 local layer_count = 1
+local meshes = {}
 local mesh_indices = {1}
+local tau = math.pi * 2
+local color_cycle = 5
+
+local function drawLayer(total_layers, layer_index, ox, oy, r, scale)
+  local previous_mesh = meshes[mesh_indices[layer_index - 1]]
+  local previous_vertex_count = previous_mesh:getVertexCount()
+  local previous_side_length = math.sin(math.pi / previous_vertex_count) * 2 * SIZE
+
+  local current_mesh = meshes[mesh_indices[layer_index]]
+  local current_vertex_count = current_mesh:getVertexCount()
+  local current_side_length = math.sin(math.pi / current_vertex_count) * 2 * SIZE
+
+  local t = tau / previous_vertex_count
+  local inner_outer_ratio = previous_side_length / current_side_length * scale
+
+  local combined_angle = (math.pi - t) + (math.pi - tau / current_vertex_count) * 2 - 0.0000001 -- rounding errors
+  local face_step = math.ceil(combined_angle / tau)
+
+  local previous_distance = SIZE * math.cos(math.pi / previous_vertex_count) * scale
+  local current_distance = SIZE * math.cos(math.pi / current_vertex_count) * inner_outer_ratio
+  local d = previous_distance + current_distance
+
+  for i=0,previous_vertex_count-1, face_step do
+    local phi = i * t + math.pi / 2 + r
+    local x = ox + d * math.cos(phi)
+    local y = oy + d * math.sin(phi)
+
+    g.setColor(hsl2rgb(layer_index / color_cycle % 1, 1, 0.5))
+    g.draw(current_mesh, x, y, t * i + math.pi + r, inner_outer_ratio)
+
+    if layer_index < total_layers then
+      drawLayer(total_layers, layer_index + 1, x, y, phi + math.pi / 2, inner_outer_ratio)
+    end
+  end
+end
 
 function MultiMeshTest:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  meshes = {}
   for i=3,12 do
     table.insert(meshes, g.newMesh(generateVertices(i, SIZE)))
   end
@@ -97,49 +126,12 @@ function MultiMeshTest:draw()
   self.camera:set()
 
   do
-    local tau = math.pi * 2
-    local color_cycle = 3
+    g.setColor(hsl2rgb(1 / color_cycle, 1, 0.5))
+    g.draw(meshes[mesh_indices[1]], 0, 0)
+  end
 
-    do
-      do
-        local m = meshes[mesh_indices[1]]
-        local v = m:getVertexCount()
-        -- print(math.deg(math.pi - tau / v), math.deg(math.pi - tau / v) * v)
-      end
-
-      g.setColor(hsl2rgb(1 / color_cycle, 1, 0.5))
-      g.draw(meshes[mesh_indices[1]], 0, 0)
-    end
-
-    for n=2,layer_count do
-      local previous_mesh = meshes[mesh_indices[n - 1]]
-      local previous_vertex_count = previous_mesh:getVertexCount()
-      local previous_side_length = math.sin(math.pi / previous_vertex_count) * 2 * SIZE
-
-      local current_mesh = meshes[mesh_indices[n]]
-      local current_vertex_count = current_mesh:getVertexCount()
-      local current_side_length = math.sin(math.pi / current_vertex_count) * 2 * SIZE
-
-      local t = tau / previous_vertex_count
-      local inner_outer_ratio = previous_side_length / current_side_length
-
-      local combined_angle = (math.pi - t) + (math.pi - tau / current_vertex_count) * 2 - 0.0000001 -- rounding errors
-      local face_step = math.ceil(combined_angle / tau)
-
-      local previous_distance = SIZE * math.cos(math.pi / previous_vertex_count)
-      local current_distance = SIZE * math.cos(math.pi / current_vertex_count) * inner_outer_ratio
-      local d = previous_distance + current_distance
-
-      g.setColor(hsl2rgb(n / color_cycle % 1, 1, 0.5))
-
-      for i=0,previous_vertex_count-1, face_step do
-        local phi = i * t + math.pi / 2
-        local x = d * math.cos(phi)
-        local y = d * math.sin(phi)
-
-        g.draw(current_mesh, x, y, t * i + math.pi, inner_outer_ratio)
-      end
-    end
+  if layer_count > 1 then
+    drawLayer(layer_count, 2, 0, 0, 0, 1)
   end
 
   self.camera:unset()
@@ -154,11 +146,6 @@ function MultiMeshTest:mousereleased(x, y, button, isTouch)
 end
 
 function MultiMeshTest:keypressed(key, scancode, isrepeat)
-  if key == '=' then center_mesh_index = math.min(#meshes, center_mesh_index + 1) end
-  if key == '-' then center_mesh_index = math.max(1, center_mesh_index - 1) end
-
-  if key == 'k' then outer_mesh_index = math.min(#meshes, outer_mesh_index + 1) end
-  if key == 'j' then outer_mesh_index = math.max(1, outer_mesh_index - 1) end
 end
 
 function MultiMeshTest:keyreleased(key, scancode)
