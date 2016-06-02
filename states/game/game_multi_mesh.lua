@@ -1,5 +1,7 @@
 local MultiMeshTest = Game:addState('MultiMesh')
 
+local SUIT = require('lib.SUIT')
+
 local half_pi = math.pi / 2
 local function generateVertices(sides, radius)
   assert(type(sides) == 'number' and sides >= 3)
@@ -24,14 +26,6 @@ local function generateVertices(sides, radius)
   return vertices
 end
 
-local function getSideLength(mesh)
-  local x1, y1 = mesh:getVertex(1)
-  local x2, y2 = mesh:getVertex(2)
-  local dx, dy = x1 - x2, y1 - y2
-
-  return math.sqrt(dx * dx + dy * dy)
-end
-
 local function printMesh(mesh)
   for i=1,mesh:getVertexCount() do
     local x, y = mesh:getVertex(i)
@@ -39,9 +33,28 @@ local function printMesh(mesh)
   end
 end
 
+local function vertexControlUI(label)
+  SUIT.layout:push(SUIT.layout:row(0, 0))
+  SUIT.Label(label, SUIT.layout:row(100, 30))
+
+  local result = 0
+  if SUIT.Button('-', {id = label .. '-'}, SUIT.layout:col(100,30)).hit then result = result - 1 end
+  if SUIT.Button('+', {id = label .. '+'}, SUIT.layout:col(100,30)).hit then result = result + 1 end
+  SUIT.layout:pop()
+
+  return result
+end
+
+local function drawLayer(total_layers, layer_index, ox, oy)
+
+end
+
 local SIZE = 80
 local center_mesh_index = 1
 local outer_mesh_index = 1
+
+local layer_count = 1
+local mesh_indices = {1}
 
 function MultiMeshTest:enteredState()
   local Camera = require("lib/camera")
@@ -58,33 +71,80 @@ end
 
 function MultiMeshTest:update(dt)
   g.setWireframe(love.keyboard.isDown('space'))
+
+  if not love.keyboard.isDown('h') then
+    SUIT.layout:reset(10, 10, 10, 10)
+
+    for i=1,layer_count do
+      local new_index = mesh_indices[i] + vertexControlUI('Layer ' .. i .. ': ' .. mesh_indices[i])
+      mesh_indices[i] = math.max(1, math.min(#meshes, new_index))
+    end
+
+    SUIT.layout:reset(10, g.getHeight() - 40, 10, 10)
+
+    if SUIT.Button('Remove Layer', SUIT.layout:row(150, 30)).hit then
+      layer_count = math.max(1, layer_count - 1)
+    end
+
+    if SUIT.Button('Add Layer', SUIT.layout:col(150, 30)).hit then
+      layer_count = layer_count + 1
+      mesh_indices[layer_count] = 1
+    end
+  end
 end
 
 function MultiMeshTest:draw()
   self.camera:set()
 
   do
-    local center_mesh = meshes[center_mesh_index]
-    local vertex_count = center_mesh:getVertexCount()
-    local t = math.pi * 2 / vertex_count
+    local tau = math.pi * 2
+    local color_cycle = 3
 
-    g.setColor(0, 0, 0)
-    g.draw(center_mesh, 0, 0)
+    do
+      do
+        local m = meshes[mesh_indices[1]]
+        local v = m:getVertexCount()
+        -- print(math.deg(math.pi - tau / v), math.deg(math.pi - tau / v) * v)
+      end
 
-    local outer_mesh = meshes[outer_mesh_index]
-    local outer_vertex_count = outer_mesh:getVertexCount()
-    local inner_outer_ratio = getSideLength(center_mesh) / getSideLength(outer_mesh)
+      g.setColor(hsl2rgb(1 / color_cycle, 1, 0.5))
+      g.draw(meshes[mesh_indices[1]], 0, 0)
+    end
 
-    g.setColor(255, 255, 255)
-    for i=0,vertex_count-1 do
-      local x = (SIZE * math.cos(math.pi / vertex_count) + SIZE * math.cos(math.pi / outer_vertex_count) * inner_outer_ratio) * math.cos(i * t + math.pi / 2)
-      local y = (SIZE * math.cos(math.pi / vertex_count) + SIZE * math.cos(math.pi / outer_vertex_count) * inner_outer_ratio) * math.sin(i * t + math.pi / 2)
+    for n=2,layer_count do
+      local previous_mesh = meshes[mesh_indices[n - 1]]
+      local previous_vertex_count = previous_mesh:getVertexCount()
+      local previous_side_length = math.sin(math.pi / previous_vertex_count) * 2 * SIZE
 
-      g.draw(outer_mesh, x, y, t * i + math.pi, inner_outer_ratio)
+      local current_mesh = meshes[mesh_indices[n]]
+      local current_vertex_count = current_mesh:getVertexCount()
+      local current_side_length = math.sin(math.pi / current_vertex_count) * 2 * SIZE
+
+      local t = tau / previous_vertex_count
+      local inner_outer_ratio = previous_side_length / current_side_length
+
+      local combined_angle = (math.pi - t) + (math.pi - tau / current_vertex_count) * 2 - 0.0000001 -- rounding errors
+      local face_step = math.ceil(combined_angle / tau)
+
+      local previous_distance = SIZE * math.cos(math.pi / previous_vertex_count)
+      local current_distance = SIZE * math.cos(math.pi / current_vertex_count) * inner_outer_ratio
+      local d = previous_distance + current_distance
+
+      g.setColor(hsl2rgb(n / color_cycle % 1, 1, 0.5))
+
+      for i=0,previous_vertex_count-1, face_step do
+        local phi = i * t + math.pi / 2
+        local x = d * math.cos(phi)
+        local y = d * math.sin(phi)
+
+        g.draw(current_mesh, x, y, t * i + math.pi, inner_outer_ratio)
+      end
     end
   end
 
   self.camera:unset()
+
+  SUIT:draw()
 end
 
 function MultiMeshTest:mousepressed(x, y, button, isTouch)

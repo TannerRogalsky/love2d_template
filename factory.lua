@@ -112,7 +112,6 @@ function Factory:connected(other)
     end
   end
   if self.providing_color then table.insert(colors, self.providing_color) end
-  print(unpack(colors))
 end
 
 function Factory:disconnected(other)
