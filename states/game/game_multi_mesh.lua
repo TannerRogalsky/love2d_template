@@ -53,6 +53,15 @@ local mesh_indices = {1}
 local tau = math.pi * 2
 local color_cycle = 5
 
+local debug = {checked = true, text = 'Debug'}
+
+local function printDebug(x, y, debug_info, ...)
+  if debug_info then
+    g.print(debug_info, x, y)
+    printDebug(x, y + 12, ...)
+  end
+end
+
 local function drawLayer(total_layers, layer_index, ox, oy, r, scale)
   local previous_mesh = meshes[mesh_indices[layer_index - 1]]
   local previous_vertex_count = previous_mesh:getVertexCount()
@@ -72,16 +81,36 @@ local function drawLayer(total_layers, layer_index, ox, oy, r, scale)
   local current_distance = SIZE * math.cos(math.pi / current_vertex_count) * inner_outer_ratio
   local d = previous_distance + current_distance
 
+  local angle_to_origin = math.atan2(oy, ox)
+  if angle_to_origin < 0 then angle_to_origin = angle_to_origin + tau end
+  local low_range = angle_to_origin - math.pi / 2 - 0.1
+  local high_range = angle_to_origin + math.pi / 2 + 0.1
+
   for i=0,previous_vertex_count-1, face_step do
     local phi = i * t + math.pi / 2 + r
-    local x = ox + d * math.cos(phi)
-    local y = oy + d * math.sin(phi)
+    local dx, dy = math.cos(phi), math.sin(phi)
+    local x = ox + d * dx
+    local y = oy + d * dy
 
-    g.setColor(hsl2rgb(layer_index / color_cycle % 1, 1, 0.5))
-    g.draw(current_mesh, x, y, t * i + math.pi + r, inner_outer_ratio)
+    local local_phi = math.atan2(dy, dx)
+    local phi_in_range =  local_phi >= low_range and local_phi <= high_range or
+                          local_phi + tau >= low_range and local_phi + tau <= high_range
+    if layer_index == 2 or phi_in_range then
+      g.setColor(hsl2rgb(layer_index / color_cycle % 1, 1, 0.5))
+      g.draw(current_mesh, x, y, t * i + math.pi + r, inner_outer_ratio)
 
-    if layer_index < total_layers then
-      drawLayer(total_layers, layer_index + 1, x, y, phi + math.pi / 2, inner_outer_ratio)
+      if debug.checked then
+        g.setColor(0, 0, 0)
+        g.points(x, y)
+        printDebug(x, y, math.round(math.deg(local_phi)), math.round(math.deg(angle_to_origin)))
+      end
+
+      if layer_index < total_layers then
+        drawLayer(total_layers, layer_index + 1, x, y, phi + math.pi / 2, inner_outer_ratio)
+      end
+    -- elseif debug.checked then
+    --   g.setColor(0, 0, 0)
+    --   printDebug(x, y, math.round(math.deg(local_phi)), math.round(math.deg(angle_to_origin)))
     end
   end
 end
@@ -109,7 +138,9 @@ function MultiMeshTest:update(dt)
       mesh_indices[i] = math.max(1, math.min(#meshes, new_index))
     end
 
-    SUIT.layout:reset(10, g.getHeight() - 40, 10, 10)
+    SUIT.layout:reset(10, g.getHeight() - 40 * 2, 10, 10)
+
+    SUIT.Checkbox(debug, SUIT.layout:row(150, 30))
 
     if SUIT.Button('Remove Layer', SUIT.layout:row(150, 30)).hit then
       layer_count = math.max(1, layer_count - 1)
@@ -132,6 +163,28 @@ function MultiMeshTest:draw()
 
   if layer_count > 1 then
     drawLayer(layer_count, 2, 0, 0, 0, 1)
+  end
+
+  if debug.checked then
+    g.setColor(0, 0, 0)
+    local mesh = meshes[mesh_indices[1]]
+    local vertex_count = mesh:getVertexCount()
+    local t = tau / vertex_count
+
+    local half_pi = -math.pi / 2
+    local rotation_offset = half_pi
+    if vertex_count % 2 == 0 then
+      rotation_offset = half_pi - t  / 2
+    end
+
+    for i=0,vertex_count - 1 do
+      local phi = i * t + rotation_offset
+      local x = math.cos(phi)
+      local y = math.sin(phi)
+
+      g.line(0, 0, x * 1000, y * 1000)
+      g.print(math.deg(phi), x * SIZE, y * SIZE)
+    end
   end
 
   self.camera:unset()
