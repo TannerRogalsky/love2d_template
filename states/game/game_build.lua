@@ -71,8 +71,6 @@ function Build:enteredState()
   table.insert(self.factories, Combinator:new(-SIZE * 3 * 3, 0))
   table.insert(self.factories, Combinator:new(SIZE * 3 * 3, 0))
 
-  MultiMesh:new(meshes[1])
-
   self.mouse_down = nil
 
   g.setBackgroundColor(150, 150, 150)
