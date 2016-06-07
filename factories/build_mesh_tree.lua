@@ -101,7 +101,11 @@ local function build(size, mesh_indices, meshes, color_cycle)
       end
     end
 
-    table.insert(tree, current_layer)
+    if #current_layer > 0 then
+      table.insert(tree, current_layer)
+    else
+      return tree
+    end
   end
 
   return tree
