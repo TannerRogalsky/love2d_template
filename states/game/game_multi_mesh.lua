@@ -1,31 +1,8 @@
 local MultiMeshTest = Game:addState('MultiMesh')
 local buildMeshTree = require('factories.build_mesh_tree')
+local generateVertices = require('factories.generate_vertices')
 
 local SUIT = require('lib.SUIT')
-
-local half_pi = math.pi / 2
-local function generateVertices(sides, radius)
-  assert(type(sides) == 'number' and sides >= 3)
-
-  local t = (2 * math.pi) / sides
-
-  local rotation_offset = half_pi
-  if sides % 2 == 0 then
-    rotation_offset = half_pi - t  / 2
-  end
-
-  -- radius = radius + radius / sides
-
-  local vertices = {}
-  for i=0,sides-1 do
-    local x, y = radius * math.cos(i * t - rotation_offset), radius * math.sin(i * t - rotation_offset)
-
-    local vertex = {x, y}
-    table.insert(vertices, vertex)
-  end
-
-  return vertices
-end
 
 local function printMesh(mesh)
   for i=1,mesh:getVertexCount() do
@@ -124,6 +101,11 @@ function MultiMeshTest:draw()
     for shape_index,shape in ipairs(layer) do
       g.setColor(shape.color)
       g.draw(shape.mesh, shape.x, shape.y, shape.rotation, shape.scale)
+
+      if debug.checked then
+        g.setColor(0, 0, 0)
+        g.circle('line', shape.x, shape.y, SIZE * shape.scale * math.cos(math.pi / shape.mesh:getVertexCount()))
+      end
     end
   end
 

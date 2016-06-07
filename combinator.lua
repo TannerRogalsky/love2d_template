@@ -1,4 +1,5 @@
 local Combinator = class('Combinator', Factory)
+local buildMeshTree = require('factories.build_mesh_tree')
 
 local function generateVertices(width, height)
   local sides = 50
@@ -13,32 +14,6 @@ local function generateVertices(width, height)
   end
 
   return verts
-end
-
-local function copyVertex(index, mesh, ox, oy, r)
-  local x, y = mesh:getVertex(index)
-  local c, s = math.cos(r), math.sin(r)
-  return {ox + (c*x - s*y), oy + (s*x + c*y)}
-end
-
-local function copyVertices(mesh, verts, x, y, r)
-  local origin = copyVertex(1, mesh, x, y, r)
-
-  for i=2,mesh:getVertexCount() - 1 do
-    table.insert(verts, origin)
-    table.insert(verts, copyVertex(i, mesh, x, y, r))
-    table.insert(verts, copyVertex(i + 1, mesh, x, y, r))
-  end
-
-  return verts
-end
-
-local function getSideLength(mesh)
-  local x1, y1 = mesh:getVertex(1)
-  local x2, y2 = mesh:getVertex(2)
-  local dx, dy = x1 - x2, y1 - y2
-
-  return math.sqrt(dx * dx + dy * dy)
 end
 
 local function setFactoryColor(factory)
@@ -67,31 +42,23 @@ function Combinator:drawResources(size, cycle)
       local oy = self.y + size * math.sin(cycle * tau) * math.cos(cycle * tau)
       local scale = 0.2
 
-      do
-        local resource = self.resources[1].mesh
-        setFactoryColor(self.resources[1])
-        g.draw(resource, ox, oy, 0, scale)
+      local meshes, mesh_indices = {}, {}
+      for i,v in ipairs(self.resources) do
+        meshes[i] = v.mesh
+        mesh_indices[i] = i
       end
 
-      do
-        if self.resources[2] then
-          setFactoryColor(self.resources[2])
-          local resource = self.resources[2].mesh
-          local prev = self.resources[1].mesh
-          local prev_vertex_count = prev:getVertexCount()
-          local curr_vertex_count = resource:getVertexCount()
-          local t = math.pi * 2 / prev_vertex_count
-
-          local inner_outer_ratio = (getSideLength(prev) / getSideLength(resource))
-
-          for i=0,prev_vertex_count-1 do
-            local x = (SIZE * math.cos(math.pi / prev_vertex_count) * scale + SIZE * math.cos(math.pi / curr_vertex_count) * scale * inner_outer_ratio) * math.cos(i * t + math.pi / 2)
-            local y = (SIZE * math.cos(math.pi / prev_vertex_count) * scale + SIZE * math.cos(math.pi / curr_vertex_count) * scale * inner_outer_ratio) * math.sin(i * t + math.pi / 2)
-
-            g.draw(resource, ox + x, oy + y, t * i + math.pi, inner_outer_ratio * scale)
-          end
+      g.push()
+      g.translate(ox, oy)
+      g.scale(scale)
+      local tree = buildMeshTree(SIZE, mesh_indices, meshes, 3)
+      for layer_index,layer in ipairs(tree) do
+        setFactoryColor(self.resources[layer_index])
+        for shape_index,shape in ipairs(layer) do
+          g.draw(shape.mesh, shape.x, shape.y, shape.rotation, shape.scale)
         end
       end
+      g.pop()
     end
   end
 end

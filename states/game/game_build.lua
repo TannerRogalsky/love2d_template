@@ -1,26 +1,5 @@
 local Build = Game:addState('Build')
-
-local function generateVertices(sides, radius)
-  assert(type(sides) == 'number' and sides >= 3)
-
-  local half_pi = math.pi / 2
-  local t = (2 * math.pi) / sides
-
-  local rotation_offset = half_pi
-  if sides % 2 == 0 then
-    rotation_offset = half_pi - t  / 2
-  end
-
-  local vertices = {}
-  for i=0,sides-1 do
-    local x, y = radius * math.cos(i * t - rotation_offset), radius * math.sin(i * t - rotation_offset)
-
-    local vertex = {x, y}
-    table.insert(vertices, vertex)
-  end
-
-  return vertices
-end
+local generateVertices = require('factories.generate_vertices')
 
 local function newProtoFactory(...)
   local factory = Factory:new(...)

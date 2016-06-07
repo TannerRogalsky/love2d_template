@@ -1,16 +1,13 @@
+local intervalIterator = require('factories.interval_iterator')
+
 local function drawResources(mesh, sx, sy, connections, size, cycle)
   local vertex_count = mesh:getVertexCount()
-  local t = (2 * math.pi) / vertex_count
+  local rotation_offset = math.pi / vertex_count
 
-  local rotation_offset = math.pi / vertex_count + math.pi / 2
-  if vertex_count % 2 == 0 then
-    rotation_offset = rotation_offset - t / 2
-  end
-
-  for i=1,vertex_count do
+  for i, phi in intervalIterator(vertex_count) do
     local connection = connections[i]
-    local cx = sx + size * math.cos(i * t - rotation_offset)
-    local cy = sy + size * math.sin(i * t - rotation_offset)
+    local cx = sx + size * math.cos(phi - rotation_offset)
+    local cy = sy + size * math.sin(phi - rotation_offset)
 
     local curve
     if connection then
