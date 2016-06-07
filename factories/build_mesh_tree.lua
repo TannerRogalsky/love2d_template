@@ -40,32 +40,30 @@ local function intersectsAny(size, shape, all_shapes)
   return false
 end
 
-local function newMeshData(mesh, x, y, rotation, scale, color)
+local function newMeshData(mesh, x, y, rotation, scale)
   return {
     mesh = mesh,
     x = x,
     y = y,
     rotation = rotation,
-    scale = scale,
-    color = color
+    scale = scale
   }
 end
 
-local function build(size, mesh_indices, meshes, color_cycle)
+local function build(size, meshes)
   local tree = {}
   local all_shapes = {}
 
   do
     local index = 1
-    local mesh = meshes[mesh_indices[index]]
-    local color = {hsl2rgb(index / color_cycle, 1, 0.5)}
+    local mesh = meshes[index]
 
-    local mesh_data = newMeshData(mesh, 0, 0, 0, 1, color)
+    local mesh_data = newMeshData(mesh, 0, 0, 0, 1)
     table.insert(tree, {mesh_data})
     table.insert(all_shapes, mesh_data)
   end
 
-  for layer_index=2,#mesh_indices do
+  for layer_index=2,#meshes do
     local previous_layer = tree[layer_index - 1]
     local current_layer = {}
 
@@ -74,7 +72,7 @@ local function build(size, mesh_indices, meshes, color_cycle)
     local previous_vertex_count = previous_mesh:getVertexCount()
     local previous_side_length = math.sin(math.pi / previous_vertex_count) * 2 * size
 
-    local current_mesh = meshes[mesh_indices[layer_index]]
+    local current_mesh = meshes[layer_index]
     local current_vertex_count = current_mesh:getVertexCount()
     local current_side_length = math.sin(math.pi / current_vertex_count) * 2 * size
 
@@ -92,8 +90,7 @@ local function build(size, mesh_indices, meshes, color_cycle)
         local x = previous_shape.x + d * dx
         local y = previous_shape.y + d * dy
 
-        local color = {hsl2rgb(layer_index / color_cycle % 1, 1, 0.5)}
-        local mesh_data = newMeshData(current_mesh, x, y, phi + half_pi, inner_outer_ratio, color)
+        local mesh_data = newMeshData(current_mesh, x, y, phi + half_pi, inner_outer_ratio)
         if intersectsAny(size, mesh_data, all_shapes) == false then
           table.insert(current_layer, mesh_data)
           table.insert(all_shapes, mesh_data)

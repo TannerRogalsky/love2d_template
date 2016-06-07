@@ -42,16 +42,15 @@ function Combinator:drawResources(size, cycle)
       local oy = self.y + size * math.sin(cycle * tau) * math.cos(cycle * tau)
       local scale = 0.2
 
-      local meshes, mesh_indices = {}, {}
+      local layers = {}
       for i,v in ipairs(self.resources) do
-        meshes[i] = v.mesh
-        mesh_indices[i] = i
+        layers[i] = v.mesh
       end
 
       g.push()
       g.translate(ox, oy)
       g.scale(scale)
-      local tree = buildMeshTree(SIZE, mesh_indices, meshes, 3)
+      local tree = buildMeshTree(SIZE, layers, 3)
       for layer_index,layer in ipairs(tree) do
         setFactoryColor(self.resources[layer_index])
         for shape_index,shape in ipairs(layer) do

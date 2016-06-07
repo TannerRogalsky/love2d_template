@@ -96,16 +96,20 @@ end
 function MultiMeshTest:draw()
   self.camera:set()
 
-  local tree = buildMeshTree(SIZE, mesh_indices, meshes, color_cycle)
+  local layers = {}
+  for i,mesh_index in ipairs(mesh_indices) do
+    layers[i] = meshes[mesh_index]
+  end
+  local tree = buildMeshTree(SIZE, layers, color_cycle)
   for layer_index,layer in ipairs(tree) do
     for shape_index,shape in ipairs(layer) do
-      g.setColor(shape.color)
+      g.setColor(hsl2rgb(layer_index / color_cycle, 1, 0.5))
       g.draw(shape.mesh, shape.x, shape.y, shape.rotation, shape.scale)
 
       if debug.checked then
         g.setColor(0, 0, 0)
         g.circle('line', shape.x, shape.y, SIZE * shape.scale * math.cos(math.pi / shape.mesh:getVertexCount()))
-        g.print(shape_index, shape.x, shape.y)
+        g.print(shape_index, shape.x - 6, shape.y - 6)
       end
     end
   end
