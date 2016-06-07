@@ -105,6 +105,7 @@ function MultiMeshTest:draw()
       if debug.checked then
         g.setColor(0, 0, 0)
         g.circle('line', shape.x, shape.y, SIZE * shape.scale * math.cos(math.pi / shape.mesh:getVertexCount()))
+        g.print(shape_index, shape.x, shape.y)
       end
     end
   end
