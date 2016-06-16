@@ -37,7 +37,7 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("MultiMesh")
+    self:gotoState("Physics")
   end)
 
   local hexFormatStringPart = '%X '

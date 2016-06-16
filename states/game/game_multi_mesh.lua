@@ -100,7 +100,7 @@ function MultiMeshTest:draw()
   for i,mesh_index in ipairs(mesh_indices) do
     layers[i] = meshes[mesh_index]
   end
-  local tree = buildMeshTree(SIZE, layers, color_cycle)
+  local tree = buildMeshTree(SIZE, layers)
   for layer_index,layer in ipairs(tree) do
     for shape_index,shape in ipairs(layer) do
       g.setColor(hsl2rgb(layer_index / color_cycle, 1, 0.5))

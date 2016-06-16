@@ -140,15 +140,81 @@ function Main:draw()
     g.translate(g.getWidth() / 8, g.getHeight() / 2 - radius - SIZE / 2)
 
     local tau = math.pi * 2
+    local num_rows = 5
+    local time = love.timer.getTime()
 
-    for n=3,7,3 do
+    for row=1,num_rows do
+      local n = row * 3
       local t = math.pi * 2 / n
       for i=1,n do
-        local x = SIZE * (n / 2) * math.cos(i * t - math.pi / 2)
-        local y = SIZE * (n / 2) * math.sin(i * t - math.pi / 2)
+        local d = radius / num_rows
+        local phi = i * t - math.pi / 2 + time
+        local x = d * (row - 0.5) * math.cos(phi)
+        local y = d * (row - 0.5) * math.sin(phi) * math.cos(phi)
 
         g.setColor(hsl2rgb(i / n, 1, 0.5))
-        g.draw(mesh, x, y, i * t)
+        g.draw(mesh, x, y, math.atan2(y, x) + phi)
+      end
+    end
+
+    g.pop()
+  end
+
+  do
+    g.push()
+    local radius = 125
+    local time = love.timer.getTime()
+    g.translate(g.getWidth() / 8, -g.getHeight() / 2 + radius + SIZE / 2)
+
+    local tau = math.pi * 2
+    local num_rows = 5
+
+    for row=1,num_rows do
+      local n = row * 3
+      local t = math.pi * 2 / n
+      for i=1,n do
+        local d = radius / num_rows
+        local phi = i * t - math.pi / 2 + time
+        local x = d * (row - 0.5) * math.sin(phi)
+        local y = d * (row - 0.5) * math.cos(phi) ^ 3
+
+        local s = math.sin(time)
+        local c = math.cos(time)
+        local x, y = c * x - s * y, s * x + c * y
+
+        g.setColor(hsl2rgb(i / n, 1, 0.5))
+        g.draw(mesh, x, y, math.atan2(y, x) + phi)
+      end
+    end
+
+    g.pop()
+  end
+
+  do
+    g.push()
+    local radius = 125
+    local time = love.timer.getTime()
+    g.translate(-g.getWidth() / 8, -g.getHeight() / 2 + radius + SIZE / 2)
+
+    local tau = math.pi * 2
+    local num_rows = 5
+
+    for row=1,num_rows do
+      local n = row * 3
+      local t = math.pi * 2 / n
+      for i=1,n do
+        local d = radius / num_rows
+        local phi = i * t - math.pi / 2 + time
+        local x = d * (row - 0.5) * math.sin(phi)
+        local y = d * (row - 0.5) * math.cos(phi)
+
+        local s = math.sin(time)
+        local c = math.cos(time)
+        local x, y = c * x - s * y, s * x + c * y
+
+        local r = math.atan2(y, x) + time
+        g.setColor(hsl2rgb((r * math.pi) % tau / tau, 1, 0.5))
+        g.draw(mesh, x, y, r)
       end
     end
 
