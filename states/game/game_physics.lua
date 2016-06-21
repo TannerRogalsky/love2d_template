@@ -32,25 +32,23 @@ end
 local function generateWorld()
   if world then world:destroy() end
   tree = buildMeshTree(SIZE, generateLayers())
-  -- tree = buildMeshTree(SIZE, {meshes[6], meshes[3], meshes[1], meshes[1]})
-  -- tree = buildMeshTree(SIZE, {meshes[1], meshes[1]})
-  -- tree = buildMeshTree(SIZE, {meshes[6], meshes[3]})
-  -- tree = buildMeshTree(SIZE, {meshes[2], meshes[2], meshes[1]})
   world = love.physics.newWorld()
   body = love.physics.newBody(world)
   shape, vertices = buildChainShape(tree)
   love.physics.newFixture(body, shape)
 
   balls = {}
-  for shape_index,shape in ipairs(tree[2]) do
-    ball = love.physics.newBody(world, shape.x, shape.y, 'dynamic')
-    local circle = love.physics.newCircleShape(BALL_RADIUS)
-    ball_fixture = love.physics.newFixture(ball, circle)
-    ball_fixture:setRestitution(1)
-    local tm = 1500
-    local m = love.math.random(tm)
-    ball:setLinearVelocity(love.math.random() * m, love.math.random() * (tm - m))
-    table.insert(balls, ball)
+  for i=2,#tree,2 do
+    for shape_index,shape in ipairs(tree[i]) do
+      ball = love.physics.newBody(world, shape.x, shape.y, 'dynamic')
+      local circle = love.physics.newCircleShape(BALL_RADIUS)
+      ball_fixture = love.physics.newFixture(ball, circle)
+      ball_fixture:setRestitution(1)
+      local tm = 1500
+      local m = love.math.random(tm)
+      ball:setLinearVelocity(love.math.random() * m, love.math.random() * (tm - m))
+      table.insert(balls, ball)
+    end
   end
 end
 
@@ -62,9 +60,6 @@ function Physics:enteredState()
     table.insert(meshes, g.newMesh(generateVertices(i, SIZE)))
   end
 
-  -- world = love.physics.newWorld()
-  -- body = love.physics.newBody(world)
-  -- shape, vertices = buildChainShape(tree)
   generateWorld()
   local tree2 = {}
   for layer_index,layer in ipairs(tree) do
@@ -77,20 +72,20 @@ function Physics:enteredState()
       table.insert(tree2, s)
     end
   end
-  -- print(#vertices / 2)
-  -- print(inspect(tree2))
-  -- fixture = love.physics.newFixture(body, shape)
 
   self.camera:move(-g.getWidth() / 2, -g.getHeight() / 2)
   g.setBackgroundColor(150, 150, 150)
   g.setLineJoin('none')
 
   g.setNewFont()
+
+  regenerator = cron.every(1, generateWorld)
 end
 
 function Physics:update(dt)
   g.setWireframe(love.keyboard.isDown('space'))
   world:update(dt)
+  if regenerator then regenerator:update(dt) end
 end
 
 function Physics:draw()
@@ -100,7 +95,8 @@ function Physics:draw()
   for layer_index,layer in ipairs(tree) do
     for shape_index,shape in ipairs(layer) do
       local mesh = shape.mesh
-      g.setColor(255, 255, 255)
+      g.setColor(hsl2rgb(layer_index / #tree, 1, 0.7))
+      -- g.setColor(255, 255, 255)
       g.draw(mesh, shape.x * part_scale, shape.y * part_scale, shape.rotation, shape.scale)
       -- g.setColor(0, 0, 255)
       -- g.print(shape_index, shape.x, shape.y)
@@ -134,7 +130,6 @@ function Physics:draw()
   -- end
 
   g.setColor(0, 0, 0)
-  -- g.line(vertices)
   for i=1,shape:getVertexCount()-1 do
     local edge = shape:getChildEdge(i)
     local x1, y1, x2, y2 = edge:getPoints()
@@ -169,6 +164,12 @@ end
 function Physics:keyreleased(key, scancode)
   if key == 'r' then
     generateWorld()
+  elseif key == 'p' then
+    if regenerator then
+      regenerator = nil
+    else
+      regenerator = cron.every(1, generateWorld)
+    end
   end
 end
 
