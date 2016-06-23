@@ -32,6 +32,8 @@ Boid = require("lib.boid")
 
 Base = require("base")
 Game = require("game")
+Player = require('player')
+Fan = require('fan')
 
 Direction = require("direction")
 
