@@ -1,5 +1,4 @@
 local Main = Game:addState('Main')
-local buildMap = require('pure.build_map')
 local instantiateInteratables = require('pure.instantiate_interactables')
 local createPlayerMoveTween = require('pure.create_player_move_tween')
 
@@ -15,16 +14,9 @@ function Main:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  map_data = require('levels.template')
-  local map = buildMap(map_data)
+  local map = self.preloaded_levels[self.sorted_names[self.level_index]]
   tileset, layers, interactables, grid, paths = map.tileset, map.layers, map.interactives, map.grid, map.paths
   player, fans = instantiateInteratables(interactables)
-
-  sprites = require('images.sprites')
-
-  -- g.setBackgroundColor(150, 150, 150)
-  -- self.camera:move(-g.getWidth() / 2, -g.getHeight() / 2)
-  -- self.camera:scale(1, 1)
 end
 
 function Main:update(dt)
@@ -43,9 +35,11 @@ function Main:update(dt)
 end
 
 function Main:draw()
+  g.setColor(255, 255, 255)
+  g.draw(self.preloaded_images['bg.png'], 0, 0, 0, g.getHeight() / self.preloaded_images['bg.png']:getHeight())
+
   self.camera:set()
 
-  g.setColor(255, 255, 255)
   g.draw(layers[1], 0, 0)
 
   player:draw()
@@ -54,7 +48,7 @@ function Main:draw()
   end
 
   g.setColor(255, 255, 255)
-  g.draw(layers[2], 0, 0)
+  g.draw(layers[3], 0, 0)
 
   self.camera:unset()
 

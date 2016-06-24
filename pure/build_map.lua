@@ -111,6 +111,11 @@ local function buildMap(map_data)
   end
   do
     local tiles = love.graphics.newSpriteBatch(image, num_sprites, 'static')
+    populateTiles(tiles, tileset, layers_by_name.Interactive, tilewidth, tileheight)
+    table.insert(layers, tiles)
+  end
+  do
+    local tiles = love.graphics.newSpriteBatch(image, num_sprites, 'static')
     populateTiles(tiles, tileset, layers_by_name.Foreground, tilewidth, tileheight)
     table.insert(layers, tiles)
   end
@@ -121,6 +126,8 @@ local function buildMap(map_data)
   local grid = Grid:new(map_data.width, map_data.height, tilewidth, tileheight)
 
   return {
+    width = tilewidth * map_data.width,
+    height = tileheight * map_data.height,
     tileset = tileset,
     layers = layers,
     interactives = interactives,

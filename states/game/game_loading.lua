@@ -1,4 +1,5 @@
 local Loading = Game:addState('Loading')
+local buildMap = require('pure.build_map')
 
 local function generate_numbers(quant)
   local numbers = {}
@@ -12,6 +13,7 @@ function Loading:enteredState()
   self.loader = require 'lib/love-loader/love-loader'
   self.preloaded_images = {}
   self.preloaded_fonts = {}
+  self.preloaded_levels = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -31,13 +33,19 @@ function Loading:enteredState()
     end
   end
 
+  self.sorted_names = require('levels/list')
+    for index, level_name in ipairs(self.sorted_names) do
+      self.preloaded_levels[level_name] = require("levels/" .. level_name)
+    end
+
   g.setFont(self.preloaded_fonts["04b03_16"])
+  g.setDefaultFilter("nearest", "nearest")
 
   self.loader.start(function()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Main")
+    self:gotoState("Menu")
   end)
 
   local hexFormatStringPart = '%X '
@@ -95,6 +103,10 @@ function Loading:update(dt)
 end
 
 function Loading:exitedState()
+  for k,v in pairs(self.preloaded_levels) do
+    self.preloaded_levels[k] = buildMap(v)
+  end
+
   self.numbers = nil
   self.numbers_text:clear()
   self.numbers_text = nil

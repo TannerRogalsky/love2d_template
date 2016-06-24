@@ -30,7 +30,6 @@ local function createPlayerMoveTween(grid, paths, fans, player)
         return tween.new(Player.TILE_MOVE_TIME, player, {x = nx, y = ny})
       else -- there's no path, don't tween
         player.orientation = math.atan2(dy, dx)
-        return nil
       end
     end
   end
