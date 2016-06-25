@@ -61,7 +61,7 @@ local function createPlayerMoveTween(grid, paths, fans, player)
       player.orientation = math.atan2(dy, dx)
 
       local fan = fanAtPoint(nx, ny, fans)
-      if fan then
+      if fan and fan.moveable then
         local fgx, fgy = cgx + dx * 2, cgy + dy * 2
         local fx, fy = grid:to_pixel(fgx, fgy)
         if paths[fgx] and paths[fgx][fgy] and fanAtPoint(fx, fy, fans) == nil then

@@ -28,6 +28,7 @@ function Fan:initialize(x, y, orientation, strength, moveable)
 
   self.x, self.y, self.orientation = x, y, orientation
   self.strength = strength
+  self.moveable = moveable
   self.psystem = newWindEffect(self.orientation, 50 / 2 / 3, self.strength)
   self.active = true
   self:toggle_active()
