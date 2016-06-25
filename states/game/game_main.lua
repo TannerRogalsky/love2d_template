@@ -36,9 +36,11 @@ function Main:update(dt)
     if player_move_tween:update(dt) then player_move_tween = nil end
 
     if fan_move_tween and fan_move_tween:update(dt) then
-      local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
-      for i,flame in ipairs(influenced_flames) do
-        flame.fans[fan_move_tween.subject.id] = fan_move_tween.subject
+      if fan_move_tween.subject.active then
+        local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
+        for i,flame in ipairs(influenced_flames) do
+          flame.fans[fan_move_tween.subject.id] = fan_move_tween.subject
+        end
       end
       fan_move_tween = nil
     end
