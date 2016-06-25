@@ -29,10 +29,53 @@ function Main:enteredState()
   local map = self.preloaded_levels[self.sorted_names[self.level_index]]
   tileset, layers, interactables, grid, paths = map.tileset, map.layers, map.interactives, map.grid, map.paths
   player, fans, flames, lavas = instantiateInteratables(interactables)
+
+  walking_animation = anim8.newAnimation({
+    game.sprites.quads.man_walking1,
+    game.sprites.quads.man_walking2,
+    game.sprites.quads.man_walking3,
+    game.sprites.quads.man_walking4,
+    game.sprites.quads.man_walking5,
+    game.sprites.quads.man_walking6,
+    game.sprites.quads.man_walking7,
+    game.sprites.quads.man_walking8,
+    game.sprites.quads.man_walking9,
+    game.sprites.quads.man_walking10,
+  }, 0.1)
+  player.animation = walking_animation
+
+  pushing_animation = anim8.newAnimation({
+    game.sprites.quads.man_pushing001,
+    game.sprites.quads.man_pushing002,
+    game.sprites.quads.man_pushing003,
+    game.sprites.quads.man_pushing004,
+    game.sprites.quads.man_pushing005,
+    game.sprites.quads.man_pushing006,
+    game.sprites.quads.man_pushing007,
+    game.sprites.quads.man_pushing008,
+    game.sprites.quads.man_pushing009,
+    game.sprites.quads.man_pushing010,
+  }, 0.1)
+
+  winning_animation = anim8.newAnimation({
+    game.sprites.quads.winning_dance_1_1,
+    game.sprites.quads.winning_dance_1_2,
+    game.sprites.quads.winning_dance_1_3,
+    game.sprites.quads.winning_dance_1_4,
+    game.sprites.quads.winning_dance_1_5,
+    game.sprites.quads.winning_dance_1_6,
+    game.sprites.quads.winning_dance_1_7,
+    game.sprites.quads.winning_dance_1_8,
+    game.sprites.quads.winning_dance_1_9,
+    game.sprites.quads.winning_dance_1_10,
+    game.sprites.quads.winning_dance_1_11,
+    game.sprites.quads.winning_dance_1_12,
+  }, 0.2)
 end
 
 function Main:update(dt)
   if player_move_tween then
+    player.animation:update(dt)
     if player_move_tween:update(dt) then player_move_tween = nil end
 
     if fan_move_tween and fan_move_tween:update(dt) then
@@ -44,6 +87,8 @@ function Main:update(dt)
       end
       fan_move_tween = nil
     end
+  elseif self.over then
+    player.animation:update(dt)
   end
 
   for i,fan in ipairs(fans) do
@@ -66,11 +111,18 @@ function Main:update(dt)
 
   if numActiveFans(fans) == #fans then
     self.over = 'win'
+    player.animation = winning_animation
   end
 
   if not player_move_tween then
     player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    if player_move_tween then
+      player.animation = walking_animation
+    elseif not self.over then
+      player.animation:gotoFrame(1)
+    end
     if fan_move_tween then
+      player.animation = pushing_animation
       local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
       for i,flame in ipairs(influenced_flames) do
         flame.fans[fan_move_tween.subject.id] = nil
@@ -109,10 +161,19 @@ function Main:draw()
 
   self.camera:unset()
 
-  g.setBlendMode('add')
-  g.setColor((1 - numActiveFans(fans) / #fans) * 100, 0, 0)
-  g.rectangle('fill', 0, 0, g.getWidth(), g.getHeight())
-  g.setBlendMode('alpha')
+  do
+    local width = g.getWidth() / 6
+    local font_height = g.getFont():getHeight()
+    local height = font_height * 2
+    local y = 10
+    local x = g.getWidth() - width - 10
+    g.setColor(0, 0, 0)
+    g.rectangle('fill', x, y, width, height)
+    g.setColor(255, 0, 0)
+    g.rectangle('fill', x, y, (1 - numActiveFans(fans) / #fans) * width, height)
+    g.setColor(255, 255, 255)
+    g.print(#fans - numActiveFans(fans) .. ' fans to turn on!', x + 5, y + font_height / 2)
+  end
 
   if self.over then
     g.setColor(0, 0, 0, 100)
@@ -140,7 +201,9 @@ function Main:keypressed(key, scancode, isrepeat)
 
   if not player_move_tween then
     player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    if player_move_tween then player.animation = walking_animation end
     if fan_move_tween then
+      player.animation = pushing_animation
       local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
       for i,flame in ipairs(influenced_flames) do
         flame.fans[fan_move_tween.subject.id] = nil
@@ -187,7 +250,9 @@ function Main:gamepadpressed(joystick, button)
 
   if not player_move_tween then
     player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    if player_move_tween then player.animation = walking_animation end
     if fan_move_tween then
+      player.animation = pushing_animation
       local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
       for i,flame in ipairs(influenced_flames) do
         flame.fans[fan_move_tween.subject.id] = nil

@@ -74,7 +74,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>7</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -176,7 +176,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -202,10 +202,42 @@
             <key type="filename">flame/flame07.png</key>
             <key type="filename">flame/flame08.png</key>
             <key type="filename">flame/flame09.png</key>
+            <key type="filename">man pushing/man_pushing001.png</key>
+            <key type="filename">man pushing/man_pushing002.png</key>
+            <key type="filename">man pushing/man_pushing003.png</key>
+            <key type="filename">man pushing/man_pushing004.png</key>
+            <key type="filename">man pushing/man_pushing005.png</key>
+            <key type="filename">man pushing/man_pushing006.png</key>
+            <key type="filename">man pushing/man_pushing007.png</key>
+            <key type="filename">man pushing/man_pushing008.png</key>
+            <key type="filename">man pushing/man_pushing009.png</key>
+            <key type="filename">man pushing/man_pushing010.png</key>
+            <key type="filename">man walking/man_walking1.png</key>
+            <key type="filename">man walking/man_walking10.png</key>
+            <key type="filename">man walking/man_walking2.png</key>
+            <key type="filename">man walking/man_walking3.png</key>
+            <key type="filename">man walking/man_walking4.png</key>
+            <key type="filename">man walking/man_walking5.png</key>
+            <key type="filename">man walking/man_walking6.png</key>
+            <key type="filename">man walking/man_walking7.png</key>
+            <key type="filename">man walking/man_walking8.png</key>
+            <key type="filename">man walking/man_walking9.png</key>
             <key type="filename">sprites/bg.png</key>
             <key type="filename">sprites/cloud1.png</key>
             <key type="filename">sprites/cloud2.png</key>
             <key type="filename">sprites/cloud3.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_1.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_10.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_11.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_12.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_2.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_3.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_4.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_5.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_6.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_7.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_8.png</key>
+            <key type="filename">winning_dance1/winning_dance_1_9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -231,6 +263,38 @@
             <filename>fan_no_trolley/fan_blue_no_trolley_2.png</filename>
             <filename>fan_with_trolley/fan_blue_trolley_1.png</filename>
             <filename>fan_with_trolley/fan_blue_trolley_2.png</filename>
+            <filename>man walking/man_walking1.png</filename>
+            <filename>man walking/man_walking2.png</filename>
+            <filename>man walking/man_walking3.png</filename>
+            <filename>man walking/man_walking4.png</filename>
+            <filename>man walking/man_walking5.png</filename>
+            <filename>man walking/man_walking6.png</filename>
+            <filename>man walking/man_walking7.png</filename>
+            <filename>man walking/man_walking8.png</filename>
+            <filename>man walking/man_walking9.png</filename>
+            <filename>man walking/man_walking10.png</filename>
+            <filename>man pushing/man_pushing001.png</filename>
+            <filename>man pushing/man_pushing002.png</filename>
+            <filename>man pushing/man_pushing003.png</filename>
+            <filename>man pushing/man_pushing004.png</filename>
+            <filename>man pushing/man_pushing005.png</filename>
+            <filename>man pushing/man_pushing006.png</filename>
+            <filename>man pushing/man_pushing007.png</filename>
+            <filename>man pushing/man_pushing008.png</filename>
+            <filename>man pushing/man_pushing009.png</filename>
+            <filename>man pushing/man_pushing010.png</filename>
+            <filename>winning_dance1/winning_dance_1_1.png</filename>
+            <filename>winning_dance1/winning_dance_1_2.png</filename>
+            <filename>winning_dance1/winning_dance_1_3.png</filename>
+            <filename>winning_dance1/winning_dance_1_4.png</filename>
+            <filename>winning_dance1/winning_dance_1_5.png</filename>
+            <filename>winning_dance1/winning_dance_1_6.png</filename>
+            <filename>winning_dance1/winning_dance_1_7.png</filename>
+            <filename>winning_dance1/winning_dance_1_8.png</filename>
+            <filename>winning_dance1/winning_dance_1_9.png</filename>
+            <filename>winning_dance1/winning_dance_1_10.png</filename>
+            <filename>winning_dance1/winning_dance_1_11.png</filename>
+            <filename>winning_dance1/winning_dance_1_12.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

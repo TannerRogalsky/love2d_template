@@ -12,15 +12,8 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  g.setColor(0, 0, 255)
-  g.rectangle('fill', self.x, self.y, 50, 50)
-  do
-    local s = 50 / 2
-    g.setColor(0, 0, 0)
-    local x1, y1 = self.x + s, self.y + s
-    local x2, y2 = x1 + math.cos(self.orientation) * s, y1 + math.sin(self.orientation) * s
-    g.line(x1, y1, x2, y2)
-  end
+  g.setColor(255, 255, 255)
+  self.animation:draw(game.sprites.texture, self.x + 25, self.y + 25, self.orientation + math.pi / 2, 1, 1, 25, 25)
 end
 
 return Player
