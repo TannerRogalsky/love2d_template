@@ -53,7 +53,14 @@ local function createPlayerMoveTween(grid, paths, fans, player)
   if love.keyboard.isDown('up') then dy = dy - 1
   elseif love.keyboard.isDown('down') then dy = dy + 1
   elseif love.keyboard.isDown('right') then dx = dx + 1
-  elseif love.keyboard.isDown('left') then dx = dx - 1 end
+  elseif love.keyboard.isDown('left') then dx = dx - 1
+  elseif love.joystick.getJoystickCount() >  0 then
+    local joystick = love.joystick:getJoysticks()[1]
+    if joystick:isGamepadDown('dpup') then dy = dy - 1
+    elseif joystick:isGamepadDown('dpdown') then dy = dy + 1
+    elseif joystick:isGamepadDown('dpright') then dx = dx + 1
+    elseif joystick:isGamepadDown('dpleft') then dx = dx - 1 end
+  end
 
   if dx ~= 0 or dy ~= 0 then
     local cgx, cgy = grid:to_grid(px, py)

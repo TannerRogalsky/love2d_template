@@ -63,11 +63,19 @@ function Menu:keyreleased(key, scancode)
 end
 
 function Menu:gamepadpressed(joystick, button)
-  print(joystick, button)
+  if button == 'dpup' then
+    self.level_index = math.max(1, self.level_index - 1)
+  elseif button == 'dpdown' then
+    self.level_index = math.min(#self.sorted_names, self.level_index + 1)
+  end
 end
 
 function Menu:gamepadreleased(joystick, button)
-  print(joystick, button)
+  if button == 'a' then
+    self:gotoState('Main')
+  elseif button == 'back' then
+    love.event.push('quit')
+  end
 end
 
 function Menu:exitedState()

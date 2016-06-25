@@ -181,9 +181,50 @@ function Main:keyreleased(key, scancode)
 end
 
 function Main:gamepadpressed(joystick, button)
+  if self.over then return end
+
+  if not player_move_tween then
+    player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    if fan_move_tween then
+      local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
+      for i,flame in ipairs(influenced_flames) do
+        flame.fans[fan_move_tween.subject.id] = nil
+      end
+    end
+  end
+
+  if button == 'a' then
+    local x, y = grid:to_grid(player.x, player.y)
+    local tgx, tgy = x + math.cos(player.orientation), y + math.sin(player.orientation)
+    local tx, ty = grid:to_pixel(tgx, tgy)
+    local touched_fan
+    for i,fan in ipairs(fans) do
+      if fan.x == tx and fan.y == ty then
+        touched_fan = fan
+        break
+      end
+    end
+
+    if touched_fan then
+      touched_fan:toggle_active()
+      local influenced_flames = checkFlameInfluence(touched_fan, flames)
+      for i,flame in ipairs(influenced_flames) do
+        if touched_fan.active then
+          flame.fans[touched_fan.id] = touched_fan
+        else
+          flame.fans[touched_fan.id] = nil
+        end
+      end
+    end
+  end
 end
 
 function Main:gamepadreleased(joystick, button)
+  if button == 'back' then
+    self:gotoState('Menu')
+  elseif button == 'start' then
+    self:gotoState('Main')
+  end
 end
 
 function Main:focus(has_focus)
