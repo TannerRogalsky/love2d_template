@@ -1,2 +1,4 @@
 .DS_Store
 levels/*.lua
+images/flame
+images/tiles
