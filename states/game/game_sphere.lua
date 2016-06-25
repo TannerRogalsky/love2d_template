@@ -1,64 +1,6 @@
 local Sphere = Game:addState('Sphere')
 local intervalIterator = require('factories.interval_iterator')
-local WIDTH, HEIGHT = 100, 100
-
-local function generateVertices(sides, radius)
-  assert(type(sides) == 'number' and sides >= 3)
-
-  local vertices = {}
-  local tau = math.pi * 2
-  for i, phi in intervalIterator(sides) do
-    local px, py = math.cos(phi), math.sin(phi)
-    local x, y = radius * px, radius * py
-    -- local u, v = (x + WIDTH / 2) / WIDTH, (y + HEIGHT / 2) / HEIGHT
-    local r = math.sqrt(px * px + py * py)
-    local d = math.asin(r) * 2
-    local p2x, p2y = px * d, py * d
-    local u = math.mod(p2x / tau + 0.5, 1)
-    local v = math.mod(p2y / tau + 0.5, 1)
-    local vertex = {
-      x, y,
-      u, v
-    }
-    table.insert(vertices, vertex)
-  end
-
-  return vertices
-end
-
-local function generateReferenceVertices(sides, radius, ox, oy)
-  assert(type(sides) == 'number' and sides >= 3)
-
-  local vertices = {}
-  for i, phi in intervalIterator(sides) do
-    local x, y = radius * math.cos(phi), radius * math.sin(phi)
-    local u, v = (x + WIDTH / 2) / WIDTH, (y + HEIGHT / 2) / HEIGHT
-    u, v = (u + ox) % 1, (v + oy) % 1
-    local vertex = {x, y, u, v}
-    table.insert(vertices, vertex)
-  end
-
-  return vertices
-end
-
-local function generateFanVertices(sides, radius, ox, oy)
-  assert(type(sides) == 'number' and sides >= 3)
-
-  local t = (2 * math.pi) / sides
-
-  local vertices = {{0, 0, (0.5 + ox) % 1, (0.5 + oy) % 1}}
-  -- local vertices = {{0, 0, 0.5 + ox, 0.5 + oy}}
-  for i=0,sides do
-    local x, y = radius * math.cos(i * t), radius * math.sin(i * t)
-    local u, v = (x + WIDTH / 2) / WIDTH, (y + HEIGHT / 2) / HEIGHT
-    u, v = (u + ox) % 1, (v + oy) % 1
-
-    local vertex = {x, y, u + ox, v + oy}
-    table.insert(vertices, vertex)
-  end
-
-  return vertices
-end
+local WIDTH, HEIGHT, NUM_VERTS = 100, 100, 40
 
 local function insertVertices(vertices, vert, ...)
   if vert then
@@ -68,13 +10,15 @@ local function insertVertices(vertices, vert, ...)
 end
 
 local function createSphereVertex(radius, theta, phi, ox, oy)
-  local xb = math.cos(phi) * math.cos(theta)
-  local yb = math.sin(theta)
-  local x, y = radius * xb, radius * yb
+  local dx, dy = math.cos(phi) * math.cos(theta), math.sin(theta)
+  local x, y = radius * dx, radius * dy
+  local xb = dx
+  local yb = dy
   local r = math.min(1, math.sqrt(xb * xb + yb * yb))
   local f = (1 - math.sqrt(1 - r)) / r
   local u = xb * f + ox
   local v = yb * f + oy
+  -- print(math.round(x), math.round(y), math.round(u, 2), math.round(v, 2), math.round(f, 3))
   return {x, y, u, v}
 end
 
@@ -141,23 +85,11 @@ function Sphere:enteredState()
   texture = g.newImage(image_data)
   texture:setWrap('repeat')
 
-  sphere_vertices = generateSphereVertices(WIDTH / 2, 4, 4, 0, 0)
+  sphere_vertices = generateSphereVertices(WIDTH / 2, NUM_VERTS, NUM_VERTS, 0, 0)
   sphere_mesh = g.newMesh(sphere_vertices, 'triangles')
   sphere_mesh:setTexture(texture)
   -- game.preloaded_images['earth.jpg']:setWrap('repeat')
   -- sphere_mesh:setTexture(game.preloaded_images['earth.jpg'])
-
-  -- local normal_image_data = love.image.newImageData(WIDTH, HEIGHT)
-  -- normal_image_data:mapPixel(function(x, y)
-  --   local ratio = WIDTH / HEIGHT;
-  --   local u, v = x / WIDTH, y / HEIGHT
-
-  --   vec3 n = vec3(uv, sqrt(1. - clamp(dot(uv, uv), 0., 1.)));
-
-  --   vec3 color = 0.5 + 0.5 * n;
-  --   color = mix(vec3(0.5), color, smoothstep(1.01, 1., dot(uv, uv)));
-  --   fragColor = vec4(color, 1.0);
-  -- end)
 
   normal_sphere_shader = g.newShader('shaders/normal_sphere.glsl')
   normal_sphere_shader:send('texture_size', {WIDTH, HEIGHT})
@@ -168,16 +100,7 @@ function Sphere:enteredState()
     g.setShader()
   g.setCanvas()
 
-  warp_shader = g.newShader('shaders/warp.glsl')
-
   normal_map_shader = g.newShader('shaders/normal_map.glsl')
-
-  local num_verts = 50
-  mesh = g.newMesh(generateVertices(num_verts, WIDTH / 2 / math.cos(math.pi / num_verts)))
-  mesh:setTexture(texture)
-
-  reference_mesh = g.newMesh(generateFanVertices(num_verts, WIDTH / 2 / math.cos(math.pi / num_verts), 0, 0), 'fan')
-  reference_mesh:setTexture(game.preloaded_images['earth.jpg'])
 
   sphere_shader = g.newShader('shaders/sphere.glsl')
 
@@ -205,9 +128,9 @@ function Sphere:update(dt)
 
   if not love.keyboard.isDown('p') then
     time = time + dt / 3
-    -- sphere_shader:send('time', {time, time / 2})
+    sphere_shader:send('time', {time, time / 2})
 
-    -- sphere_mesh:setVertices(generateSphereVertices(WIDTH / 2, 4, 4, time, time / 2))
+    sphere_mesh:setVertices(generateSphereVertices(WIDTH / 2, NUM_VERTS, NUM_VERTS, time, time / 2))
     -- reference_mesh:setVertices(generateFanVertices(50, WIDTH / 2 / math.cos(math.pi / 50), time, 0))
   end
 end
@@ -220,10 +143,7 @@ function Sphere:draw()
   g.rectangle('fill', -g.getWidth() / 2, -g.getHeight() / 2, WIDTH, HEIGHT)
   g.setShader()
 
-  g.draw(texture, 0, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
-  g.draw(mesh, WIDTH * 2, 0)
-  g.draw(reference_mesh, WIDTH * 2, HEIGHT * 2)
-  g.draw(normal_sphere, 0, -HEIGHT * 2, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
+  g.draw(normal_sphere, WIDTH * 2, -HEIGHT * 2, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
 
   do
     local mx, my = love.mouse.getPosition()
@@ -233,16 +153,25 @@ function Sphere:draw()
     g.setColor(153, 153, 255, 127)
     normal_map_shader:send('l_pos', {mx / g.getWidth(), my / g.getHeight(), 0.075})
     g.setShader(normal_map_shader)
-    g.draw(mesh, WIDTH * 2, -HEIGHT * 2)
-    g.draw(sphere_mesh, -WIDTH * 2, HEIGHT * 2)
-    g.draw(reference_mesh, 0, HEIGHT * 2)
+    g.draw(sphere_mesh, 0, HEIGHT * 2)
     g.setShader()
     g.setColor(255, 255, 255)
-    g.printf("MESH + NORMALS", -WIDTH * 2 - WIDTH / 2, HEIGHT + HEIGHT / 8, WIDTH, 'center')
+    g.printf("MESH + NORMALS", 0 - WIDTH / 2, HEIGHT + HEIGHT / 8, WIDTH, 'center')
   end
 
-  g.draw(sphere_mesh, -WIDTH * 2, -HEIGHT * 2)
-  g.printf("MESH", -WIDTH * 2 - WIDTH / 2, -HEIGHT * 3 + HEIGHT / 3, WIDTH, 'center')
+  g.draw(sphere_mesh, 0, -HEIGHT * 2)
+  g.printf("MESH", 0 - WIDTH / 2, -HEIGHT * 3 + HEIGHT / 3, WIDTH, 'center')
+
+  g.printf("SHADER", 0 - WIDTH / 2, -HEIGHT + HEIGHT / 3, WIDTH, 'center')
+  g.setShader(sphere_shader)
+  sphere_shader:send('image_aspect_ratio', 1)
+  g.draw(texture, 0, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
+  do
+    local img = game.preloaded_images['earth.jpg']
+    sphere_shader:send('image_aspect_ratio', img:getWidth() / img:getHeight())
+    g.draw(earth, -WIDTH * 2, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
+  end
+  g.setShader()
 
   -- do
   --   local time = love.timer.getTime()
@@ -310,18 +239,6 @@ function Sphere:draw()
   --   g.setShader()
   -- end
 
-  g.printf("SHADER", -WIDTH * 2 - WIDTH / 2, -HEIGHT + HEIGHT / 3, WIDTH, 'center')
-  g.setShader(sphere_shader)
-  sphere_shader:send('image_aspect_ratio', 1)
-  g.draw(sphere_mesh, -WIDTH * 2, -HEIGHT * 2)
-  g.draw(texture, -WIDTH * 2, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
-  do
-    local img = game.preloaded_images['earth.jpg']
-    sphere_shader:send('image_aspect_ratio', img:getWidth() / img:getHeight())
-    g.draw(earth, -WIDTH * 4, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
-  end
-  g.setShader()
-
   self.camera:unset()
 end
 
@@ -332,9 +249,6 @@ function Sphere:mousereleased(x, y, button, isTouch)
 end
 
 function Sphere:keypressed(key, scancode, isrepeat)
-  if key == 'r' then
-    sphere_mesh:setVertices(generateSphereVertices(WIDTH / 2, 40, 40, 0, 0))
-  end
 end
 
 function Sphere:keyreleased(key, scancode)
