@@ -23,7 +23,7 @@ local function newWindEffect(phi, size, distance)
   return p
 end
 
-function Fan:initialize(x, y, orientation, strength)
+function Fan:initialize(x, y, orientation, strength, moveable)
   Base.initialize(self)
 
   self.x, self.y, self.orientation = x, y, orientation

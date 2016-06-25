@@ -8,36 +8,42 @@
   <tile id="432">
    <properties>
     <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="1"/>
    </properties>
   </tile>
   <tile id="433">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="1"/>
    </properties>
   </tile>
   <tile id="434">
    <properties>
     <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="2"/>
    </properties>
   </tile>
   <tile id="435">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="2"/>
    </properties>
   </tile>
   <tile id="436">
    <properties>
     <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="3"/>
    </properties>
   </tile>
   <tile id="437">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="3"/>
    </properties>
   </tile>
@@ -51,39 +57,87 @@
     <property name="flame" type="int" value="2"/>
    </properties>
   </tile>
+  <tile id="447">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="448">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="449">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="450">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="451">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="452">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
   <tile id="459">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="1"/>
    </properties>
   </tile>
   <tile id="460">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="1"/>
    </properties>
   </tile>
   <tile id="461">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="2"/>
    </properties>
   </tile>
   <tile id="462">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="2"/>
    </properties>
   </tile>
   <tile id="463">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="3"/>
    </properties>
   </tile>
   <tile id="464">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="3"/>
    </properties>
   </tile>
@@ -97,81 +151,239 @@
     <property name="flame" type="int" value="4"/>
    </properties>
   </tile>
+  <tile id="474">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="475">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="476">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="477">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="478">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="479">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
   <tile id="486">
    <properties>
     <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="4"/>
    </properties>
   </tile>
   <tile id="487">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="4"/>
    </properties>
   </tile>
   <tile id="488">
    <properties>
     <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="5"/>
    </properties>
   </tile>
   <tile id="489">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="5"/>
    </properties>
   </tile>
   <tile id="490">
    <properties>
     <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="6"/>
    </properties>
   </tile>
   <tile id="491">
    <properties>
     <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="492">
+   <properties>
+    <property name="lava" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="493">
+   <properties>
+    <property name="lava" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="501">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="502">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="503">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="504">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="505">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="506">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
     <property name="strength" type="int" value="6"/>
    </properties>
   </tile>
   <tile id="513">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="4"/>
    </properties>
   </tile>
   <tile id="514">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="4"/>
    </properties>
   </tile>
   <tile id="515">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="5"/>
    </properties>
   </tile>
   <tile id="516">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="5"/>
    </properties>
   </tile>
   <tile id="517">
    <properties>
     <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="6"/>
    </properties>
   </tile>
   <tile id="518">
    <properties>
     <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
     <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="519">
+   <properties>
+    <property name="lava" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="520">
+   <properties>
+    <property name="lava" type="int" value="4"/>
    </properties>
   </tile>
   <tile id="527">
    <properties>
     <property name="player" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="528">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="529">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="530">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="531">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="532">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="533">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
    </properties>
   </tile>
  </tileset>
@@ -226,7 +438,7 @@
 0,0,0,0,0,0,0,0,28,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,28,86,86,86,86,0,86,86,86,86,86,29,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,28,86,86,86,86,86,86,86,86,86,86,29,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,28,86,86,86,86,86,0,86,0,0,0,29,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,28,86,86,86,86,86,0,86,86,86,86,29,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,60,57,57,57,0,0,57,57,57,57,57,61,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -247,7 +459,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="Interactive" width="32" height="32">
+ <layer name="Interactive" width="32" height="32" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -262,7 +474,7 @@
 0,0,0,0,0,0,0,0,0,0,0,528,0,0,439,0,0,0,0,433,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,488,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,462,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,462,0,502,475,503,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -298,8 +510,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,181,182,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,208,209,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,447,448,449,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,181,182,0,0,532,533,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,181,182,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,208,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,265,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,184,185,0,0,0,0,0,0,

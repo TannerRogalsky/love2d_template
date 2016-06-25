@@ -9,7 +9,7 @@ local function instantiateInteratables(interactables)
       player = Player:new(interactable.x, interactable.y)
     elseif interactable.fan then
       local orientation = interactable.fan * (math.pi / 2)
-      table.insert(fans, Fan:new(interactable.x, interactable.y, orientation, interactable.strength))
+      table.insert(fans, Fan:new(interactable.x, interactable.y, orientation, interactable.strength, interactable.moveable))
     elseif interactable.flame then
       table.insert(flames, Flame:new(interactable.x, interactable.y, interactable.flame))
     end

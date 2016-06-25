@@ -11,6 +11,23 @@ local function numActiveFans(fans)
   return num_active_fans
 end
 
+local function checkFlameInfluence(fan, flames)
+  local x1, y1, x2, y2 = fan:getInfluence()
+  if fan.active then
+    for i,flame in ipairs(flames) do
+      if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
+        flame.fans[fan.id] = fan
+      end
+    end
+  else
+    for i,flame in ipairs(flames) do
+      if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
+        flame.fans[fan.id] = nil
+      end
+    end
+  end
+end
+
 function Main:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
@@ -35,17 +52,26 @@ function Main:update(dt)
 
   if player_move_tween then
     if player_move_tween:update(dt) then player_move_tween = nil end
+
+    if fan_move_tween and fan_move_tween:update(dt) then
+      checkFlameInfluence(fan_move_tween.subject, flames)
+      fan_move_tween = nil
+    end
   end
 
   if not player_move_tween then
-    player_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
   end
   self.camera:setPosition(math.floor(player.x - g.getWidth() / 2 + 25), math.floor(player.y - g.getHeight() / 2 + 25))
 end
 
 function Main:draw()
   g.setColor(255, 255, 255)
-  g.draw(self.preloaded_images['bg.png'], 0, 0, 0, g.getHeight() / self.preloaded_images['bg.png']:getHeight())
+  do
+    local bg = self.sprites.quads['bg']
+    local _, _, bgw, bgh = bg:getViewport()
+    g.draw(self.sprites.texture, bg, 0, 0, 0, g.getHeight() / bgh)
+  end
 
   self.camera:set()
 
@@ -81,7 +107,7 @@ end
 
 function Main:keypressed(key, scancode, isrepeat)
   if not player_move_tween then
-    player_move_tween = createPlayerMoveTween(grid, paths, fans, player)
+    player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
   end
 
   if key == 'space' then
@@ -98,26 +124,17 @@ function Main:keypressed(key, scancode, isrepeat)
 
     if touched_fan then
       touched_fan:toggle_active()
-
-      local x1, y1, x2, y2 = touched_fan:getInfluence()
-      if touched_fan.active then
-        for i,flame in ipairs(flames) do
-          if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
-            flame.fans[touched_fan.id] = touched_fan
-          end
-        end
-      else
-        for i,flame in ipairs(flames) do
-          if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
-            flame.fans[touched_fan.id] = nil
-          end
-        end
-      end
+      checkFlameInfluence(touched_fan, flames)
     end
   end
 end
 
 function Main:keyreleased(key, scancode)
+  if key == 'r' then
+    self:gotoState('Main')
+  elseif key == 'escape' then
+    self:gotoState('Menu')
+  end
 end
 
 function Main:gamepadpressed(joystick, button)

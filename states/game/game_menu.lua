@@ -21,8 +21,9 @@ function Menu:draw()
     local level = self.preloaded_levels[self.sorted_names[self.level_index]]
     local w, h = level.width, level.height
     local s = g.getHeight() / h
-    local bg = self.preloaded_images['bg.png']
-    g.draw(bg, 0, 0, 0, g.getHeight() / bg:getHeight())
+    local bg = self.sprites.quads['bg']
+    local _, _, bgw, bgh = bg:getViewport()
+    g.draw(self.sprites.texture, bg, 0, 0, 0, g.getHeight() / bgh)
     for i,layer in ipairs(level.layers) do
       g.draw(layer, g.getWidth() / 2 - w / 2 * s, g.getHeight() / 2 - h / 2 * s, 0, s)
     end
@@ -56,6 +57,8 @@ end
 function Menu:keyreleased(key, scancode)
   if key == 'return' then
     self:gotoState('Main')
+  elseif key == "escape" then
+    love.event.push("quit")
   end
 end
 

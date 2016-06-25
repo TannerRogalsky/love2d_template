@@ -1,5 +1,5 @@
 local Player = class('Player', Base):include(Stateful)
-Player.static.TILE_MOVE_TIME = 1/3
+Player.static.TILE_MOVE_TIME = 1/6
 
 function Player:initialize(x, y)
   Base.initialize(self)
