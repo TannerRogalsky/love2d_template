@@ -68,40 +68,28 @@ local function insertVertices(vertices, vert, ...)
 end
 
 local function createSphereVertex(radius, theta, phi, ox, oy)
-  local x, y = radius * math.cos(phi) * math.cos(theta), radius * math.sin(theta)
-  local z = radius - math.sqrt(x * x + y * y)
-  -- local z = radius * math.sin(phi) * math.cos(phi)
-  -- local x1 = radius * math.cos(phi) * math.sin(theta - math.pi / 2)
-  -- local y1 = radius * math.sin(phi) * math.sin(theta)
-  -- local z1 = radius * math.cos(theta)
-  -- print(x1, y1, z1)
-  -- local u, v = (x + WIDTH / 2) / WIDTH, (y + HEIGHT / 2) / HEIGHT
-  -- local u = ((0.25 + (math.acos(x / radius) / math.pi)) * 2 + ox) % 1
-  -- local u = (0.5 + (math.atan(x / radius) / math.pi) + ox) % 1
-  -- local u = 0.5 + (math.atan2(z, x) / (math.pi * 2))
-  local u = 1 - (math.atan2(z, x) / (math.pi * 2))
-  local v = 0.5 + (math.asin(y / radius) / math.pi)
-  u, v = (u + ox) % 1, (v + oy) % 1
-  -- local v = math.sin(theta) / math.pi + 0.5
-  -- print(math.round(x), math.round(y), math.deg(phi), math.deg(theta), u, v)
-  -- print(math.round(x), math.round(y), math.round(z), u, v)
+  local xb = math.cos(phi) * math.cos(theta)
+  local yb = math.sin(theta)
+  local x, y = radius * xb, radius * yb
+  local r = math.min(1, math.sqrt(xb * xb + yb * yb))
+  local f = (1 - math.sqrt(1 - r)) / r
+  local u = xb * f + ox
+  local v = yb * f + oy
   return {x, y, u, v}
 end
 
 local function generateSphereVertices(radius, slices, stacks, ox, oy)
-  local pi, cos, sin = math.pi, math.cos, math.sin
+  local pi = math.pi
   local vertices = {}
 
   for t=1,stacks do
     local s = t - stacks / 2
     local theta1 = (s - 1) / stacks * pi
     local theta2 = s / stacks * pi
-    -- print('theta', math.deg(theta1), math.deg(theta2))
 
     for p=1,slices do
       local phi1 = (p - 1) / slices * pi
       local phi2 = p / slices * pi
-      -- print('phi', math.deg(phi1), math.deg(phi2))
 
       local v1 = createSphereVertex(radius, theta1, phi1, ox, oy)
       local v2 = createSphereVertex(radius, theta1, phi2, ox, oy)
@@ -119,7 +107,6 @@ local function generateSphereVertices(radius, slices, stacks, ox, oy)
     end
   end
 
-  -- print(#vertices, #vertices / 3)
   return vertices
 end
 
@@ -152,12 +139,13 @@ function Sphere:enteredState()
     end)
   end
   texture = g.newImage(image_data)
+  texture:setWrap('repeat')
 
-  sphere_vertices = generateSphereVertices(WIDTH / 2, 40, 40, 0, 0)
+  sphere_vertices = generateSphereVertices(WIDTH / 2, 4, 4, 0, 0)
   sphere_mesh = g.newMesh(sphere_vertices, 'triangles')
-  -- sphere_mesh:setTexture(texture)
+  sphere_mesh:setTexture(texture)
   -- game.preloaded_images['earth.jpg']:setWrap('repeat')
-  sphere_mesh:setTexture(game.preloaded_images['earth.jpg'])
+  -- sphere_mesh:setTexture(game.preloaded_images['earth.jpg'])
 
   -- local normal_image_data = love.image.newImageData(WIDTH, HEIGHT)
   -- normal_image_data:mapPixel(function(x, y)
@@ -192,7 +180,20 @@ function Sphere:enteredState()
   reference_mesh:setTexture(game.preloaded_images['earth.jpg'])
 
   sphere_shader = g.newShader('shaders/sphere.glsl')
-  sphere_shader:send('resolution', 2)
+
+  do
+    local img = game.preloaded_images['earth.jpg']
+    img:setWrap("repeat", "repeat")
+    local eia = img:getWidth() / img:getHeight()
+    local vertices = {
+        {0,0,     0,0,                255,255,255}, --topleft
+        {WIDTH,0,   0 + 1/eia,0,        255,255,255}, --topright
+        {WIDTH,HEIGHT, 0 + 1/eia,1,        255,255,255}, --bottomright
+        {0,HEIGHT,   0,1,                255,255,255} --bottomleft
+    }
+    earth = love.graphics.newMesh(vertices)
+    earth:setTexture(img)
+  end
 
   self.camera:move(-g.getWidth() / 2, -g.getHeight() / 2)
   g.setBackgroundColor(150, 150, 150)
@@ -204,10 +205,10 @@ function Sphere:update(dt)
 
   if not love.keyboard.isDown('p') then
     time = time + dt / 3
-    sphere_shader:send('time', {time, 0})
+    -- sphere_shader:send('time', {time, time / 2})
 
-    sphere_mesh:setVertices(generateSphereVertices(WIDTH / 2, 40, 40, time, 0))
-    reference_mesh:setVertices(generateFanVertices(50, WIDTH / 2 / math.cos(math.pi / 50), time, 0))
+    -- sphere_mesh:setVertices(generateSphereVertices(WIDTH / 2, 4, 4, time, time / 2))
+    -- reference_mesh:setVertices(generateFanVertices(50, WIDTH / 2 / math.cos(math.pi / 50), time, 0))
   end
 end
 
@@ -237,64 +238,67 @@ function Sphere:draw()
     g.draw(reference_mesh, 0, HEIGHT * 2)
     g.setShader()
     g.setColor(255, 255, 255)
+    g.printf("MESH + NORMALS", -WIDTH * 2 - WIDTH / 2, HEIGHT + HEIGHT / 8, WIDTH, 'center')
   end
 
   g.draw(sphere_mesh, -WIDTH * 2, -HEIGHT * 2)
+  g.printf("MESH", -WIDTH * 2 - WIDTH / 2, -HEIGHT * 3 + HEIGHT / 3, WIDTH, 'center')
 
-  do
-    local time = love.timer.getTime()
+  -- do
+  --   local time = love.timer.getTime()
 
-    g.push()
-    g.translate(-WIDTH * 2, -HEIGHT * 2)
-    local pi, cos, sin = math.pi, math.cos, math.sin
-    local slices, stacks = 10, 10
-    local radius = WIDTH / 2
+  --   g.push()
+  --   g.translate(-WIDTH * 2, -HEIGHT * 2)
+  --   local pi, cos, sin = math.pi, math.cos, math.sin
+  --   local slices, stacks = 10, 10
+  --   local radius = WIDTH / 2
 
-    for t=0,stacks do
-      local theta = (t - stacks / 2) / stacks * pi
+  --   for t=0,stacks do
+  --     local theta = (t - stacks / 2) / stacks * pi
 
-      for p=0,slices do
-        local phi = (p) / slices * pi
+  --     for p=0,slices do
+  --       local phi = (p) / slices * pi
 
-        -- g.setColor(255, 255, 255)
+  --       -- g.setColor(255, 255, 255)
 
-        do
-          g.push()
-          g.translate(-WIDTH, 0)
-          local x, y = radius * math.cos(phi) * math.cos(theta), radius * math.sin(theta)
-          local z = radius - math.sqrt(x * x + y * y)
-          x, y = radius * math.cos(phi + time) * math.cos(theta), radius * math.sin(theta)
-          -- g.setColor(0, 0, 255)
-          g.setColor(hsl2rgb(z / radius, 1, 0.5))
-          g.points(x, y)
-          g.pop()
-        end
+  --       do
+  --         g.push()
+  --         g.translate(-WIDTH, 0)
+  --         local x, y = radius * math.cos(phi) * math.cos(theta), radius * math.sin(theta)
+  --         local z = radius - math.sqrt(x * x + y * y)
+  --         x, y = radius * math.cos(phi + time) * math.cos(theta), radius * math.sin(theta)
+  --         -- g.setColor(0, 0, 255)
+  --         g.setColor(hsl2rgb(z / radius, 1, 0.5))
+  --         g.points(x, y)
+  --         g.pop()
+  --       end
 
-        do
-          -- local phi = phi + time
-          g.push()
-          g.translate(0, HEIGHT)
-          local x, y = radius * math.cos(phi + math.pi) * math.cos(theta), radius * math.sin(theta)
-          local z = radius - math.sqrt(x * x + y * y)
-          -- g.setColor(0, 0, 255)
-          g.setColor(hsl2rgb(z / radius, 1, 0.5))
-          g.points(x, y)
-          g.pop()
-        end
+  --       do
+  --         -- local phi = phi + time
+  --         g.push()
+  --         g.translate(0, HEIGHT)
+  --         local x, y = radius * math.cos(phi + math.pi) * math.cos(theta), radius * math.sin(theta)
+  --         local z = radius - math.sqrt(x * x + y * y)
+  --         -- g.setColor(0, 0, 255)
+  --         g.setColor(hsl2rgb(z / radius, 1, 0.5))
+  --         g.points(x, y)
+  --         g.pop()
+  --       end
 
-        do
-          local phi = phi + time
-          g.push()
-          g.translate(0, -HEIGHT)
-          g.setColor(255, 0, 0)
-          g.points(radius * math.cos(phi) * math.cos(theta - math.pi / 2), radius * math.sin(phi) * math.sin(theta))
-          g.pop()
-        end
-      end
-    end
-    g.pop()
-    g.setColor(255, 255, 255)
-  end
+  --       do
+  --         local phi = phi + time
+  --         g.push()
+  --         g.translate(0, -HEIGHT)
+  --         local x, y = radius * math.cos(phi) * math.cos(theta - math.pi / 2), radius * math.sin(phi) * math.sin(theta)
+  --         g.setColor(hsl2rgb(math.atan2(y, x) / math.pi / 2, 1, 0.5))
+  --         g.points(x, y)
+  --         g.pop()
+  --       end
+  --     end
+  --   end
+  --   g.pop()
+  --   g.setColor(255, 255, 255)
+  -- end
 
   -- do
   --   warp_shader:send('normals', normal_sphere)
@@ -306,11 +310,16 @@ function Sphere:draw()
   --   g.setShader()
   -- end
 
+  g.printf("SHADER", -WIDTH * 2 - WIDTH / 2, -HEIGHT + HEIGHT / 3, WIDTH, 'center')
   g.setShader(sphere_shader)
-  sphere_shader:send('width', 1)
+  sphere_shader:send('image_aspect_ratio', 1)
+  g.draw(sphere_mesh, -WIDTH * 2, -HEIGHT * 2)
   g.draw(texture, -WIDTH * 2, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
-  sphere_shader:send('width', 4)
-  g.draw(game.preloaded_images['earth.jpg'], -WIDTH * 4, 0, 0, 0.25, 0.25, WIDTH * 2, HEIGHT * 2)
+  do
+    local img = game.preloaded_images['earth.jpg']
+    sphere_shader:send('image_aspect_ratio', img:getWidth() / img:getHeight())
+    g.draw(earth, -WIDTH * 4, 0, 0, 1, 1, WIDTH / 2, HEIGHT / 2)
+  end
   g.setShader()
 
   self.camera:unset()
