@@ -1,6 +1,6 @@
 local Fan = class('Fan', Base):include(Stateful)
 
-local SPEED = 50
+local SPEED = 100
 local function newWindEffect(phi, size, distance)
   local image_data = love.image.newImageData(1, 1)
   image_data:setPixel(0, 0, 255, 255, 255)

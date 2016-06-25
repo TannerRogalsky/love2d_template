@@ -40,14 +40,18 @@ function Main:update(dt)
     flame:update(dt)
 
     if flame.scale > 0 and player.x == flame.x and player.y == flame.y then
-      self.over = true
+      self.over = 'lose'
     end
   end
 
   for i,lava in ipairs(lavas) do
     if player.x == lava.x and player.y == lava.y then
-      self.over = true
+      self.over = 'lose'
     end
+  end
+
+  if numActiveFans(fans) == #fans then
+    self.over = 'win'
   end
 
   if player_move_tween then
@@ -112,7 +116,11 @@ function Main:draw()
     g.setColor(0, 0, 0, 100)
     g.rectangle('fill', 0, 0, g.getWidth(), g.getHeight())
     g.setColor(255, 255, 255)
-    g.print('he ded', 100, 100)
+    if self.over == 'lose' then
+      g.print('he ded', 100, 100)
+    else
+      g.print('he livd', 100, 100)
+    end
   end
 
   -- g.setColor(0, 255, 0)
@@ -126,6 +134,8 @@ function Main:mousereleased(x, y, button, isTouch)
 end
 
 function Main:keypressed(key, scancode, isrepeat)
+  if self.over then return end
+
   if not player_move_tween then
     player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
     if fan_move_tween then
