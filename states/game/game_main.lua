@@ -71,6 +71,8 @@ function Main:enteredState()
     game.sprites.quads.winning_dance_1_11,
     game.sprites.quads.winning_dance_1_12,
   }, 0.2)
+
+  self.game_over_overlay = g.newCanvas()
 end
 
 function Main:update(dt)
@@ -177,15 +179,34 @@ function Main:draw()
   end
 
   if self.over then
+    g.setCanvas(self.game_over_overlay)
+    g.clear()
     g.setColor(0, 0, 0, 100)
     g.rectangle('fill', 0, 0, g.getWidth(), g.getHeight())
-    g.setColor(255, 255, 255)
-    if self.over == 'lose' then
-      g.print('he ded', 100, 100)
-    else
-      g.print('he livd', 100, 100)
+    g.setBlendMode('add')
+    g.setColor(255, 255, 255, 255)
+    do
+      local x, y = g.getWidth() / 2, g.getHeight() / 2
+      local x1, y1 = x + math.cos(0) * 50, y + math.sin(0) * 50
+      local x2, y2 = x + math.cos(math.pi) * 50, y + math.sin(math.pi) * 50
+      g.polygon('fill', x1, y1, g.getWidth() / 2, -50, x2, y2)
     end
+    g.circle('fill', g.getWidth() / 2, g.getHeight() / 2, 50)
+    g.setBlendMode('alpha')
+    g.setFont(self.preloaded_fonts['04b03_24'])
+    if self.over == 'lose' then
+      g.printf('You Died!', 0, g.getHeight() * 0.75, g.getWidth(), 'center')
+    else
+      g.printf('You Lived!', 0, g.getHeight() * 0.75, g.getWidth(), 'center')
+    end
+    g.setFont(self.preloaded_fonts["04b03_16"])
+    g.setCanvas()
+    g.draw(self.game_over_overlay, 0, 0)
   end
+
+  g.setColor(0, 0, 0)
+  g.print('r/start to reset', 5, 5)
+  g.print('esc/back to return to menu', 5, 20)
 
   -- g.setColor(0, 255, 0)
   -- g.print(love.timer.getFPS(), 0, 0)
