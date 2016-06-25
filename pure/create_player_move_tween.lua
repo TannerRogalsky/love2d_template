@@ -47,6 +47,8 @@ local function createPlayerMoveTween(grid, paths, fans, player)
     end
   end
 
+  if game.over then return nil end
+
   local dx, dy = 0, 0
   if love.keyboard.isDown('up') then dy = dy - 1
   elseif love.keyboard.isDown('down') then dy = dy + 1

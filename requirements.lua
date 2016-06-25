@@ -35,7 +35,7 @@ Game = require("game")
 Player = require('player')
 Fan = require('fan')
 Flame = require('flame')
-Laval = require('lava')
+Lava = require('lava')
 
 Direction = require("direction")
 

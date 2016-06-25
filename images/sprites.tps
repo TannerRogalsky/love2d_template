@@ -188,10 +188,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">bg.png</key>
-            <key type="filename">cloud1.png</key>
-            <key type="filename">cloud2.png</key>
-            <key type="filename">cloud3.png</key>
+            <key type="filename">fan_no_trolley/fan_blue_no_trolley_1.png</key>
+            <key type="filename">fan_no_trolley/fan_blue_no_trolley_2.png</key>
+            <key type="filename">fan_with_trolley/fan_blue_trolley_1.png</key>
+            <key type="filename">fan_with_trolley/fan_blue_trolley_2.png</key>
             <key type="filename">flame/flame00.png</key>
             <key type="filename">flame/flame01.png</key>
             <key type="filename">flame/flame02.png</key>
@@ -202,6 +202,10 @@
             <key type="filename">flame/flame07.png</key>
             <key type="filename">flame/flame08.png</key>
             <key type="filename">flame/flame09.png</key>
+            <key type="filename">sprites/bg.png</key>
+            <key type="filename">sprites/cloud1.png</key>
+            <key type="filename">sprites/cloud2.png</key>
+            <key type="filename">sprites/cloud3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -219,10 +223,14 @@
             <filename>flame/flame07.png</filename>
             <filename>flame/flame08.png</filename>
             <filename>flame/flame09.png</filename>
-            <filename>bg.png</filename>
-            <filename>cloud1.png</filename>
-            <filename>cloud2.png</filename>
-            <filename>cloud3.png</filename>
+            <filename>sprites/bg.png</filename>
+            <filename>sprites/cloud1.png</filename>
+            <filename>sprites/cloud2.png</filename>
+            <filename>sprites/cloud3.png</filename>
+            <filename>fan_no_trolley/fan_blue_no_trolley_1.png</filename>
+            <filename>fan_no_trolley/fan_blue_no_trolley_2.png</filename>
+            <filename>fan_with_trolley/fan_blue_trolley_1.png</filename>
+            <filename>fan_with_trolley/fan_blue_trolley_2.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

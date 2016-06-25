@@ -14,7 +14,7 @@ local function instantiateInteratables(interactables)
     elseif interactable.flame then
       table.insert(flames, Flame:new(interactable.x, interactable.y, interactable.flame))
     elseif interactable.lava then
-      table.insert(lavas, Laval:new(interactable.x, interactable.y, interactable.lava))
+      table.insert(lavas, Lava:new(interactable.x, interactable.y, interactable.lava))
     end
   end
 

@@ -32,6 +32,18 @@ function Main:enteredState()
 end
 
 function Main:update(dt)
+  if player_move_tween then
+    if player_move_tween:update(dt) then player_move_tween = nil end
+
+    if fan_move_tween and fan_move_tween:update(dt) then
+      local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
+      for i,flame in ipairs(influenced_flames) do
+        flame.fans[fan_move_tween.subject.id] = fan_move_tween.subject
+      end
+      fan_move_tween = nil
+    end
+  end
+
   for i,fan in ipairs(fans) do
     fan:update(dt)
   end
@@ -52,18 +64,6 @@ function Main:update(dt)
 
   if numActiveFans(fans) == #fans then
     self.over = 'win'
-  end
-
-  if player_move_tween then
-    if player_move_tween:update(dt) then player_move_tween = nil end
-
-    if fan_move_tween and fan_move_tween:update(dt) then
-      local influenced_flames = checkFlameInfluence(fan_move_tween.subject, flames)
-      for i,flame in ipairs(influenced_flames) do
-        flame.fans[fan_move_tween.subject.id] = fan_move_tween.subject
-      end
-      fan_move_tween = nil
-    end
   end
 
   if not player_move_tween then

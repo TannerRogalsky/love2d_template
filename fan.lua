@@ -32,21 +32,40 @@ function Fan:initialize(x, y, orientation, strength, moveable)
   self.psystem = newWindEffect(self.orientation, 50 / 2 / 3, self.strength)
   self.active = true
   self:toggle_active()
+
+  if moveable then
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fan_blue_trolley_1,
+      game.sprites.quads.fan_blue_trolley_2
+    }, 0.1)
+  else
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fan_blue_no_trolley_1,
+      game.sprites.quads.fan_blue_no_trolley_2
+    }, 0.1)
+  end
 end
 
 function Fan:update(dt)
   self.psystem:update(dt)
+
+  if self.active then
+    self.animation:update(dt)
+  end
 end
 
 function Fan:draw()
-  g.setColor(255, 0, 0)
-  g.rectangle('fill', self.x, self.y, 50, 50)
+  -- g.setColor(255, 0, 0)
+  -- g.rectangle('fill', self.x, self.y, 50, 50)
   g.setColor(255, 255, 255)
+  self.animation:draw(game.sprites.texture, self.x + 25, self.y + 25, self.orientation + math.pi, 1, 1, 25, 25)
   do
     local scale = 3
     local x, y = self.x + math.cos(self.orientation) * 25, self.y + math.sin(self.orientation) * 25
     g.draw(self.psystem, x, y, 0, scale, scale, -25 / scale, -25 / scale)
   end
+  g.setColor(0, 0, 0)
+  g.print(self.strength, self.x + 20, self.y + 20)
 end
 
 function Fan:getInfluence()
