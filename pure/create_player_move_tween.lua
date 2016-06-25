@@ -37,8 +37,8 @@ local function createPlayerMoveTween(grid, paths, fans, player)
       local dx, dy = math.cos(phi), math.sin(phi)
       local cgx, cgy = grid:to_grid(px, py)
       local ngx, ngy = cgx + dx, cgy + dy
-      if paths[ngx] and paths[ngx][ngy] then -- there's a path where we want to move to
-        local nx, ny = grid:to_pixel(ngx, ngy)
+      local nx, ny = grid:to_pixel(ngx, ngy)
+      if paths[ngx] and paths[ngx][ngy] and fanAtPoint(nx, ny, fans) == nil then
         player.orientation = math.atan2(dy, dx)
         return tween.new(Player.TILE_MOVE_TIME, player, {x = nx, y = ny})
       else -- there's no path, don't tween
