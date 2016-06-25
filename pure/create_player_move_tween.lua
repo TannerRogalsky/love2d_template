@@ -14,7 +14,15 @@ local function createPlayerMoveTween(grid, paths, fans, player)
         fx2, fy2 = fx2 + 50, fy2 + 50
 
         if px >= fx1 and px < fx2 and py >= fy1 and py < fy2 then
-          fan_of_influence = fan
+          if fan_of_influence then
+            local dist1 = (px - fan.x) * (py - fan.y)
+            local dist2 = (px - fan_of_influence.x) * (py - fan_of_influence.y)
+            if dist1 < dist2 then
+              fan_of_influence = fan
+            end
+          else
+            fan_of_influence = fan
+          end
         end
       end
     end

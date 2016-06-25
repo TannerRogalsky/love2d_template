@@ -23,11 +23,11 @@ local function newWindEffect(phi, size, distance)
   return p
 end
 
-function Fan:initialize(x, y, orientation)
+function Fan:initialize(x, y, orientation, strength)
   Base.initialize(self)
 
   self.x, self.y, self.orientation = x, y, orientation
-  self.strength = 2
+  self.strength = strength
   self.psystem = newWindEffect(self.orientation, 50 / 2 / 3, self.strength)
   self.active = true
   self:toggle_active()
