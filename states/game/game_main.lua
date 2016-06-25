@@ -104,6 +104,7 @@ function Main:update(dt)
   end
 
   for i,lava in ipairs(lavas) do
+    lava:update(dt)
     if player.x == lava.x and player.y == lava.y then
       self.over = 'lose'
     end
