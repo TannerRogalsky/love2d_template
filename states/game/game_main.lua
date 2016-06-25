@@ -1,6 +1,7 @@
 local Main = Game:addState('Main')
 local instantiateInteratables = require('pure.instantiate_interactables')
 local createPlayerMoveTween = require('pure.create_player_move_tween')
+local pointInRect = require('pure.point_in_rect')
 
 local function numActiveFans(fans)
   local num_active_fans = 0
@@ -16,12 +17,20 @@ function Main:enteredState()
 
   local map = self.preloaded_levels[self.sorted_names[self.level_index]]
   tileset, layers, interactables, grid, paths = map.tileset, map.layers, map.interactives, map.grid, map.paths
-  player, fans = instantiateInteratables(interactables)
+  player, fans, flames = instantiateInteratables(interactables)
 end
 
 function Main:update(dt)
   for i,fan in ipairs(fans) do
     fan:update(dt)
+  end
+
+  for i,flame in ipairs(flames) do
+    flame:update(dt)
+
+    if flame.scale > 0 and player.x == flame.x and player.y == flame.y then
+      print('he ded')
+    end
   end
 
   if player_move_tween then
@@ -42,6 +51,9 @@ function Main:draw()
 
   g.draw(layers[1], 0, 0)
 
+  for i,flame in ipairs(flames) do
+    flame:draw()
+  end
   player:draw()
   for i,fan in ipairs(fans) do
     fan:draw()
@@ -86,6 +98,21 @@ function Main:keypressed(key, scancode, isrepeat)
 
     if touched_fan then
       touched_fan:toggle_active()
+
+      local x1, y1, x2, y2 = touched_fan:getInfluence()
+      if touched_fan.active then
+        for i,flame in ipairs(flames) do
+          if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
+            flame.fans[touched_fan.id] = touched_fan
+          end
+        end
+      else
+        for i,flame in ipairs(flames) do
+          if pointInRect(flame.x, flame.y, x1, y1, x2, y2) then
+            flame.fans[touched_fan.id] = nil
+          end
+        end
+      end
     end
   end
 end

@@ -1,3 +1,5 @@
+local pointInRect = require('pure.point_in_rect')
+
 local function createPlayerMoveTween(grid, paths, fans, player)
   local px, py = player.x, player.y
 
@@ -5,15 +7,9 @@ local function createPlayerMoveTween(grid, paths, fans, player)
     local fan_of_influence = nil
     for i,fan in ipairs(fans) do
       if fan.active then
-        local phi = fan.orientation
-        local dx, dy = math.cos(phi), math.sin(phi)
-        local fx1, fy1 = fan.x + dx * 50, fan.y + dy * 50
-        local fx2, fy2 = fan.x + fan.strength * dx * 50, fan.y + fan.strength * dy * 50
-        if fx1 > fx2 then fx1, fx2 = fx2, fx1 end
-        if fy1 > fy2 then fy1, fy2 = fy2, fy1 end
-        fx2, fy2 = fx2 + 50, fy2 + 50
+        local fx1, fy1, fx2, fy2 = fan:getInfluence()
 
-        if px >= fx1 and px < fx2 and py >= fy1 and py < fy2 then
+        if pointInRect(px, py, fx1, fy1, fx2, fy2) then
           if fan_of_influence then
             local dist1 = (px - fan.x) * (py - fan.y)
             local dist2 = (px - fan_of_influence.x) * (py - fan_of_influence.y)

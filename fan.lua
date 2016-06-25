@@ -48,6 +48,17 @@ function Fan:draw()
   end
 end
 
+function Fan:getInfluence()
+  local phi = self.orientation
+  local dx, dy = math.cos(phi), math.sin(phi)
+  local fx1, fy1 = self.x + dx * 50, self.y + dy * 50
+  local fx2, fy2 = self.x + self.strength * dx * 50, self.y + self.strength * dy * 50
+  if fx1 > fx2 then fx1, fx2 = fx2, fx1 end
+  if fy1 > fy2 then fy1, fy2 = fy2, fy1 end
+  fx2, fy2 = fx2 + 50, fy2 + 50
+  return fx1, fy1, fx2, fy2
+end
+
 function Fan:toggle_active()
   self.active = not self.active
   self.psystem:reset()

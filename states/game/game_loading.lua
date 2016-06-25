@@ -106,6 +106,7 @@ function Loading:exitedState()
   for k,v in pairs(self.preloaded_levels) do
     self.preloaded_levels[k] = buildMap(v)
   end
+  self.sprites = require('images.sprites')
 
   self.numbers = nil
   self.numbers_text:clear()

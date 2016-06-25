@@ -1,3 +1,4 @@
 return {
-  'template'
+  'leveltest',
+  'template',
 }
