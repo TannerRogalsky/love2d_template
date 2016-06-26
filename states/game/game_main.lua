@@ -57,7 +57,8 @@ function Main:enteredState()
     game.sprites.quads.man_pushing010,
   }, 0.1)
 
-  winning_animation = anim8.newAnimation({
+  winning_animations = {}
+  table.insert(winning_animations, anim8.newAnimation({
     game.sprites.quads.winning_dance_1_1,
     game.sprites.quads.winning_dance_1_2,
     game.sprites.quads.winning_dance_1_3,
@@ -70,7 +71,17 @@ function Main:enteredState()
     game.sprites.quads.winning_dance_1_10,
     game.sprites.quads.winning_dance_1_11,
     game.sprites.quads.winning_dance_1_12,
-  }, 0.2)
+  }, 0.2))
+  table.insert(winning_animations, anim8.newAnimation({
+    game.sprites.quads.winning_dance_2_1,
+    game.sprites.quads.winning_dance_2_2,
+    game.sprites.quads.winning_dance_2_3,
+    game.sprites.quads.winning_dance_2_4,
+    game.sprites.quads.winning_dance_2_5,
+    game.sprites.quads.winning_dance_2_6,
+    game.sprites.quads.winning_dance_2_7,
+    game.sprites.quads.winning_dance_2_8,
+  }, 0.1))
 
   self.game_over_overlay = g.newCanvas()
 end
@@ -112,16 +123,16 @@ function Main:update(dt)
     end
   end
 
-  if numActiveFans(fans) == #fans then
+  if numActiveFans(fans) == #fans and not self.over then
     self.over = 'win'
-    player.animation = winning_animation
+    player.animation = winning_animations[love.math.random(2)]
   end
 
   if not player_move_tween then
     player_move_tween, fan_move_tween = createPlayerMoveTween(grid, paths, fans, player)
-    if player_move_tween then
+    if player_move_tween and not self.over then
       player.animation = walking_animation
-    elseif not self.over then
+    elseif not player_move_tween and not self.over then
       player.animation:gotoFrame(1)
     end
     if fan_move_tween then

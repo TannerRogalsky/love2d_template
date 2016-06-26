@@ -202,6 +202,12 @@
             <key type="filename">flame/flame07.png</key>
             <key type="filename">flame/flame08.png</key>
             <key type="filename">flame/flame09.png</key>
+            <key type="filename">lava/lava10.png</key>
+            <key type="filename">lava/lava11.png</key>
+            <key type="filename">lava/lava12.png</key>
+            <key type="filename">lava/lava13.png</key>
+            <key type="filename">lava/lava14.png</key>
+            <key type="filename">lava/lava9.png</key>
             <key type="filename">man pushing/man_pushing001.png</key>
             <key type="filename">man pushing/man_pushing002.png</key>
             <key type="filename">man pushing/man_pushing003.png</key>
@@ -238,6 +244,14 @@
             <key type="filename">winning_dance1/winning_dance_1_7.png</key>
             <key type="filename">winning_dance1/winning_dance_1_8.png</key>
             <key type="filename">winning_dance1/winning_dance_1_9.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_1.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_2.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_3.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_4.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_5.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_6.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_7.png</key>
+            <key type="filename">winning_dance2/winning_dance_2_8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -295,6 +309,20 @@
             <filename>winning_dance1/winning_dance_1_10.png</filename>
             <filename>winning_dance1/winning_dance_1_11.png</filename>
             <filename>winning_dance1/winning_dance_1_12.png</filename>
+            <filename>lava/lava9.png</filename>
+            <filename>lava/lava10.png</filename>
+            <filename>lava/lava11.png</filename>
+            <filename>lava/lava12.png</filename>
+            <filename>lava/lava13.png</filename>
+            <filename>lava/lava14.png</filename>
+            <filename>winning_dance2/winning_dance_2_1.png</filename>
+            <filename>winning_dance2/winning_dance_2_2.png</filename>
+            <filename>winning_dance2/winning_dance_2_3.png</filename>
+            <filename>winning_dance2/winning_dance_2_4.png</filename>
+            <filename>winning_dance2/winning_dance_2_5.png</filename>
+            <filename>winning_dance2/winning_dance_2_6.png</filename>
+            <filename>winning_dance2/winning_dance_2_7.png</filename>
+            <filename>winning_dance2/winning_dance_2_8.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
