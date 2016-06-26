@@ -5,19 +5,19 @@ function Lava:initialize(x, y)
 
   self.x, self.y = x, y
 
-  if love.math.random() < 0.5 then
-    self.animation = anim8.newAnimation({
-      game.sprites.quads.lava9,
-      game.sprites.quads.lava10,
-      game.sprites.quads.lava11,
-      }, 0.6)
-  else
+  -- if love.math.random() < 0.5 then
+  --   self.animation = anim8.newAnimation({
+  --     game.sprites.quads.lava9,
+  --     game.sprites.quads.lava10,
+  --     game.sprites.quads.lava11,
+  --     }, 0.6)
+  -- else
     self.animation = anim8.newAnimation({
       game.sprites.quads.lava12,
       game.sprites.quads.lava13,
       game.sprites.quads.lava14,
       }, 0.6)
-  end
+  -- end
 end
 
 function Lava:update(dt)
