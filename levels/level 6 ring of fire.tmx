@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="50" tileheight="50" nextobjectid="1">
+ <properties>
+  <property name="name" value="Template"/>
+ </properties>
+ <tileset firstgid="1" name="tiles" tilewidth="50" tileheight="50" spacing="2" tilecount="540" columns="27">
+  <image source="../images/tiles.png" width="1404" height="1040"/>
+  <tile id="432">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="433">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="434">
+   <properties>
+    <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="435">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="436">
+   <properties>
+    <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="437">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="438">
+   <properties>
+    <property name="flame" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="439">
+   <properties>
+    <property name="flame" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="447">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="448">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="449">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="450">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="451">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="452">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="459">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="460">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="461">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="462">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="463">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="464">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="465">
+   <properties>
+    <property name="flame" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="466">
+   <properties>
+    <property name="flame" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="474">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="475">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="476">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="477">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="478">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="479">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="486">
+   <properties>
+    <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="487">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="488">
+   <properties>
+    <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="489">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="490">
+   <properties>
+    <property name="fan" value="2"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="491">
+   <properties>
+    <property name="fan" value="0"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="492">
+   <properties>
+    <property name="lava" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="493">
+   <properties>
+    <property name="lava" type="int" value="2"/>
+   </properties>
+  </tile>
+  <tile id="501">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="502">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="503">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="504">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="505">
+   <properties>
+    <property name="fan" type="int" value="2"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="506">
+   <properties>
+    <property name="fan" type="int" value="0"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="513">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="514">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="515">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="516">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="517">
+   <properties>
+    <property name="fan" value="3"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="518">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="false"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="519">
+   <properties>
+    <property name="lava" type="int" value="3"/>
+   </properties>
+  </tile>
+  <tile id="520">
+   <properties>
+    <property name="lava" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="527">
+   <properties>
+    <property name="player" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="528">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="529">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="4"/>
+   </properties>
+  </tile>
+  <tile id="530">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="531">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="5"/>
+   </properties>
+  </tile>
+  <tile id="532">
+   <properties>
+    <property name="fan" type="int" value="3"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+  <tile id="533">
+   <properties>
+    <property name="fan" type="int" value="1"/>
+    <property name="moveable" type="bool" value="true"/>
+    <property name="strength" type="int" value="6"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background" width="32" height="32">
+  <data encoding="csv">
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,6,86,6,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,6,6,6,6,82,82,82,6,6,6,6,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,6,6,6,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,86,82,82,82,82,82,6,6,6,82,82,82,82,82,86,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,6,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,6,6,6,6,82,82,6,6,6,6,6,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,6,86,6,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,
+82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82,82
+</data>
+ </layer>
+ <layer name="Paths" width="32" height="32">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,86,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,86,86,86,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,0,0,0,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,86,86,86,86,86,86,0,0,0,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,86,86,86,86,86,86,86,86,86,86,86,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,86,86,86,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,86,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Interactive" width="32" height="32">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,528,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,476,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,439,439,439,439,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,439,0,0,0,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,439,0,0,449,0,439,0,519,0,439,0,448,0,0,439,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,439,0,0,0,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,439,439,439,439,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,439,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Foreground" width="32" height="32">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,181,182,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,91,0,91,0,0,0,0,0,0,0,0,0,208,209,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,183,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,181,182,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,208,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,91,0,0,0,0,0,91,91,90,0,0,0,0,0,90,0,0,0,0,181,182,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,91,0,91,0,0,0,0,0,0,0,0,0,0,208,209,0,0,0,0,
+0,0,0,0,0,0,0,90,0,0,0,0,0,0,0,0,0,0,0,0,0,91,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,265,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,184,185,0,0,0,0,0,0,
+0,0,181,182,0,0,0,0,0,0,0,0,0,90,0,90,0,0,0,0,0,0,0,0,211,212,0,0,265,0,0,0,
+0,0,208,209,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,184,185,0,0,0,0,0,0,0,0,184,185,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,211,212,0,0,0,0,0,0,0,0,211,212,0,0,0,0,0,0,181,182,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,208,209,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

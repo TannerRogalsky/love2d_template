@@ -192,6 +192,34 @@
             <key type="filename">fan_no_trolley/fan_blue_no_trolley_2.png</key>
             <key type="filename">fan_with_trolley/fan_blue_trolley_1.png</key>
             <key type="filename">fan_with_trolley/fan_blue_trolley_2.png</key>
+            <key type="filename">fire_blink/fire_blink1.png</key>
+            <key type="filename">fire_blink/fire_blink2.png</key>
+            <key type="filename">fire_blink/fire_blink3.png</key>
+            <key type="filename">fire_blink/fire_blink4.png</key>
+            <key type="filename">fire_blink/fire_blink5.png</key>
+            <key type="filename">fire_blink/fire_blink6.png</key>
+            <key type="filename">fire_blink/fire_blink7.png</key>
+            <key type="filename">fire_normal/fire_normal1.png</key>
+            <key type="filename">fire_normal/fire_normal2.png</key>
+            <key type="filename">fire_normal/fire_normal3.png</key>
+            <key type="filename">fire_normal/fire_normal4.png</key>
+            <key type="filename">fire_normal/fire_normal5.png</key>
+            <key type="filename">fire_normal/fire_normal6.png</key>
+            <key type="filename">fire_normal/fire_normal7.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy1.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy2.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy3.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy4.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy5.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy6.png</key>
+            <key type="filename">fire_not_happy/fire_not_happy7.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy1.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy2.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy3.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy4.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy5.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy6.png</key>
+            <key type="filename">fire_super_happy/fire_super_happy7.png</key>
             <key type="filename">flame/flame00.png</key>
             <key type="filename">flame/flame01.png</key>
             <key type="filename">flame/flame02.png</key>
@@ -323,6 +351,10 @@
             <filename>winning_dance2/winning_dance_2_6.png</filename>
             <filename>winning_dance2/winning_dance_2_7.png</filename>
             <filename>winning_dance2/winning_dance_2_8.png</filename>
+            <filename>fire_blink</filename>
+            <filename>fire_normal</filename>
+            <filename>fire_not_happy</filename>
+            <filename>fire_super_happy</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
