@@ -15,6 +15,9 @@ function Loading:enteredState()
   self.preloaded_fonts = {}
   self.preloaded_levels = {}
 
+  self.bg_music = love.audio.newSource('sounds/FANTASTIC.mp3')
+  self.bg_music:setLooping(true)
+
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
     if image:match('(.*).png$') ~= nil or image:match('(.*).gif$') ~= nil or image:match('(.*).jpg$') ~= nil then

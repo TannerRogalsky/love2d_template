@@ -26,6 +26,8 @@ function Main:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
+  self.bg_music:play()
+
   local map = self.preloaded_levels[self.sorted_names[self.level_index]]
   tileset, layers, interactables, grid, paths = map.tileset, map.layers, map.interactives, map.grid, map.paths
   player, fans, flames, lavas = instantiateInteratables(interactables)

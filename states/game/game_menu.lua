@@ -1,7 +1,8 @@
 local Menu = Game:addState('Menu')
 
 function Menu:enteredState()
-  self.level_index = 1
+  self.level_index = self.level_index or 1
+  self.bg_music:stop()
 
   local font = g.getFont()
   self.max_text_width = 0
