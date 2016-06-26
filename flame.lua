@@ -5,18 +5,49 @@ function Flame:initialize(x, y, strength)
 
   self.x, self.y = x, y
   self.strength = strength
-  self.animation = anim8.newAnimation({
-    game.sprites.quads.flame00,
-    game.sprites.quads.flame01,
-    game.sprites.quads.flame02,
-    game.sprites.quads.flame03,
-    game.sprites.quads.flame04,
-    game.sprites.quads.flame05,
-    game.sprites.quads.flame06,
-    game.sprites.quads.flame07,
-    game.sprites.quads.flame08,
-    game.sprites.quads.flame09,
-  }, 0.1)
+  local r = love.math.random(4)
+  local t = 0.1
+  if r == 1 then
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fire_blink1,
+      game.sprites.quads.fire_blink2,
+      game.sprites.quads.fire_blink3,
+      game.sprites.quads.fire_blink4,
+      game.sprites.quads.fire_blink5,
+      game.sprites.quads.fire_blink6,
+      game.sprites.quads.fire_blink7,
+    }, 0.1)
+  elseif r == 2 then
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fire_normal1,
+      game.sprites.quads.fire_normal2,
+      game.sprites.quads.fire_normal3,
+      game.sprites.quads.fire_normal4,
+      game.sprites.quads.fire_normal5,
+      game.sprites.quads.fire_normal6,
+      game.sprites.quads.fire_normal7,
+    }, 0.1)
+  elseif r == 3 then
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fire_not_happy1,
+      game.sprites.quads.fire_not_happy2,
+      game.sprites.quads.fire_not_happy3,
+      game.sprites.quads.fire_not_happy4,
+      game.sprites.quads.fire_not_happy5,
+      game.sprites.quads.fire_not_happy6,
+      game.sprites.quads.fire_not_happy7,
+    }, 0.1)
+  elseif r == 4 then
+    self.animation = anim8.newAnimation({
+      game.sprites.quads.fire_super_happy1,
+      game.sprites.quads.fire_super_happy2,
+      game.sprites.quads.fire_super_happy3,
+      game.sprites.quads.fire_super_happy4,
+      game.sprites.quads.fire_super_happy5,
+      game.sprites.quads.fire_super_happy6,
+      game.sprites.quads.fire_super_happy7,
+    }, 0.1)
+  end
 
   self.fans = {}
   self.scale = 1
