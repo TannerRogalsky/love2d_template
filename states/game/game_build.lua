@@ -1,5 +1,6 @@
 local Build = Game:addState('Build')
 local generateVertices = require('factories.generate_vertices')
+local intervalIterator = require('factories.interval_iterator')
 
 local function newProtoFactory(...)
   local factory = Factory:new(...)
@@ -31,24 +32,35 @@ function Build:enteredState()
   end
   meshes[0] = g.newMesh(generateVertices(50, SIZE))
 
-  self.factories = {
-    newProducingFactory(meshes[1], 0, 0),
-  }
+  self.factories = {}
 
-  for x=-2,2 do
-    for y=-2,2 do
-      if x ~= 0 or y ~= 0 then
-        table.insert(self.factories, newProtoFactory(meshes[0], SIZE * 3 * x, SIZE * 3 * y))
+  do
+    local s = 3
+    local radius = SIZE * 2.5
+    for i=1,s do
+      local d = radius * i
+      local n = math.floor(math.pi * d / (SIZE * 1.5))
+      local producer_interval = math.ceil(n / 3)
+      for j, phi in intervalIterator(n) do
+        local x = math.cos(phi) * d
+        local y = math.sin(phi) * d
+
+        if i == s then
+          local p = (phi - math.pi / 2 + math.pi) % (math.pi * 2)
+          if p % (math.pi * 2 / 3) == 0 then
+            local factory = newProducingFactory(meshes[1], x, y)
+            factory.providing_color = j / producer_interval / 3
+            table.insert(self.factories, factory)
+          else
+            table.insert(self.factories, newProtoFactory(meshes[0], x, y))
+          end
+        else
+          table.insert(self.factories, newProtoFactory(meshes[0], x, y))
+        end
       end
     end
   end
-
-  self.factories[5 * 1 + 1].providing_color = 1 / 3--{1 / 3, 1, 0.5}
-  self.factories[5 * 3].providing_color = 2 / 3--{2 / 3, 1, 0.5}
-  self.factories[5 * 5].providing_color = 0 / 3--{3 / 3, 1, 0.5}
-
-  table.insert(self.factories, Combinator:new(-SIZE * 3 * 3, 0))
-  table.insert(self.factories, Combinator:new(SIZE * 3 * 3, 0))
+  table.insert(self.factories, Combinator:new(0, 0))
 
   self.mouse_down = nil
 
