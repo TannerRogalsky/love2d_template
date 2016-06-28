@@ -36,7 +36,7 @@ end
 function Combinator:drawResources(size, cycle)
   if #self.resources > 0 then
     local tau = math.pi * 2
-    for i=1,2 do
+    for i=1,1 do
       cycle = cycle * -1
       local ox = self.x + size * math.sin(cycle * tau)
       local oy = self.y + size * math.sin(cycle * tau) * math.cos(cycle * tau)
@@ -63,12 +63,16 @@ function Combinator:drawResources(size, cycle)
 end
 
 function Combinator:connected(other)
-  print(other.mesh:getVertexCount() .. ' vertex shaped connected to combinator.')
   table.insert(self.resources, other)
 end
 
 function Combinator:disconnected(other)
-  print(other.mesh:getVertexCount() .. ' vertex shaped disconnected to combinator.')
+  for i,resource in ipairs(self.resources) do
+    if resource == other then
+      table.remove(self.resources, i)
+      break
+    end
+  end
 end
 
 return Combinator
