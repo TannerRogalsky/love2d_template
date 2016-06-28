@@ -1,84 +1,21 @@
 local Sphere = Game:addState('Sphere')
 local intervalIterator = require('factories.interval_iterator')
+local generateSphereVertices = require('planet.generate_sphere_vertices')
+local tilingNoise = require('planet.tiling_noise')
 local WIDTH, HEIGHT, NUM_VERTS = 100, 100, 40
-
-local function insertVertices(vertices, vert, ...)
-  if vert then
-    table.insert(vertices, vert)
-    insertVertices(vertices, ...)
-  end
-end
-
-local function createSphereVertex(radius, theta, phi, ox, oy)
-  local dx, dy = math.cos(phi) * math.cos(theta), math.sin(theta)
-  local x, y = radius * dx, radius * dy
-  local xb = dx
-  local yb = dy
-  local r = math.min(1, math.sqrt(xb * xb + yb * yb))
-  local f = (1 - math.sqrt(1 - r)) / r
-  local u = xb * f + ox
-  local v = yb * f + oy
-  -- print(math.round(x), math.round(y), math.round(u, 2), math.round(v, 2), math.round(f, 3))
-  return {x, y, u, v}
-end
-
-local function generateSphereVertices(radius, slices, stacks, ox, oy)
-  local pi = math.pi
-  local vertices = {}
-
-  for t=1,stacks do
-    local s = t - stacks / 2
-    local theta1 = (s - 1) / stacks * pi
-    local theta2 = s / stacks * pi
-
-    for p=1,slices do
-      local phi1 = (p - 1) / slices * pi
-      local phi2 = p / slices * pi
-
-      local v1 = createSphereVertex(radius, theta1, phi1, ox, oy)
-      local v2 = createSphereVertex(radius, theta1, phi2, ox, oy)
-      local v3 = createSphereVertex(radius, theta2, phi2, ox, oy)
-      local v4 = createSphereVertex(radius, theta2, phi1, ox, oy)
-
-      if( t == 1 ) then -- top cap
-        insertVertices(vertices, v1, v3, v4)
-      elseif( t == stacks ) then --end cap
-        insertVertices(vertices, v3, v1, v2)
-      else
-        insertVertices(vertices, v1, v2, v4)
-        insertVertices(vertices, v2, v3, v4)
-      end
-    end
-  end
-
-  return vertices
-end
 
 function Sphere:enteredState()
   local Camera = require("lib/camera")
   self.camera = Camera:new()
 
-  local noise = love.math.noise
   local image_data = love.image.newImageData(WIDTH, HEIGHT)
   do
-    local pi, cos, sin = math.pi, math.cos, math.sin
     local random = love.math.random
     -- local x, y = random(0, 100), random(0, 100)
     local x, y = 0, 0
     local x1, y1, x2, y2 = x, y, x + WIDTH / 20, y + HEIGHT / 20
     image_data:mapPixel(function(x, y)
-      x, y = x - 1, y - 1
-      local s = x / WIDTH
-      local t = y / HEIGHT
-      local dx = x2 - x1
-      local dy = y2 - y1
-
-      local nx = x1+cos(s*2*pi)*dx/(2*pi)
-      local ny = y1+cos(t*2*pi)*dy/(2*pi)
-      local nz = x1+sin(s*2*pi)*dx/(2*pi)
-      local nw = y1+sin(t*2*pi)*dy/(2*pi)
-
-      local p = noise(nx,ny,nz,nw)
+      local p = tilingNoise(x - 1, y - 1, x1, y1, x2, y2, WIDTH, HEIGHT)
       return p * 255, p * 255, p * 255
     end)
   end
