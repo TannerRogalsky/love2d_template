@@ -1,6 +1,7 @@
 local Build = Game:addState('Build')
 local generateVertices = require('factories.generate_vertices')
 local intervalIterator = require('factories.interval_iterator')
+local buildMeshTree = require('factories.build_mesh_tree')
 
 local function newProtoFactory(...)
   local factory = Factory:new(...)
@@ -106,6 +107,9 @@ function Build:draw()
   end
 
   self.camera:unset()
+
+  g.setColor(0, 255, 0)
+  g.print(love.timer.getFPS(), 0, 0)
 end
 
 function Build:mousepressed(x, y, button, isTouch)

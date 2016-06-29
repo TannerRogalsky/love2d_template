@@ -50,7 +50,7 @@ function Combinator:drawResources(size, cycle)
       g.push()
       g.translate(ox, oy)
       g.scale(scale)
-      local tree = buildMeshTree(SIZE, layers, 3)
+      local tree = buildMeshTree(SIZE, layers)
       for layer_index,layer in ipairs(tree) do
         setFactoryColor(self.resources[layer_index])
         for shape_index,shape in ipairs(layer) do

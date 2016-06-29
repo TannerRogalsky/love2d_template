@@ -1,3 +1,5 @@
+local rotationOffset = require('factories.rotation_offset')
+
 local function iterator(state)
   state.index = state.index + 1
   if state.index <= state.total then
@@ -7,10 +9,7 @@ end
 
 local function interval_iterator(vertex_count)
   local interval = math.pi * 2 / vertex_count
-  local rotation_offset = math.pi / 2
-  if vertex_count % 2 == 0 then
-    rotation_offset = rotation_offset - interval  / 2
-  end
+  local rotation_offset = rotationOffset(vertex_count)
 
   return iterator, {
     index = 0,
