@@ -40,9 +40,10 @@ local function require_all(directory)
   local lfs = love.filesystem
   for index,filename in ipairs(lfs.getDirectoryItems(directory)) do
     local file = directory .. "/" .. filename
-    if lfs.isFile(file) and file:match("%.lua$") then
+    local info = lfs.getInfo(file)
+    if info.type == 'file' and file:match("%.lua$") then
       require(file:gsub("%.lua", ""))
-    elseif lfs.isDirectory(file) then
+    elseif info.type == 'directory' then
       require_all(file)
     end
   end
