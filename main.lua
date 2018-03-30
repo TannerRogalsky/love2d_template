@@ -8,11 +8,11 @@ function love.load(args)
     k_args[key] = value
   end
 
-  local gameWidth, gameHeight = love.graphics.getDimensions()
+  -- local gameWidth, gameHeight = love.graphics.getDimensions()
   -- local windowWidth, windowHeight = love.window.getDesktopDimensions()
-  local windowWidth, windowHeight = 1920, 1080
+  -- local windowWidth, windowHeight = 1920, 1080
 
-  push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen=false})
+  -- push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {fullscreen=false})
 
   game = Game:new(k_args)
 end
@@ -87,11 +87,11 @@ function love.textinput(text)
 end
 
 function love.draw()
-  push:start()
+  -- push:start()
 
   game:draw()
 
-  push:finish()
+  -- push:finish()
 end
 
 function love.focus(has_focus)
